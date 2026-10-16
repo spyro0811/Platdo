@@ -2,6 +2,7 @@
 
 Prepared from `V8.html`. The original file was not modified.
 
+<<<<<<< HEAD
 ## Included files
 
 ```text
@@ -37,3 +38,9 @@ Serve this folder through a local web server. Some audio and animation loaders u
 - Verified asset hashes and all 157 asset references.
 - Checked JavaScript syntax in all 46 script blocks.
 - Full gameplay was not browser-tested.
+=======
+Release notes can be found under the [releases](https://github.com/spyro0811/Platdo/releases.)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Dev note:
+And if you make a request I will definitely put it in the game unless it sucks but i promise i will see it but if its buns i wont add it. I'll reply to your issue and I'll let you know if i will do it or not.
+>>>>>>> 5cc40a762eb0b95e24a70cab02f3139a3f1f97fa
