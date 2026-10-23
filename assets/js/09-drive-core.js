@@ -31,9 +31,11 @@
   // The geometry's normal remains LEFT; never mirror the scenery to change traffic.
   const createLanes=MapCatalog?.createLanes||((offsets,roadId='main')=>[1,-1].flatMap(direction=>offsets.filter(offset=>-Math.sign(offset)===direction).sort((a,b)=>Math.abs(a)-Math.abs(b)).map((offset,index)=>({id:roadId+':'+(direction>0?'forward':'reverse')+':'+index,roadId,offset,direction,index}))));
   const routeLanes=route=>route.lanes||createLanes(route.laneOffsets||[-2,-6,2,6]);
-  const RULES_VERSION = 'drive3';
+  const RULES_VERSION = 'drive4';
   // Metres/seconds. Normal contact speed, not dashboard speed or accumulated damage.
   const RAIL_TUNING=Object.freeze({span:4,breakSpeed:8.5,resistance:.22,debrisLimit:192,debrisLife:24,launchMin:2.8,launchMax:8,ccdStep:.32});
+  const SCENERY_TUNING=Object.freeze({cellSize:32,debrisLimit:192,debrisLife:24,contactEpsilon:1e-7,separation:.002,maxContacts:20});
+  const SCENERY_KINDS=Object.freeze({building:{breakable:false,resistance:1},fixed:{breakable:false,resistance:1},rock:{breakable:true,resistance:1.15},tree:{breakable:true,resistance:.9},bush:{breakable:true,resistance:.25},prop:{breakable:true,resistance:.55}});
   const BREAKAWAY_PARTS = [
     {id:'front-bumper',threshold:.30},{id:'rear-bumper',threshold:.30},
     {id:'left-mirror',threshold:.23},{id:'right-mirror',threshold:.23},
@@ -41,11 +43,90 @@
     {id:'front-left-wheel',threshold:.82},{id:'front-right-wheel',threshold:.82},
     {id:'rear-left-wheel',threshold:.82},{id:'rear-right-wheel',threshold:.82}
   ];
+  // Stable IDs are save identities. Object insertion order is the garage progression.
+  // P1 matches the frozen pre-update stock Vektor drivetrain, speed, grip and brakes.
+  const vehicle = (id,name,description,price,color,accel,maxSpeed,brake,grip,steerRate,width,length,height,wheelbase,wheelRadius,mass,rearBias) => ({id,name,description,price,color,accel,maxSpeed,brake,grip,steerRate,width,length,height,wheelbase,wheelRadius,mass,rearBias,ratings:{acceleration:accel,speed:maxSpeed/10,handling:grip,braking:brake/2}});
   const CARS = {
-    compact: { id: 'compact', name: 'P1 COMPACT', description: 'Light, planted, and forgiving. The perfect first line.', price: 0, color: '#e6e1d5', accel: 5.6, brake: 12.8, grip: 10.7, maxSpeed: 46, steerRate: 8.6, wheelbase: 2.52, mass: 1120, width: 1.78, length: 4.12, rearBias: .1, ratings: { acceleration: 5, speed: 5, handling: 8, braking: 6 } },
-    vektor: { id: 'vektor', name: 'VEKTOR GT', description: 'A balanced coupe with sharp responses and effortless pace.', price: 1200, color: '#b44d32', accel: 7.5, brake: 15.2, grip: 11.8, maxSpeed: 58, steerRate: 9.2, wheelbase: 2.65, mass: 1330, width: 1.88, length: 4.52, rearBias: .25, ratings: { acceleration: 7, speed: 7, handling: 9, braking: 8 } },
-    apex: { id: 'apex', name: 'APEX R', description: 'A powerful rear-drive machine. Brake early, commit, and catch the slide.', price: 2600, color: '#31565e', accel: 9.2, brake: 17.6, grip: 11.5, maxSpeed: 70, steerRate: 9.8, wheelbase: 2.72, mass: 1410, width: 1.96, length: 4.68, rearBias: .48, ratings: { acceleration: 10, speed: 10, handling: 7, braking: 10 } }
+    compact:vehicle('compact','P1 COMPACT','A nimble hatch with GT pace and forgiving grip. Your first great drive.',0,'#e6e1d5',7.5,58,15.2,11.8,9.2,1.78,4.12,1.48,2.52,.35,1120,.1),
+    nova:vehicle('nova','NOVA S','A clean fastback: eager acceleration, crisp turn-in and everyday composure.',600,'#79a9b9',8,61,15.8,12.1,9.4,1.82,4.28,1.43,2.59,.35,1220,.16),
+    vektor:vehicle('vektor','VEKTOR GT','A balanced grand-touring coupe with effortless pace and sharp responses.',1200,'#b44d32',8.6,64,16.4,12.4,9.6,1.88,4.52,1.34,2.65,.35,1330,.25),
+    corsa:vehicle('corsa','CORSA 200','A compact mid-engine wedge. Light, precise and beautifully direct.',1650,'#e3bc4d',9.1,67,17,12.8,9.8,1.87,4.38,1.30,2.62,.345,1205,.28),
+    rally:vehicle('rally','RALLY RS','Wide arches, a tall cabin and surefooted traction on demanding roads.',2100,'#4269b8',9.8,70,17.7,13.3,10,1.91,4.36,1.47,2.58,.36,1370,.12),
+    apex:vehicle('apex','APEX R','A broad-shouldered rear-drive coupe. Strong power with room to slide.',2600,'#31565e',10.6,74,18.3,13.5,10.2,1.96,4.68,1.32,2.72,.36,1410,.48),
+    muscle:vehicle('muscle','MAMMOTH V8','A long hood and deep torque, with brakes to match its presence.',3350,'#a33e32',11.7,78,19,13.7,10.4,2,4.90,1.39,2.88,.37,1640,.44),
+    roadster:vehicle('roadster','SOLAR ROADSTER','A low open cockpit and short wheelbase make every corner vivid.',4150,'#e0d8c1',12.8,82,20,14.3,10.7,1.90,4.37,1.22,2.57,.35,1190,.31),
+    touring:vehicle('touring','ATLAS GTR','A sweeping four-seat grand tourer with long legs and serious brakes.',5000,'#4c6377',14,87,21,14.7,10.9,1.96,4.90,1.34,2.91,.37,1570,.30),
+    zenith:vehicle('zenith','ZENITH S10','The tenth-car milestone: a low mid-engine super sports car with formidable pace.',6200,'#ee7b36',15.7,94,22,15.4,11.3,2.02,4.70,1.17,2.76,.37,1390,.34),
+    volt:vehicle('volt','VOLT XR','A sculpted electric performance coupe with immediate, relentless acceleration.',7600,'#8ab9b3',17,100,23,15.9,11.6,1.99,4.82,1.30,2.89,.37,1790,.22),
+    stratos:vehicle('stratos','STRATOS LM','A compact endurance special: deep aero channels and remarkable precision.',9200,'#cbdd63',18.6,107,24,16.4,12,2.06,4.64,1.13,2.79,.37,1285,.37),
+    hyperion:vehicle('hyperion','HYPERION X','The collection flagship. A dramatic long-tail body and immense capability.',11000,'#8b79b7',20.4,114,25,17,12.3,2.10,4.84,1.10,2.85,.38,1440,.4)
   };
+  const PART_CATEGORIES = Object.freeze(['spoilers','wheels','engines','transmissions','brakes']);
+  const part=(id,name,description,price,modifiers,design,style,color='#d0d4d8',accent='#c46040')=>({id,name,description,price,modifiers,visual:{design,style,color,accent}});
+  const PARTS = {
+    spoilers:[
+      part('ducktail','Ducktail','A curved, integrated kick-up; a light aero speed gain.',160,{speed:1.025,drag:.98},0,'ducktail'),
+      part('lip','Touring Lip','A discreet rear edge with low drag.',210,{speed:1.032,drag:.975},1,'lip'),
+      part('twin-post','Twin Post','A raised blade on two narrow supports.',280,{speed:1.04,drag:.97},2,'twin-post'),
+      part('gt-wing','GT Wing','A deep motorsport wing with pronounced endplates.',360,{speed:1.048,drag:.965},3,'gt-wing'),
+      part('swan-neck','Swan Neck','Top-mounted supports leave the lower blade clean.',450,{speed:1.057,drag:.96},4,'swan-neck'),
+      part('split-wing','Split Wing','Twin aero blades around an open center.',540,{speed:1.064,drag:.955},5,'split-wing'),
+      part('roof-wing','High Arch','An elevated curved blade with broad supports.',630,{speed:1.072,drag:.95},6,'roof-wing'),
+      part('active-blade','Active Blade','A swept low-profile performance blade.',730,{speed:1.081,drag:.945},7,'active-blade'),
+      part('double-deck','Double Deck','Two stacked blades with linked endplates.',850,{speed:1.09,drag:.94},8,'double-deck'),
+      part('endurance','Endurance Aero','A wide competition blade with split endplates.',990,{speed:1.10,drag:.93},9,'endurance')
+    ],
+    wheels:[
+      part('five-spoke','Sport Five','Five broad spokes; more grip and quicker response.',180,{grip:1.04,steering:1.04},0,'five-spoke','#c6cdd4'),
+      part('turbine','Turbine','Directional turbine spokes with a bright machined face.',230,{grip:1.065,steering:1.055},1,'turbine','#a6b7c5'),
+      part('mesh','Classic Mesh','Dense cross-spokes and a polished deep rim.',300,{grip:1.09,steering:1.07},2,'mesh','#c6aa70'),
+      part('split-six','Split Six','Twelve slim arms from six sculpted roots.',380,{grip:1.115,steering:1.085},3,'split-six','#7f8995'),
+      part('disc','Retro Disc','A nearly closed wheel with circular cooling ports.',470,{grip:1.14,steering:1.10},4,'disc','#c7cbd0'),
+      part('rally','Rally White','Strong rally spokes and a tough rim.',560,{grip:1.17,steering:1.12},5,'rally','#ecece4'),
+      part('split-ten','Split Ten','Fine split spokes with a dark contrast barrel.',670,{grip:1.195,steering:1.14},6,'split-ten','#a7a9ae'),
+      part('forged-seven','Forged Seven','Seven concave forged spokes in bronze.',790,{grip:1.22,steering:1.16},7,'forged-seven','#ae895c'),
+      part('aero','Aero Carbon','Carbon-faced aero spokes with exposed outer channels.',920,{grip:1.245,steering:1.18},8,'aero','#3d434c'),
+      part('centerlock','Centerlock Pro','Light competition spokes and a single center nut.',1080,{grip:1.28,steering:1.21},9,'centerlock','#d2d9df')
+    ],
+    engines:[
+      part('sport-intake','Sport Intake','A freer-breathing engine with extra speed and useful torque.',220,{speed:1.04,accel:1.04},0,'intake'),
+      part('cam-pack','Cam Pack','Revised valve timing extends the useful power range.',300,{speed:1.06,accel:1.065},1,'cam'),
+      part('high-flow','High Flow','Intake, exhaust and calibration work together.',390,{speed:1.08,accel:1.09},2,'high-flow'),
+      part('balanced-six','Balanced Six','A smooth, responsive fast-road power unit.',490,{speed:1.105,accel:1.12},3,'six'),
+      part('sport-turbo','Sport Turbo','A compact turbo adds strong high-speed performance.',610,{speed:1.13,accel:1.15},4,'turbo'),
+      part('twin-scroll','Twin Scroll','Broad torque and improved breathing at speed.',740,{speed:1.155,accel:1.18},5,'twin-scroll'),
+      part('supercharged','Supercharged','A positive-pressure package with a strong pull.',890,{speed:1.18,accel:1.21},6,'supercharged'),
+      part('race-built','Race Built','A strengthened competition power unit.',1060,{speed:1.21,accel:1.25},7,'race'),
+      part('twin-turbo','Twin Turbo','Two compact turbos deliver serious high-speed power.',1250,{speed:1.24,accel:1.29},8,'twin-turbo'),
+      part('works-power','Works Power','The complete works package, calibrated for maximum pace.',1470,{speed:1.28,accel:1.34},9,'works')
+    ],
+    transmissions:[
+      part('sport-five','Sport Five','Shorter launch ratios and cleaner shifts.',170,{accel:1.035,shift: .95},0,'five'),
+      part('close-six','Close Six','Closer ratios keep the engine pulling.',230,{accel:1.055,shift:.90},1,'six'),
+      part('touring-six','Touring Six','A smooth fast-road gearset with stronger pickup.',300,{accel:1.075,shift:.85},2,'touring'),
+      part('rally-box','Rally Box','Tight ratios for decisive acceleration.',380,{accel:1.095,shift:.80},3,'rally'),
+      part('sport-seven','Sport Seven','A broad seven-speed performance calibration.',470,{accel:1.12,shift:.75},4,'seven'),
+      part('quickshift','Quickshift','Faster shifts and improved torque delivery.',570,{accel:1.145,shift:.70},5,'quickshift'),
+      part('dual-clutch','Dual Clutch','Preselected ratios reduce the interruption in power.',690,{accel:1.17,shift:.62},6,'dual-clutch'),
+      part('sequential','Sequential','A competition box with short, direct shifts.',820,{accel:1.20,shift:.55},7,'sequential'),
+      part('track-eight','Track Eight','A close competition calibration across the speed range.',970,{accel:1.23,shift:.48},8,'eight'),
+      part('works-box','Works Box','The quickest launch and least interruption between ratios.',1140,{accel:1.27,shift:.40},9,'works')
+    ],
+    brakes:[
+      part('sport-pads','Sport Pads','Higher-friction pads improve stopping force.',140,{brake:1.045},0,'pads'),
+      part('vented','Vented','Vented rotors and matched pads.',190,{brake:1.075},1,'vented'),
+      part('slotted','Slotted','Slotted rotors for consistent hard braking.',250,{brake:1.105},2,'slotted'),
+      part('four-piston','Four Piston','More clamping force with predictable modulation.',320,{brake:1.14},3,'four'),
+      part('big-disc','Big Disc','Larger rotors increase braking leverage.',400,{brake:1.175},4,'big'),
+      part('six-piston','Six Piston','A powerful, balanced performance brake kit.',490,{brake:1.21},5,'six'),
+      part('two-piece','Two Piece','Light floating rotors and stronger calipers.',600,{brake:1.25},6,'floating'),
+      part('ceramic','Ceramic','High-performance ceramic friction surfaces.',720,{brake:1.29},7,'ceramic'),
+      part('endurance-brake','Endurance','Competition rotors for forceful, stable stops.',860,{brake:1.33},8,'endurance'),
+      part('carbon-race','Carbon Race','The strongest complete braking package.',1020,{brake:1.38},9,'carbon')
+    ]
+  };
+  const PAINT_LIMIT=1400;
+  const blankCustomization=(baseColor=null)=>({equipped:Object.fromEntries(PART_CATEGORIES.map(k=>[k,null])),ownedParts:Object.fromEntries(PART_CATEGORIES.map(k=>[k,[]])),baseColor,strokes:[]});
   const PAINTS = [
     { id: 'chalk', name: 'Chalk', color: '#e6e1d5' }, { id: 'ember', name: 'Ember', color: '#b44d32' },
     { id: 'tide', name: 'Tide', color: '#315f77' }, { id: 'pine', name: 'Pine', color: '#375c48' },
@@ -55,9 +136,9 @@
   const MEDAL_THRESHOLDS = { gold: 85, silver: 105, bronze: 140 };
   const UPGRADE_PRICES = { engine: [300, 500, 800], tires: [250, 450, 700], brakes: [200, 350, 550] };
   function createDefaultSave() {
-    return { version: 1, credits: 0, owned: ['compact'], selected: 'compact', selectedMap:'coastline', lastMode:'free', firstPlayDone: false,
-      upgrades: { compact: { engine: 0, tires: 0, brakes: 0 }, vektor: { engine: 0, tires: 0, brakes: 0 }, apex: { engine: 0, tires: 0, brakes: 0 } },
-      paints: { compact: 'chalk', vektor: 'ember', apex: 'tide' }, bestRush: 0, bestTimes: {}, records:{trial:{},rush:{}}, settledRuns: [],
+    return { version: 2, credits: 0, owned: ['compact'], selected: 'compact', selectedMap:'coastline', lastMode:'free', firstPlayDone: false,
+      upgrades: Object.fromEntries(Object.keys(CARS).map(id=>[id,{engine:0,tires:0,brakes:0}])),
+      paints: Object.fromEntries(Object.keys(CARS).map(id=>[id,id==='vektor'?'ember':id==='apex'?'tide':'chalk'])), customization:Object.fromEntries(Object.keys(CARS).map(id=>[id,blankCustomization(['compact','vektor','apex'].includes(id)?null:CARS[id].color)])), bestRush: 0, bestTimes: {}, records:{trial:{},rush:{}}, settledRuns: [],
       settings: { licensePlate:'PLATDO', units: 'mph', tips: true, graphics: 'medium', resolution: 1, fov: 68, reducedMotion: false, showFPS: false, damageMode:'standard',trafficDensity:'medium',chaseDistance:6.2,chaseHeight:3.05,cameraShake:.35,speedFov:true, master: .8, effects: .8,engine:.8,tires:.8,impacts:.8,environment:.8, music: .35, mute: false, autosave: 3 },
       bindings: { ...DEFAULT_BINDINGS } };
   }
@@ -67,7 +148,7 @@
     const fail = label => { if (strict) throw new Error('Invalid save: ' + label); };
     if (!plain(data)) { fail('expected a save object'); return save; }
     if (strict && ['version', 'credits', 'owned', 'selected'].some(key => !own(data, key))) fail('missing version or vehicle progress');
-    if (data.version !== undefined && data.version !== 1 && data.version !== 0) { fail('unsupported version'); return save; }
+    if (data.version !== undefined && ![0,1,2].includes(data.version)) { fail('unsupported version'); return save; }
     const value = (source, key, valid, fallback) => {
       if (!own(source, key)) return fallback;
       if (valid(source[key])) return source[key];
@@ -89,12 +170,29 @@
       else for (const kind of Object.keys(UPGRADE_PRICES)) save.upgrades[id][kind] = value(upgrade, kind, v => Number.isInteger(v) && v >= 0 && v <= 3, 0);
       if (own(data, 'paints') && !plain(data.paints)) fail('paints');
       if (plain(data.paints)) save.paints[id] = value(data.paints, id, v => PAINTS.some(p => p.id === v), save.paints[id]);
+      // New fields are optional on old saves. Paid legacy levels are retained and
+      // are the stock fallback whenever a replacement part is not selected.
+      if(own(data,'customization')&&!plain(data.customization))fail('customization');
+      if(plain(data.customization)&&own(data.customization,id)){
+        const src=data.customization[id],dest=save.customization[id];
+        if(!plain(src)){fail('vehicle customization');continue;}
+        if(own(src,'baseColor')){if(src.baseColor===null||validColor(src.baseColor))dest.baseColor=src.baseColor;else fail('paint color');}
+        for(const category of PART_CATEGORIES){
+          if(own(src,'ownedParts')&&!plain(src.ownedParts))fail('owned parts');
+          const ids=src.ownedParts?.[category];
+          if(ids!==undefined){if(!Array.isArray(ids)||ids.length>10||ids.some(partId=>!findPart(category,partId)))fail('owned '+category);else dest.ownedParts[category]=[...new Set(ids)];}
+          if(own(src,'equipped')&&!plain(src.equipped))fail('equipped parts');
+          const selected=src.equipped?.[category];
+          if(selected!==undefined&&selected!==null){if(!findPart(category,selected)||!dest.ownedParts[category].includes(selected))fail('equipped '+category);else dest.equipped[category]=selected;}
+        }
+        if(own(src,'strokes')){if(!Array.isArray(src.strokes)||src.strokes.length>PAINT_LIMIT)fail('paint strokes');if(Array.isArray(src.strokes))for(const dot of src.strokes.slice(0,PAINT_LIMIT)){if(!validPaintDot(dot)){fail('paint dot');continue;}dest.strokes.push(copyPaintDot(dot));}}
+      }
     }
     save.bestRush = value(data, 'bestRush', v => Number.isInteger(v) && v >= 0 && v <= 1e9, 0);
     if (own(data, 'bestTimes')) {
       if (!plain(data.bestTimes)) fail('best times');
       else for (const [key, time] of Object.entries(data.bestTimes)) {
-        if (!/^(compact|vektor|apex)-e[0-3]-t[0-3]-b[0-3]$/.test(key) || !finite(time) || time < 1 || time > 86400) { fail('best time'); continue; }
+        if (!validConfigKey(key) || !finite(time) || time < 1 || time > 86400) { fail('best time'); continue; }
         save.bestTimes[key] = time;
       }
     }
@@ -143,21 +241,78 @@
     save.credits -= price; save.upgrades[id][kind]++;
     return { ok: true, price, level: level + 1 };
   }
+  const validColor=value=>typeof value==='string'&&/^#[0-9a-fA-F]{6}$/.test(value);
+  const findPart=(category,id)=>PARTS[category]?.find(p=>p.id===id)||null;
+  const validPaintDot=dot=>plain(dot)&&typeof dot.surface==='string'&&/^[a-z][a-z0-9-]{0,47}$/.test(dot.surface)&&finite(dot.u)&&dot.u>=0&&dot.u<=1&&finite(dot.v)&&dot.v>=0&&dot.v<=1&&finite(dot.r)&&dot.r>=.005&&dot.r<=.12&&validColor(dot.color)&&(dot.stroke===undefined||Number.isInteger(dot.stroke)&&dot.stroke>=0&&dot.stroke<=1e9);
+  const copyPaintDot=dot=>({surface:dot.surface,u:dot.u,v:dot.v,r:dot.r,color:dot.color.toLowerCase(),stroke:dot.stroke||0});
+  function customizationFor(save,id){if(!save.customization)save.customization={};if(!save.customization[id])save.customization[id]=blankCustomization();return save.customization[id];}
+  function equipPart(save,category,partId,id=save.selected){
+    if(!own(CARS,id)||!save.owned.includes(id)||!PART_CATEGORIES.includes(category))return{ok:false,reason:'Part unavailable.'};
+    const custom=customizationFor(save,id);
+    if(partId!==null&&(!findPart(category,partId)||!custom.ownedParts[category].includes(partId)))return{ok:false,reason:'Buy this part before equipping it.'};
+    custom.equipped[category]=partId;return{ok:true,id:partId,carId:id,category};
+  }
+  function purchasePart(save,category,partId,id=save.selected){
+    if(!own(CARS,id)||!save.owned.includes(id)||!PART_CATEGORIES.includes(category))return{ok:false,reason:'Own this car before customizing it.'};
+    const item=findPart(category,partId);if(!item)return{ok:false,reason:'Unknown part.'};
+    const custom=customizationFor(save,id);if(custom.ownedParts[category].includes(partId))return equipPart(save,category,partId,id);
+    if(!Number.isInteger(save.credits)||save.credits<item.price)return{ok:false,reason:'Not enough credits.'};
+    save.credits-=item.price;custom.ownedParts[category].push(partId);custom.equipped[category]=partId;return{ok:true,id:partId,carId:id,category,price:item.price};
+  }
+  function setPaintColor(save,color,id=save.selected){
+    if(!own(CARS,id)||!save.owned.includes(id))return{ok:false,reason:'Own this car before painting it.'};
+    const preset=PAINTS.find(p=>p.id===color),resolved=preset?.color||color;if(!validColor(resolved))return{ok:false,reason:'Choose a valid paint color.'};
+    customizationFor(save,id).baseColor=resolved.toLowerCase();if(preset)save.paints[id]=preset.id;return{ok:true};
+  }
+  function addPaintStroke(save,dots,id=save.selected){
+    if(!own(CARS,id)||!save.owned.includes(id))return{ok:false,reason:'Own this car before painting it.'};
+    const list=Array.isArray(dots)?dots:[dots],custom=customizationFor(save,id);
+    if(!list.length||list.some(dot=>!validPaintDot(dot)))return{ok:false,reason:'Invalid paint stroke.'};
+    if(custom.strokes.length+list.length>PAINT_LIMIT)return{ok:false,reason:'Paint is full. Undo or clear some markings first.'};
+    const group=Math.min(1e9,(custom.strokes.reduce((n,d)=>Math.max(n,d.stroke||0),0)+1));
+    for(const dot of list)custom.strokes.push({...copyPaintDot(dot),stroke:dot.stroke===undefined?group:dot.stroke});
+    return{ok:true,count:list.length};
+  }
+  function undoPaint(save,id=save.selected){if(!own(CARS,id)||!save.owned.includes(id))return{ok:false};const custom=customizationFor(save,id);if(!custom.strokes.length)return{ok:false,reason:'Nothing to undo.'};const group=custom.strokes[custom.strokes.length-1].stroke;let count=0;while(custom.strokes.length&&custom.strokes[custom.strokes.length-1].stroke===group){custom.strokes.pop();count++;}return{ok:true,count};}
+  function clearPaint(save,id=save.selected){if(!own(CARS,id)||!save.owned.includes(id))return{ok:false};customizationFor(save,id).strokes=[];return{ok:true};}
   function getConfig(saveOrId = 'compact', upgrades) {
     const id = typeof saveOrId === 'string' ? saveOrId : saveOrId.selected;
     const base = CARS[id] || CARS.compact;
-    const u = upgrades || (plain(saveOrId) && saveOrId.upgrades[base.id]) || { engine: 0, tires: 0, brakes: 0 };
+    const u = upgrades || (plain(saveOrId) && saveOrId.upgrades?.[base.id]) || { engine: 0, tires: 0, brakes: 0 };
     const e = clamp(u.engine || 0, 0, 3), t = clamp(u.tires || 0, 0, 3), b = clamp(u.brakes || 0, 0, 3);
-    const configKey = `${base.id}-e${e}-t${t}-b${b}`;
-    const drivetrain={compact:{gearRatios:[3.36,2.09,1.48,1.12,.88],finalDrive:3.45,idleRPM:850,redlineRPM:6500,shiftRPM:5700,wheelRadius:.34},vektor:{gearRatios:[3.48,2.18,1.52,1.18,.96,.80],finalDrive:3.48,idleRPM:900,redlineRPM:7200,shiftRPM:6450,wheelRadius:.35},apex:{gearRatios:[3.14,2.12,1.58,1.21,.96,.78],finalDrive:3.60,idleRPM:1000,redlineRPM:8000,shiftRPM:7200,wheelRadius:.36}}[base.id];
-    return { ...base,...drivetrain, ratings: { ...base.ratings }, accel: base.accel * (1 + e * .095), maxSpeed: base.maxSpeed * (1 + e * .045), grip: base.grip * (1 + t * .075), brake: base.brake * (1 + b * .12), upgrades: { engine: e, tires: t, brakes: b }, key: configKey, configKey };
+    const custom=plain(saveOrId)&&saveOrId.customization?.[base.id]||blankCustomization(),parts={},equipped={};
+    for(const category of PART_CATEGORIES){parts[category]=findPart(category,custom.equipped?.[category]);equipped[category]=parts[category]?.id||null;}
+    const engine=parts.engines?.modifiers||{accel:1+e*.095,speed:1+e*.045},wheels=parts.wheels?.modifiers||{grip:1+t*.075,steering:1},brakes=parts.brakes?.modifiers||{brake:1+b*.12},spoiler=parts.spoilers?.modifiers||{speed:1,drag:1},transmission=parts.transmissions?.modifiers||{accel:1,shift:1};
+    const configKey = `${base.id}-e${parts.engines?0:e}-t${parts.wheels?0:t}-b${parts.brakes?0:b}`+(PART_CATEGORIES.some(k=>equipped[k])?'~'+PART_CATEGORIES.map(k=>equipped[k]||'stock').join('.'):'');
+    const redline=base.id==='compact'?7200:7200+Object.keys(CARS).indexOf(base.id)*85,gearRatios=[3.48,2.18,1.52,1.18,.96,.80],maxSpeed=base.maxSpeed*engine.speed*spoiler.speed;
+    // At higher effective speeds the final drive is lengthened, so upgraded cars
+    // do not sit at the rev limiter. Acceleration gain is the transmission's real
+    // force multiplier, while shift duration remains part of the same drivetrain.
+    const finalDrive=Math.min(3.48,redline*.94*TAU*base.wheelRadius/(maxSpeed*60*gearRatios[gearRatios.length-1]));
+    const preset=plain(saveOrId)&&PAINTS.find(p=>p.id===saveOrId.paints?.[base.id]);
+    const paintColor=custom.baseColor||preset?.color||base.color,paint={baseColor:paintColor,strokes:(custom.strokes||[]).map(copyPaintDot)};
+    return {...base,gearRatios,finalDrive,idleRPM:900,redlineRPM:redline,shiftRPM:redline*(6450/7200),shiftDuration:.16*transmission.shift,ratings:{...base.ratings},accel:base.accel*engine.accel*transmission.accel,maxSpeed,grip:base.grip*wheels.grip,steerRate:base.steerRate*wheels.steering,steeringMultiplier:wheels.steering,brake:base.brake*brakes.brake,dragCoefficient:.0013*spoiler.drag,upgrades:{engine:e,tires:t,brakes:b},parts,equipped,paint,paintColor,dimensions:{width:base.width,length:base.length,height:base.height,wheelbase:base.wheelbase,wheelRadius:base.wheelRadius},key:configKey,configKey};
   }
-  function validRecordKey(key){return typeof key==='string'&&/^drive[23]:(coastline|metro|pinecrest|sunridge):main:(compact|vektor|apex)-e[0-3]-t[0-3]-b[0-3]:(standard|cosmetic):(low|medium|high)$/.test(key);}
+  function validConfigKey(key){if(typeof key!=='string'||key.length>240)return false;const [legacy,equipment,...extra]=key.split('~'),match=/^([a-z]+)-e[0-3]-t[0-3]-b[0-3]$/.exec(legacy);if(extra.length||!match||!own(CARS,match[1]))return false;if(equipment===undefined)return true;const ids=equipment.split('.');return ids.length===5&&ids.every((id,i)=>id==='stock'||!!findPart(PART_CATEGORIES[i],id));}
+  function validRecordKey(key){if(typeof key!=='string')return false;const p=key.split(':');return p.length===6&&/^drive[234]$/.test(p[0])&&MAPS.some(m=>m.id===p[1])&&p[2]==='main'&&validConfigKey(p[3])&&['standard','cosmetic'].includes(p[4])&&['low','medium','high'].includes(p[5]);}
   function recordKey(routeOrMap,config,damageMode='standard',density='medium'){const id=typeof routeOrMap==='string'?routeOrMap:routeOrMap.mapId||routeOrMap.map?.id||'coastline',key=typeof config==='string'?config:config.configKey||config.key;return `${RULES_VERSION}:${id}:main:${key}:${damageMode==='cosmetic'?'cosmetic':'standard'}:${['low','medium','high'].includes(density)?density:'medium'}`;}
   function bestRecord(save,mode,route,config,damageMode='standard',density='medium'){return save.records?.[mode]?.[recordKey(route,config,damageMode,mode==='trial'?'medium':density)]||null;}
   function catmull(a, b, c, d, t) {
     const t2 = t * t, t3 = t2 * t;
     return .5 * ((2 * b) + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (-a + 3 * b - 3 * c + d) * t3);
+  }
+  function sceneryDescriptor(source){
+    if(!plain(source)||typeof source.id!=='string'||!/^[\w:./|,-]{1,180}$/.test(source.id)||!own(SCENERY_KINDS,source.kind))throw new Error('Invalid scenery identity or kind');
+    const shape=s=>{const out={x:s.x,y:s.y??0,z:s.z,yaw:s.yaw??0,width:s.width,length:s.length,height:s.height};if(Object.values(out).some(v=>!finite(v))||out.width<=0||out.length<=0||out.height<=0||Math.max(out.width,out.length,out.height)>4096)throw new Error('Invalid scenery collider: '+source.id);return out;};
+    const base=shape(source),colliders=(source.colliders===undefined?[base]:source.colliders);
+    if(!Array.isArray(colliders)||!colliders.length||colliders.length>128)throw new Error('Invalid compound scenery: '+source.id);
+    // Exact duplicate child shapes carry no extra mass. Cap the remaining sum
+    // by the physical collider envelope, never by a tree's visual crown bounds.
+    const seen=new Set(),normalized=colliders.map(shape).filter(c=>{const key=JSON.stringify(c);if(seen.has(key))return false;seen.add(key);return true;}),bounds={minX:Infinity,maxX:-Infinity,minY:Infinity,maxY:-Infinity,minZ:Infinity,maxZ:-Infinity};let volume=0;
+    for(const c of normalized){const rx=Math.abs(Math.cos(c.yaw))*c.width/2+Math.abs(Math.sin(c.yaw))*c.length/2,rz=Math.abs(Math.sin(c.yaw))*c.width/2+Math.abs(Math.cos(c.yaw))*c.length/2;bounds.minX=Math.min(bounds.minX,c.x-rx);bounds.maxX=Math.max(bounds.maxX,c.x+rx);bounds.minY=Math.min(bounds.minY,c.y);bounds.maxY=Math.max(bounds.maxY,c.y+c.height);bounds.minZ=Math.min(bounds.minZ,c.z-rz);bounds.maxZ=Math.max(bounds.maxZ,c.z+rz);volume+=c.width*c.height*c.length;}
+    volume=Math.min(volume,(bounds.maxX-bounds.minX)*(bounds.maxY-bounds.minY)*(bounds.maxZ-bounds.minZ));
+    const out={id:source.id,kind:source.kind,...base,colliders:normalized,breakable:SCENERY_KINDS[source.kind].breakable,resistance:finite(source.resistance)?clamp(source.resistance,.1,3):SCENERY_KINDS[source.kind].resistance,color:validColor(source.color)?source.color:({rock:'#838477',tree:'#65533d',bush:'#526b3c',prop:'#9a9e91'}[source.kind]||'#969b92'),size:Math.cbrt(volume),bounds};
+    out.signature=JSON.stringify(out);return out;
   }
   class Route {
     constructor(mapId='coastline') {
@@ -165,7 +320,7 @@
       this.width = this.map.width; this.halfWidth = this.width/2; this.barrierOffset = this.map.barrierOffset;
       this.laneOffsets=this.map.laneOffsets.slice();this.zones=this.map.zones;
       this.drivingSide=MapCatalog?.drivingSide||'right';this.lanes=this.map.lanes||createLanes(this.laneOffsets);this.forwardLanes=this.lanes.filter(lane=>lane.direction===1);
-      this.connectors=[];this.obstacles=[];this.rails=[];this.railGrid=new Map();
+      this.connectors=[];this.obstacles=[];this.rails=[];this.railGrid=new Map();this.scenery=[];this.sceneryById=new Map();this.sceneryGrid=new Map();this.sceneryRevision=0;
       const points = this.map.points;
       const raw = [], n = points.length, count = n * 100;
       let distance = 0;
@@ -196,8 +351,21 @@
       for(const descriptor of this.map.connectors||[])this.connectors.push(makeConnector(this,descriptor));
       // Solid shoulder objects share one descriptor with renderer and collision tests.
       if(this.map.theme==='mountain')for(const [fraction,side]of [[.37,1],[.49,-1],[.79,1]]){const p=this.at(this.length*fraction),offset=side*(this.halfWidth+1.8);this.obstacles.push({id:'shoulder-rock-'+fraction,kind:'rock',x:p.x+p.nx*offset,y:p.y,z:p.z+p.nz*offset,yaw:p.yaw,width:1.15,length:2.5,height:1.05,s:p.s});}
-      this._buildRails();
+      this._buildRails();this.registerScenery(this.obstacles);
     }
+    registerScenery(descriptors){
+      if(!Array.isArray(descriptors))throw new Error('Expected scenery descriptors');
+      const incoming=descriptors.map(sceneryDescriptor);let added=0,updated=0;
+      if(!this.sceneryById){this.scenery=[];this.sceneryById=new Map();this.sceneryGrid=new Map();this.sceneryRevision=0;}
+      for(const object of incoming){const old=this.sceneryById.get(object.id);if(old?.signature===object.signature)continue;
+        if(old){for(const key of old.cells){const cell=this.sceneryGrid.get(key);cell?.delete(old);if(!cell?.size)this.sceneryGrid.delete(key);}this.scenery[this.scenery.indexOf(old)]=object;updated++;}else{this.scenery.push(object);added++;}
+        const b=object.bounds,cell=SCENERY_TUNING.cellSize;object.cells=[];
+        for(let x=Math.floor(b.minX/cell);x<=Math.floor(b.maxX/cell);x++)for(let z=Math.floor(b.minZ/cell);z<=Math.floor(b.maxZ/cell);z++){const key=x+':'+z;if(!this.sceneryGrid.has(key))this.sceneryGrid.set(key,new Set());this.sceneryGrid.get(key).add(object);object.cells.push(key);}
+        this.sceneryById.set(object.id,object);
+      }
+      if(added||updated)this.sceneryRevision++;return{added,updated,total:this.scenery.length,revision:this.sceneryRevision};
+    }
+    sceneryNear(x,z,radius=8){const found=new Set(),cell=SCENERY_TUNING.cellSize;for(let a=Math.floor((x-radius)/cell);a<=Math.floor((x+radius)/cell);a++)for(let b=Math.floor((z-radius)/cell);b<=Math.floor((z+radius)/cell);b++)for(const object of this.sceneryGrid?.get(a+':'+b)||[])found.add(object);return found;}
     _buildRails(){
       for(const path of [this,...this.connectors])for(let s=0;s<path.length;s+=RAIL_TUNING.span)for(const side of[-1,1]){
         const tunnel=path===this&&this.map.tunnel&&s/this.length>this.map.tunnel.start&&s/this.length<this.map.tunnel.end;
@@ -420,6 +588,25 @@
     const low = Math.max(Math.min(...af), Math.min(...bf)), high = Math.min(Math.max(...af), Math.max(...bf)), tangent = (low + high) / 2, normal = (an + bn) / 2;
     return { depth, nx, nz, x: normal * nx + tangent * tx, z: normal * nz + tangent * tz };
   }
+  // Continuous SAT for a translating oriented vehicle and a static OBB. Unlike
+  // expanded world AABBs it preserves rotated walls, narrow gaps and open doors.
+  function sweepBox(a,b,aw,al,dx,dz){
+    const overlap=boxContact(a,b,aw,al,b.width,b.length);if(overlap)return{...overlap,t:0};
+    const arx=Math.cos(a.yaw),arz=-Math.sin(a.yaw),afx=-arz,afz=arx,brx=Math.cos(b.yaw),brz=-Math.sin(b.yaw),bfx=-brz,bfz=brx;
+    let enter=-Infinity,leave=Infinity,nx=0,nz=0;
+    for(const [x,z]of[[arx,arz],[afx,afz],[brx,brz],[bfx,bfz]]){
+      const center=(a.x-b.x)*x+(a.z-b.z)*z,movement=dx*x+dz*z,radius=(Math.abs(arx*x+arz*z)*aw+Math.abs(afx*x+afz*z)*al+Math.abs(brx*x+brz*z)*b.width+Math.abs(bfx*x+bfz*z)*b.length)/2;
+      if(Math.abs(movement)<1e-12){if(Math.abs(center)>radius+1e-9)return null;continue;}
+      const t1=(-radius-center)/movement,t2=(radius-center)/movement,first=Math.min(t1,t2),last=Math.max(t1,t2);
+      if(first>enter){enter=first;const sign=movement>0?-1:1;nx=x*sign;nz=z*sign;}leave=Math.min(leave,last);if(enter>leave+1e-10)return null;
+    }
+    if(enter< -1e-8||enter>1+1e-9||leave<0||!finite(enter))return null;
+    const t=clamp(enter,0,1),pose={x:a.x+dx*t,yaw:a.yaw,z:a.z+dz*t},ac=corners(pose,aw,al),bc=corners(b,b.width,b.length),tx=-nz,tz=nx;
+    const an=Math.min(...ac.map(p=>p.x*nx+p.z*nz)),bn=Math.max(...bc.map(p=>p.x*nx+p.z*nz)),af=ac.filter(p=>p.x*nx+p.z*nz<an+.035).map(p=>p.x*tx+p.z*tz),bf=bc.filter(p=>p.x*nx+p.z*nz>bn-.035).map(p=>p.x*tx+p.z*tz),tangent=(Math.max(Math.min(...af),Math.min(...bf))+Math.min(Math.max(...af),Math.max(...bf)))/2,normal=(an+bn)/2;
+    return{t,depth:0,nx,nz,x:normal*nx+tangent*tx,z:normal*nz+tangent*tz};
+  }
+  const sceneryBodyHeight=body=>body.height||({truck:2.85,van:2.12,suv:1.82}[body.type]||1.48);
+  const verticallyTouches=(body,height,shape)=>(body.y||0)<shape.y+shape.height-.001&&(body.y||0)+height>shape.y+.001;
   class Simulation {
     constructor(route = new Route(), config = getConfig(), options = {}) {
       this.route = route; this.config = config; this.mode = ['free', 'rush', 'trial'].includes(options.mode) ? options.mode : 'free';
@@ -437,13 +624,34 @@
       this.oncomingDistance=0;this.oncomingPoints=0;this._oncomingProgress=0;this.player.oncoming=false;
       this.checkpoints = Array.from({ length: 8 }, (_, i) => this.route.length * (i + 1) / 8);
       this.penalty = 0; this.finished = false; this.result = null; this.events = []; this.id = makeRunId(); this.traffic = [];
-      this.brokenRails=new Set();this.railDebris=[];this.railRevision=0;this.railBreakCount=0;this._encounters = new Map(); this._passed = new Set(); this._collisionTimes = new Map(); this._contacts = new Map(); this._lastAction = 0; this._offroadTime = 0; this._decayAt = 8; this._recoveryCooldown = 0; this._trialTravel = 0;
+      this.brokenRails=new Set();this.railDebris=[];this.railRevision=0;this.railBreakCount=0;this.brokenScenery=new Set();this.sceneryRevision=0;this.sceneryBreakCount=0;this.sceneryDebris=[];this._encounters = new Map(); this._passed = new Set(); this._collisionTimes = new Map(); this._contacts = new Map(); this._lastAction = 0; this._offroadTime = 0; this._decayAt = 8; this._recoveryCooldown = 0; this._trialTravel = 0;
       if (this.mode !== 'trial') this._createTraffic();
       return this;
     }
     _emit(event) { this.events.push(event); if (this.events.length > 64) this.events.shift(); }
     _road(x,z,hint){const p=this.mode==='free'&&this.route.driveNearest?this.route.driveNearest(x,z,hint):this.route.nearest(x,z,hint);return{roadId:'main',halfWidth:this.route.halfWidth,width:this.route.width,barrierOffset:this.route.barrierOffset,...p};}
     interpolate(alpha=1){const p=this.player,old=this.previousPlayer||p,t=clamp(alpha,0,1),out=this.renderPlayer||{};Object.assign(out,p);for(const key of ['x','y','z','steer','roll','pitch','wheelSpin'])out[key]=mix(old[key]||0,p[key]||0,t);out.yaw=(old.yaw||0)+shortest((p.yaw||0)-(old.yaw||0),TAU)*t;this.renderPlayer=out;return out;}
+    applyGarageConfig(config){
+      if(!config||!own(CARS,config.id)||!finite(config.width)||!finite(config.length)||config.width<=0||config.length<=0)return false;
+      const p=this.player,old=this.config,dimensionChange=old.id!==config.id||old.width!==config.width||old.length!==config.length;
+      const clear=candidate=>{
+        if(this.traffic.some(other=>Math.abs((other.y||0)-(candidate.y||0))<2.5&&boxContact(candidate,other,config.width,config.length,other.width,other.length)))return false;
+        if(!this._sceneryClear(candidate,config.width,config.length,config.height))return false;
+        if((this.route.obstacles||[]).some(other=>!this.route.sceneryById?.has(other.id)&&!other.destroyed&&Math.abs((other.y||0)-(candidate.y||0))<(other.height||2)+1&&boxContact(candidate,other,config.width,config.length,other.width,other.length)))return false;
+        for(const rail of this.route.railsNear?.(candidate.x,candidate.z,Math.hypot(config.width,config.length)/2+3)||[])if(!this.brokenRails.has(rail.id)&&candidate.y<rail.y+rail.height&&candidate.y+config.height>rail.y&&boxContact(candidate,rail,config.width,config.length,rail.width,rail.length))return false;
+        return true;
+      };
+      let placement=null;
+      if(dimensionChange||!clear(p)){
+        const offsets=routeLanes(this.route).filter(lane=>lane.direction===1).map(lane=>lane.offset);
+        for(let tries=0;tries<Math.ceil(this.route.length/12)&&!placement;tries++)for(const offset of offsets){const at=this.route.at(wrap(p.s-tries*12,this.route.length)),candidate={x:at.x+at.nx*offset,y:at.y,z:at.z+at.nz*offset,yaw:at.yaw,s:at.s,offset,roadId:'main'};if(Math.abs(offset)+config.width/2<this.route.halfWidth-.05&&clear(candidate)){placement=candidate;break;}}
+        if(!placement)return false;
+      }
+      this.config=config;p.mass=config.mass;p.inertia=inertia(config.mass,config.width,config.length);
+      if(placement){Object.assign(p,placement,{vx:0,vz:0,speed:0,steer:0,slip:0,yawRate:0,crashYawRate:0,roll:0,pitch:0,driftIntensity:0,gear:0,engineRPM:config.idleRPM,rpm:config.idleRPM/config.redlineRPM,shiftRemaining:0,shifting:false,offRoad:false,oncoming:false});this._contacts.clear();this._encounters.clear();this._oncomingProgress=0;}
+      if(old.configKey!==config.configKey){if(this.mode!=='free')this.assisted=true;this.recordKey=recordKey(this.route,config,this.damageMode,this.mode==='trial'?'medium':this.density);}
+      Object.assign(this.previousPlayer,p);this.renderPlayer=null;return true;
+    }
     _createTraffic() {
       const count = Math.round({ low: 12, medium: 24, high: 40 }[this.density]*(this.route.map?.trafficDensity||1));
       const types = [{ type: 'compact', width: 1.75, length: 4.1, mass: 1120 }, { type: 'sedan', width: 1.86, length: 4.7, mass: 1500 }, { type: 'suv', width: 1.98, length: 4.75, mass: 1950 }, { type: 'van', width: 2.03, length: 5.25, mass: 2200 }, { type: 'truck', width: 2.25, length: 7.3, mass: 4600 }];
@@ -506,7 +714,7 @@
         car.s = wrap(car.s + car.speed * dt * car.direction, this.route.length); car.wheelSpin += car.speed * dt / .34; this._locateTraffic(car);
       }
       this._trafficPileups();
-      for (const car of this.traffic) if (car.crashActive) this._trafficBarrierCollisions(car);
+      for (const car of this.traffic) if (car.crashActive) {this._trafficBarrierCollisions(car);this._sceneryCollisions(car);this._syncTrafficPose(car);}
     }
     _trafficObstructionSpeed(car,other,width,length){
       // A wreck or a wrong-way player physically blocking this lane is an emergency,
@@ -540,7 +748,7 @@
       car.vx += (fx * (drive - rolling) + rx * lateralForce) * dt;
       car.vz += (fz * (drive - rolling) + rz * lateralForce) * dt;
       car.yaw = shortest(car.yaw + car.crashYawRate * dt, TAU);
-      car.x += car.vx * dt; car.z += car.vz * dt; car.wheelSpin += forward * dt / .34;
+      this._moveSceneryBody(car,car.width,car.length,sceneryBodyHeight(car),dt);car.wheelSpin += forward * dt / .34;
       this._syncTrafficPose(car);
       // Rejoin lane following only when position, heading and lateral momentum agree.
       if (car.recovering && Math.abs(car.offset - car.laneOffset) < .06 && Math.abs(car.yawOffset) < .025 && Math.abs(car.deflectVelocity) < .12 && Math.abs(car.crashYawRate) < .08) {
@@ -588,7 +796,7 @@
       Object.assign(this.previousPlayer,p);this.renderPlayer=null;
       this.time += dt; if (this.mode === 'rush') this.remaining = Math.max(0, this.remaining - dt);
       this._recoveryCooldown = Math.max(0, this._recoveryCooldown - dt);
-      this._trafficStep(dt);this._stepRailDebris(dt);
+      this._trafficStep(dt);this._stepRailDebris(dt);this._stepSceneryDebris(dt);
       const throttle = clamp(Number(input.throttle) || 0, 0, 1), brake = clamp(Number(input.brake) || 0, 0, 1), steering = clamp(Number(input.steer) || 0, -1, 1), hand = input.handbrake ? 1 : 0;
       p.throttle = throttle; p.brake = brake;
       const fx = Math.sin(p.yaw), fz = Math.cos(p.yaw), rx = fz, rz = -fx;
@@ -603,14 +811,14 @@
       // Full keyboard input builds gently; releasing or countersteering straightens
       // the wheels sooner. High speed reduces actual angle, not just its display.
       const returning = Math.abs(targetSteer) < Math.abs(p.steer) || targetSteer * p.steer < 0;
-      const steerResponse = returning ? 9 : 3.2 + (c.steerRate - 8.6) * .15;
-      const steeringRate = .9 / (1 + Math.abs(forward) / 18);
+      const steerResponse = (returning ? 9 : 3.2 + (c.steerRate - 8.6) * .15)*(c.steeringMultiplier||1);
+      const steeringRate = .9*(c.steeringMultiplier||1) / (1 + Math.abs(forward) / 18);
       p.steer += clamp((targetSteer - p.steer) * (1 - Math.exp(-steerResponse * dt)), -steeringRate * dt, steeringRate * dt);
       let force = 0;
       if (throttle) force += forward < -.6 ? c.brake * throttle : forward < c.maxSpeed * (1 - engineDamage * .08) ? c.accel * engineFactor * throttle * (1 - .35 * Math.pow(Math.max(0, forward) / c.maxSpeed, 2)) * (offroad?.9:surface) * (p.shiftRemaining>0?.76:1) : 0;
       if (brake) force -= forward > .6 ? c.brake * brake : forward > -8 ? c.accel * .55 * brake : 0;
       if (hand && Math.abs(forward) > .05) force -= Math.sign(forward) * 5.8;
-      force -= forward * Math.abs(forward) * .0013 + Math.sign(forward) * (.19 + (offroad ? .55 : 0));
+      force -= forward * Math.abs(forward) * (c.dragCoefficient||.0013) + Math.sign(forward) * (.19 + (offroad ? .55 : 0));
       // Mild longitudinal gravity matters on mountain climbs without feeding visual suspension back into physics.
       const path=contactRoad.roadId==='main'?this.route:(this.route.connectors||[]).find(q=>q.id===contactRoad.roadId)||this.route,distanceOnPath=contactRoad.connectorS??p.s;
       const behind=path.at(distanceOnPath-2),ahead=path.at(distanceOnPath+2),grade=offroad&&this.route.surfaceHeight?(this.route.surfaceHeight(p.x+fx*2,p.z+fz*2,p.s)-this.route.surfaceHeight(p.x-fx*2,p.z-fz*2,p.s))/4:(ahead.y-behind.y)/4;
@@ -674,8 +882,10 @@
       const count=Math.max(1,Math.ceil(Math.min(dt,.1)*120)),slice=Math.min(dt,.1)/count,p=this.player;
       for(let i=0;i<count;i++){
         Object.assign(this.previousPlayer,p);this.renderPlayer=null;this.time+=slice;
-        this._trafficStep(slice);this._stepRailDebris(slice);p.vx*=Math.exp(-2.8*slice);p.vz*=Math.exp(-2.8*slice);
-        p.x+=p.vx*slice;p.z+=p.vz*slice;const road=this._road(p.x,p.z,p.s);p.s=road.s;p.offset=road.offset;this._supportPlayer(slice,road);
+        this._trafficStep(slice);this._stepRailDebris(slice);this._stepSceneryDebris(slice);p.vx*=Math.exp(-2.8*slice);p.vz*=Math.exp(-2.8*slice);
+        // The wreck continues moving behind the recovery menu, but retains the
+        // same swept solid/destructible contacts as the live car.
+        this._movePlayer(slice);const road=this._road(p.x,p.z,p.s);p.s=road.s;p.offset=road.offset;this._supportPlayer(slice,road);
         p.speed=Math.hypot(p.vx,p.vz);p.throttle=0;p.engineLoad=0;p.engineRPM=0;
       }
     }
@@ -685,7 +895,7 @@
       let gear=p.gear;if(p.speed<-.45)gear=-1;else if(Math.abs(p.speed)<.30&&!throttle)gear=0;else if(gear<=0)gear=1;
       p.shiftRemaining=Math.max(0,p.shiftRemaining-dt);
       if(gear>0&&p.shiftRemaining<=0){const rpm=roadRPM*ratios[gear-1],up=(c.shiftRPM||5700)*(throttle>.7?1:.84);if(rpm>up&&gear<ratios.length)gear++;else if(gear>1&&rpm<redline*.31&&roadRPM*ratios[gear-2]<redline*.82)gear--;}
-      if(gear!==p.gear&&p.gear>0&&gear>0){p.shiftRemaining=.16;p.lastShift=this.time;}
+      if(gear!==p.gear&&p.gear>0&&gear>0){p.shiftRemaining=c.shiftDuration??.16;p.lastShift=this.time;}
       p.gear=gear;p.shifting=p.shiftRemaining>0;
       const coupled=roadRPM*(gear<0?ratios[0]:ratios[Math.max(0,gear-1)]),launch=idle+throttle*(gear===0?1700:1050),spin=throttle*p.driftIntensity*550;
       const target=clamp(Math.max(launch,coupled+spin)*(p.shifting?.91:1),idle,redline);
@@ -722,14 +932,91 @@
       car.wrecked = car.condition <= 12;
       if(car.condition<=0&&!car.destroyed){car.destroyed=true;this._emit({type:'explosion',bodyId:car.id,x:car.x,y:car.y,z:car.z});}
     }
+    _sceneryClear(candidate,width,length,height){
+      for(const object of this.route.sceneryNear?.(candidate.x,candidate.z,Math.hypot(width,length)/2+1)||[]){if(this.brokenScenery.has(object.id))continue;for(const shape of object.colliders)if(verticallyTouches(candidate,height,shape)&&boxContact(candidate,shape,width,length,shape.width,shape.length))return false;}return true;
+    }
+    _sceneryDamage(body,width,length,impact,details,once=false,objectId=''){
+      const player=body===this.player;
+      if(!once){if(player)return this._collision('scenery:'+objectId,impact,impact<3.5,details);const previous=this._recordContact('traffic-scenery:'+body.id+':'+objectId,impact);if(previous!==null)this._damageTraffic(body,impact,impact<3.5,details,previous);return previous;}
+      // Fracture has its own exact-once object transition. Do not discard gentle
+      // contacts via the old .8m/s repeated-wall-contact gate.
+      let event;
+      if(player){this._lastRoadContact=this.time;this._oncomingProgress=0;body.oncoming=false;if(impact>2)this.multiplier=1;for(const encounter of this._encounters.values())encounter.dirty=true;
+        event=this.admin?.invincible?{impact,damage:0,severity:0,...details}:applyBodyDamage(body,width,length,impact,impact<3.5,details,0,this.time,0,this.damageMode==='cosmetic'?0:this.mode==='free'?.5:1);
+        this._emit({type:'collision',...event});
+      }else{event=applyBodyDamage(body,width,length,impact,impact<3.5,details,0,this.time);body.crashActive=true;body.recovering=false;body.disturbed=Math.max(body.disturbed||0,.6);body.wrecked=body.condition<=12;if(body.condition<=0&&!body.destroyed){body.destroyed=true;this._emit({type:'explosion',bodyId:body.id,x:body.x,y:body.y,z:body.z});}}
+      return event;
+    }
+    _sceneryContact(body,width,length,object,contact){
+      if(this.brokenScenery.has(object.id))return false;
+      const preVX=body.vx,preVZ=body.vz,speed=Math.hypot(preVX,preVZ),normalSpeed=Math.max(0,-preVX*contact.nx-preVZ*contact.nz);
+      if(object.breakable){
+        if(normalSpeed<=SCENERY_TUNING.contactEpsilon)return false;
+        // One bounded partial normal impulse breaks the material. It preserves
+        // tangential velocity, cannot reverse or add speed, and is never followed
+        // by a second wall impulse. Material supports actual scale and speed.
+        const fraction=clamp((.018+.028*object.size)*object.resistance*(1+Math.min(75,normalSpeed)*.007),.004,.38);
+        this.brokenScenery.add(object.id);this.sceneryRevision++;this.sceneryBreakCount++;
+        body.vx+=contact.nx*normalSpeed*fraction;body.vz+=contact.nz*normalSpeed*fraction;
+        const afterSpeed=Math.hypot(body.vx,body.vz),energy=Math.max(0,.5*body.mass*(speed*speed-afterSpeed*afterSpeed)),equivalentImpact=Math.sqrt(2*energy/body.mass),condition=body.condition;
+        const details={...contact,energy,impulse:body.mass*normalSpeed*fraction,surface:object.kind,objectId:object.id,normalSpeed,speed,tangentSpeed:Math.abs(preVX*-contact.nz+preVZ*contact.nx)};
+        this._sceneryDamage(body,width,length,equivalentImpact,details,true,object.id);
+        const event={type:'sceneryBreak',id:object.id,objectId:object.id,bodyId:body===this.player?'player':body.id,kind:object.kind,x:object.x,y:object.y,z:object.z,yaw:object.yaw,width:object.width,height:object.height,length:object.length,normalSpeed,speed,size:object.size,damage:Math.max(0,condition-body.condition),velocityLoss:speed-afterSpeed,nx:contact.nx,nz:contact.nz,preVX,preVZ,energy,revision:this.sceneryRevision};
+        this._spawnSceneryDebris(object,event);this._emit(event);
+      }else{
+        const response=resolveImpulse(body,null,contact,{friction:.22});this._sceneryDamage(body,width,length,response.impact,{...contact,...response,surface:object.kind},false,object.id);
+        body.x+=contact.nx*(contact.depth+SCENERY_TUNING.separation);body.z+=contact.nz*(contact.depth+SCENERY_TUNING.separation);
+      }
+      if(body===this.player)body.speed=body.vx*Math.sin(body.yaw)+body.vz*Math.cos(body.yaw);return true;
+    }
+    _sceneryCollisions(body=this.player,width=body===this.player?this.config.width:body.width,length=body===this.player?this.config.length:body.length,height=body===this.player?this.config.height:sceneryBodyHeight(body)){
+      for(const object of this.route.sceneryNear?.(body.x,body.z,Math.hypot(width,length)/2+1)||[]){if(this.brokenScenery.has(object.id))continue;for(const shape of object.colliders){if(!verticallyTouches(body,height,shape))continue;const contact=boxContact(body,shape,width,length,shape.width,shape.length);if(contact&&this._sceneryContact(body,width,length,object,contact)&&object.breakable)break;}}
+    }
+    _moveSceneryBody(body,width,length,height,dt){
+      let remaining=dt,iterations=0;
+      while(remaining>1e-10&&iterations++<SCENERY_TUNING.maxContacts){
+        const dx=body.vx*remaining,dz=body.vz*remaining;let first=null;
+        for(const object of this.route.sceneryNear?.(body.x+dx/2,body.z+dz/2,Math.hypot(width,length)/2+Math.hypot(dx,dz)/2+.01)||[]){
+          if(this.brokenScenery.has(object.id))continue;
+          for(const shape of object.colliders){if(!verticallyTouches(body,height,shape))continue;const hit=sweepBox(body,shape,width,length,dx,dz);if(!hit)continue;
+            const approaching=-body.vx*hit.nx-body.vz*hit.nz>SCENERY_TUNING.contactEpsilon;
+            if(object.breakable&&!approaching)continue;if(!object.breakable&&!approaching&&hit.depth<1e-7)continue;
+            if(!first||hit.t<first.contact.t-1e-9||Math.abs(hit.t-first.contact.t)<1e-9&&object.id<first.object.id)first={object,contact:hit};
+          }
+        }
+        if(!first){body.x+=dx;body.z+=dz;break;}
+        body.x+=dx*first.contact.t;body.z+=dz*first.contact.t;remaining*=1-first.contact.t;
+        this._sceneryContact(body,width,length,first.object,first.contact);
+      }
+      // If a pathological compound traps us, discard only this remaining step;
+      // never teleport through the next wall to escape a contact-iteration limit.
+    }
+    _spawnSceneryDebris(object,event){
+      let seed=2166136261;for(const char of object.id)seed=Math.imul(seed^char.charCodeAt(0),16777619)>>>0;
+      const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;},direction=Math.hypot(event.preVX,event.preVZ)||1,fallX=event.preVX/direction,fallZ=event.preVZ/direction;
+      const push=(kind,index,x,y,z,width,height,length)=>{const a=random()*TAU,launch=Math.min(5,event.normalSpeed*.09),piece={id:object.id+':'+index,objectId:object.id,kind,x,y,z,rx:0,ry:object.yaw,rz:0,width,height,length,vx:fallX*launch+Math.sin(a)*(.3+random()),vy:.4+Math.min(3,event.normalSpeed*.04)+random(),vz:fallZ*launch+Math.cos(a)*(.3+random()),wx:(random()-.5)*3,wy:(random()-.5)*3,wz:(random()-.5)*3,age:0,life:SCENERY_TUNING.debrisLife,settled:false,bounces:0,color:object.color};this.sceneryDebris.push(piece);return piece;};
+      if(object.kind==='tree'){
+        const tree=push('tree','tree',object.x,object.y,object.z,object.width,object.height,object.length);Object.assign(tree,{rx:0,ry:0,rz:0,vx:0,vy:0,vz:0,wx:0,wy:0,wz:0,fallX,fallZ,fallAngle:0,fallDuration:clamp(1.1+object.height*.035,1.2,2.1)});
+        for(let i=0;i<2;i++)push('branch',i,object.x,object.y+Math.min(object.height*.25,2),object.z,.09,.1,Math.min(1.5,object.height*.14));
+      }else{const count=object.kind==='rock'?6:object.kind==='bush'?6:5;for(let i=0;i<count;i++){const angle=i/count*TAU,x=object.x+Math.sin(angle)*object.width*.18,z=object.z+Math.cos(angle)*object.length*.18,kind=object.kind==='rock'?'rock':object.kind==='bush'?(i<4?'foliage':'branch'):(object.height>object.width*3?(i<2?'post':'panel'):'panel'),scale=.20+random()*.15;push(kind,i,x,object.y+object.height*(.25+random()*.4),z,Math.max(.04,object.width*scale),Math.max(.04,Math.min(object.height*.32,kind==='post'?2:1.4)),Math.max(.04,object.length*scale));}}
+      if(this.sceneryDebris.length>SCENERY_TUNING.debrisLimit)this.sceneryDebris.splice(0,this.sceneryDebris.length-SCENERY_TUNING.debrisLimit);
+    }
+    _stepSceneryDebris(dt){
+      for(const p of this.sceneryDebris){p.age+=dt;if(p.kind==='tree'){const t=clamp(p.age/p.fallDuration,0,1);p.fallAngle=1.48*(t*t*(3-2*t));p.settled=t===1;continue;}if(p.settled)continue;
+        p.vy-=9.81*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.z+=p.vz*dt;p.rx+=p.wx*dt;p.ry+=p.wy*dt;p.rz+=p.wz*dt;
+        const floor=(this.route.surfaceHeight?this.route.surfaceHeight(p.x,p.z):this.route.nearest(p.x,p.z).y)+Math.min(p.width,p.height,p.length)*.3;
+        if(p.y<floor){p.y=floor;p.vy=Math.abs(p.vy)*.20;p.vx*=.64;p.vz*=.64;p.wx*=.5;p.wy*=.5;p.wz*=.5;p.bounces++;if(Math.hypot(p.vx,p.vy,p.vz)<.35||p.bounces>12){p.settled=true;p.vx=p.vy=p.vz=p.wx=p.wy=p.wz=0;}}
+      }this.sceneryDebris=this.sceneryDebris.filter(p=>p.age<p.life);
+    }
     _movePlayer(dt){
       const p=this.player,steps=Math.max(1,Math.ceil(Math.hypot(p.vx,p.vz)*dt/RAIL_TUNING.ccdStep)),slice=dt/steps;
-      for(let i=0;i<steps;i++){p.x+=p.vx*slice;p.z+=p.vz*slice;this._barrierCollisions();}
+      for(let i=0;i<steps;i++){this._moveSceneryBody(p,this.config.width,this.config.length,this.config.height,slice);this._barrierCollisions();}
     }
     _supportPlayer(dt,road){
       const p=this.player,c=this.config;
       if(!this.route.surfaceHeight){p.y=road.y;return;}
-      const fx=Math.sin(p.yaw),fz=Math.cos(p.yaw),rx=fz,rz=-fx,half=c.wheelbase*.5,track=c.width*.39;
+      // Match the visible wheel pivots; their tire/rim envelopes stay within width.
+      const fx=Math.sin(p.yaw),fz=Math.cos(p.yaw),rx=fz,rz=-fx,half=c.wheelbase*.5,track=c.width*.435;
       const wheels=[];for(const front of[1,-1])for(const side of[-1,1]){const x=p.x+fx*half*front+rx*track*side,z=p.z+fz*half*front+rz*track*side;wheels.push({x,z,y:this.route.surfaceHeight(x,z,p.s)});}
       p.wheelContacts=wheels;
       const target=wheels.reduce((sum,w)=>sum+w.y,0)/4,pitch=-Math.atan2((wheels[0].y+wheels[1].y-wheels[2].y-wheels[3].y)/2,c.wheelbase),roll=Math.atan2((wheels[1].y+wheels[3].y-wheels[0].y-wheels[2].y)/2,track*2);
@@ -773,7 +1060,7 @@
         const response=resolveImpulse(p,null,contact,{friction:.2});this._collision('rail-'+rail.id,response.impact,response.impact<5&&tangentSpeed>response.impact*2,{...contact,...response,tangentSpeed,surface:rail.breakable?'guardrail':'tunnel'});p.x+=contact.nx*(contact.depth+.003);p.z+=contact.nz*(contact.depth+.003);
       }
     }
-    _obstacleCollisions(){const p=this.player,c=this.config;for(const obstacle of this.route.obstacles||[]){if((p.x-obstacle.x)**2+(p.z-obstacle.z)**2>64)continue;const contact=boxContact(p,obstacle,c.width,c.length,obstacle.width,obstacle.length);if(!contact)continue;const response=resolveImpulse(p,null,contact,{friction:.3});this._collision(obstacle.id,response.impact,false,{...contact,...response,surface:obstacle.kind});p.x+=contact.nx*(contact.depth+.003);p.z+=contact.nz*(contact.depth+.003);}}
+    _obstacleCollisions(){this._sceneryCollisions();const p=this.player,c=this.config;for(const obstacle of this.route.obstacles||[]){if(this.route.sceneryById?.has(obstacle.id))continue;const radius=(Math.hypot(c.width,c.length)+Math.hypot(obstacle.width,obstacle.length))/2;if((p.x-obstacle.x)**2+(p.z-obstacle.z)**2>radius*radius||!verticallyTouches(p,c.height,{y:obstacle.y||0,height:obstacle.height||3}))continue;const contact=boxContact(p,obstacle,c.width,c.length,obstacle.width,obstacle.length);if(!contact)continue;const response=resolveImpulse(p,null,contact,{friction:.3});this._collision(obstacle.id,response.impact,false,{...contact,...response,surface:obstacle.kind});p.x+=contact.nx*(contact.depth+.003);p.z+=contact.nz*(contact.depth+.003);}}
     _trafficCollisions() {
       const p = this.player, c = this.config;
       for (const car of this.traffic) {
@@ -792,7 +1079,7 @@
         car.x -= contact.nx * (contact.depth + .008) * otherShare; car.z -= contact.nz * (contact.depth + .008) * otherShare;
         this._syncTrafficPose(car);
         if (response.impact > 1) car.disturbed = Math.max(car.disturbed || 0, Math.min(4, response.impact * .1));
-        if (car.crashActive) this._trafficBarrierCollisions(car);
+        if (car.crashActive) {this._trafficBarrierCollisions(car);this._sceneryCollisions(car);this._syncTrafficPose(car);}
       }
     }
     _scoreOncoming(road,previousRoad,oldX,oldZ,drivenStep){
@@ -846,12 +1133,12 @@
       let s = this.mode === 'trial' ? (this.checkpointIndex ? this.checkpoints[this.checkpointIndex - 1] + 8 : 0) : p.s;
       const safeLanes=routeLanes(this.route).filter(lane=>lane.direction===1).map(lane=>lane.offset);let laneIndex=0,offset=safeLanes[0],clear=false;
       // A nearby empty forward-lane position, never into another road user.
-      if (this.mode !== 'trial') for (let tries = 0; tries < Math.ceil(this.route.length/12)*safeLanes.length; tries++) {
+      for (let tries = 0; tries < Math.ceil(this.route.length/12)*safeLanes.length; tries++) {
         const candidate=this.route.at(s),x=candidate.x+candidate.nx*offset,z=candidate.z+candidate.nz*offset;
-        if (!this.traffic.some(t => Math.abs(t.y-candidate.y)<2.5 && (Math.abs(shortest(t.s - s, this.route.length)) < 32 && Math.abs(t.offset - offset) < 2.5 || Math.hypot(t.x-x,t.z-z)<(t.length+this.config.length)/2+2))) {clear=true;break;}
+        if (this._sceneryClear({x,y:candidate.y,z,yaw:candidate.yaw},this.config.width,this.config.length,this.config.height)&&!this.traffic.some(t => Math.abs(t.y-candidate.y)<2.5 && (Math.abs(shortest(t.s - s, this.route.length)) < 32 && Math.abs(t.offset - offset) < 2.5 || Math.hypot(t.x-x,t.z-z)<(t.length+this.config.length)/2+2))) {clear=true;break;}
         laneIndex++;if(laneIndex>=safeLanes.length){laneIndex=0;s=wrap(s-12,this.route.length);}offset=safeLanes[laneIndex];
       }
-      if(this.mode!=='trial'&&!clear)return false;
+      if(!clear)return false;
       const road = this.route.at(s);
       Object.assign(p, { x: road.x + road.nx * offset, y: road.y, z: road.z + road.nz * offset, yaw: road.yaw, s: road.s, offset, vx: 0, vz: 0, speed: 0, steer: 0, slip: 0, yawRate: 0, crashYawRate: 0, suspensionKick: { roll: 0, pitch: 0, heave: 0 }, driftIntensity: 0, offRoad: false, roll: 0, pitch: 0, gear: 0, condition });
       Object.assign(p,{roadId:'main',engineRPM:this.config.idleRPM||850,rpm:(this.config.idleRPM||850)/(this.config.redlineRPM||6500),shiftRemaining:0,shifting:false});
@@ -894,7 +1181,7 @@
     if (!result || typeof result.id !== 'string' || !/^[a-zA-Z0-9_-]{1,100}$/.test(result.id) || !['rush', 'trial'].includes(result.mode) || save.settledRuns.includes(result.id)) return none;
     if (!finite(result.time) || result.time < 0 || !finite(result.score) || result.score < 0 || !finite(result.distance) || result.distance < 0 || !Number.isInteger(result.overtakes) || result.overtakes < 0) return none;
     if(scoped&&!validRecordKey(key))return none;
-    if (result.mode === 'trial' && (!result.completed || !/^(compact|vektor|apex)-e[0-3]-t[0-3]-b[0-3]$/.test(configKey))) return none;
+    if (result.mode === 'trial' && (!result.completed || !validConfigKey(configKey))) return none;
     let credits = 0, record = false;
     if (result.mode === 'rush') {
       credits = Math.min(2400, Math.floor((result.completed ? 220 : 50) + result.score * .08 + Math.min(result.distance, 6000) * .025));
@@ -907,7 +1194,19 @@
     save.credits = Math.min(1e9, save.credits + credits); save.settledRuns.push(result.id);
     return { awarded: true, credits, record,...values() };
   }
-  return { RAIL_TUNING,CARS, PAINTS,MAPS,RULES_VERSION,BREAKAWAY_PARTS,recordKey,bestRecord, DEFAULT_BINDINGS, MEDAL_THRESHOLDS, UPGRADE_PRICES, createDefaultSave, validateSave, purchaseCar, buyUpgrade, getConfig, Route, Simulation, settleResult, settleFreeDriveCredits, clamp, wrap, shortest, steeringLimit, Collision: { boxContact, resolveImpulse, corners, inertia } };
+  const performanceCache=new Map();
+  function getPerformanceStats(config){
+    const key=[config.configKey,config.accel,config.maxSpeed,config.brake,config.grip,config.steerRate,config.steeringMultiplier,config.dragCoefficient,config.shiftDuration].join(':');
+    if(performanceCache.has(key))return{...performanceCache.get(key)};
+    const straight={length:1e6,width:20000,halfWidth:10000,barrierOffset:10002,mapId:'coastline',at(s){return{s,x:0,y:0,z:s,yaw:0,tx:0,tz:1,nx:1,nz:0};},nearest(x,z){return{...this.at(z),offset:x,distance:Math.abs(x)};}};
+    const run=new Simulation(straight,config,{mode:'trial'});let zeroTo100=null;
+    for(let i=0;i<2400;i++){run.step(1/120,{throttle:1});if(run.player.speed>=100/3.6){zeroTo100=run.time;break;}}
+    const stop=new Simulation(straight,config,{mode:'trial'});Object.assign(stop.player,{vx:0,vz:100/3.6,speed:100/3.6});const start=stop.player.z;
+    for(let i=0;i<1800&&stop.player.speed>.6;i++)stop.step(1/120,{brake:1});
+    const result={topSpeed:Math.min(config.maxSpeed,Math.sqrt(Math.max(0,config.accel-.19)/((config.dragCoefficient||.0013)+.35*config.accel/config.maxSpeed**2))),acceleration:config.accel-.19,traction:config.grip,steering:(3.2+(config.steerRate-8.6)*.15)*(config.steeringMultiplier||1),braking:config.brake,zeroTo100,stoppingDistance:stop.player.z-start};
+    if(performanceCache.size>=256)performanceCache.delete(performanceCache.keys().next().value);performanceCache.set(key,result);return{...result};
+  }
+  return { RAIL_TUNING,SCENERY_TUNING,SCENERY_KINDS,CARS, PAINTS,PARTS,PART_CATEGORIES,PAINT_LIMIT,MAPS,RULES_VERSION,BREAKAWAY_PARTS,recordKey,bestRecord,validRecordKey,validConfigKey, DEFAULT_BINDINGS, MEDAL_THRESHOLDS, UPGRADE_PRICES, createDefaultSave, validateSave, purchaseCar, buyUpgrade,purchasePart,equipPart,setPaintColor,addPaintStroke,undoPaint,clearPaint,getPerformanceStats, getConfig, Route, Simulation, settleResult, settleFreeDriveCredits, clamp, wrap, shortest, steeringLimit, Collision: { boxContact,sweepBox, resolveImpulse, corners, inertia } };
 });
 
 

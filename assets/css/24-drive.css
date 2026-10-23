@@ -112,6 +112,7 @@
 #driveRoot .drive-fps{position:absolute;bottom:5px;right:12px;font:10px monospace;color:#e6f1ce;pointer-events:none}
 #driveRoot .drive-pause-panel,#driveRoot .drive-results-panel,#driveRoot .drive-tip-panel{display:flex;align-items:center;justify-content:center}
 #driveRoot .drive-pause-panel .drive-panel-card{width:360px}
+#driveRoot .drive-pause-panel .drive-panel-card{max-height:100%;overflow:auto;scrollbar-width:thin}
 #driveRoot .drive-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
 #driveRoot .drive-stat-grid small{display:block;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-size:10px;margin-bottom:4px}
 #driveRoot .drive-stat-grid strong{font-size:24px;font-weight:550}
@@ -169,6 +170,78 @@ body:has(#driveRoot.drive-wreck:not([hidden])) #platdoStandaloneControls{top:65p
 #driveRoot .drive-admin-panel .drive-field{gap:16px}
 @media(max-width:600px){#driveRoot .drive-wreck-panel{top:auto;bottom:0;left:0;right:0;width:100%;height:auto;max-height:52%;padding:12px;overflow:auto}#driveRoot .drive-wreck-panel .drive-panel-card{padding:16px}#driveRoot .drive-wreck-panel .drive-menu-buttons{display:grid;grid-template-columns:1fr 1fr}#driveRoot .drive-wreck-panel .drive-stat-grid{grid-template-columns:1fr 1fr;margin:10px 0}#driveRoot .drive-wreck-panel h2{font-size:30px}#driveRoot .drive-admin-panel .drive-field{align-items:flex-start;flex-direction:column}#driveRoot .drive-admin-panel .drive-row{width:100%}#driveRoot .drive-admin-panel input[type=range]{min-width:90px;max-width:65%}}
 @media(max-height:500px) and (orientation:landscape){#driveRoot .drive-wreck-panel{width:290px;padding:8px;align-items:flex-start;overflow:auto}#driveRoot .drive-wreck-panel .drive-panel-card{padding:14px}#driveRoot .drive-wreck-panel .drive-menu-buttons{display:grid;grid-template-columns:1fr 1fr}#driveRoot .drive-wreck-panel .drive-stat-grid{grid-template-columns:1fr 1fr;margin:9px 0}#driveRoot .drive-wreck-panel h2{font-size:30px}}
+/* The workshop gives the vehicle its own stage; its statistics stay directly below. */
+#driveRoot.drive-in-garage{background:#0c191d}
+#driveRoot.drive-in-garage>.drive-canvas,#driveRoot.drive-in-garage>.drive-vignette,#driveRoot.drive-in-garage>.drive-bottom{visibility:hidden}
+#driveRoot.drive-in-garage .drive-top{top:18px;left:28px;right:28px}
+#driveRoot .drive-garage-panel{inset:56px 28px 20px;padding-right:3px}
+#driveRoot .drive-garage-header{display:flex;align-items:center;gap:18px;margin-bottom:12px;font-size:12px}
+#driveRoot .drive-garage-header .drive-back{margin:0!important;white-space:nowrap}
+#driveRoot .drive-garage-header .drive-credits{margin-left:auto;white-space:nowrap}
+#driveRoot .drive-garage-saved{color:#9aafab;font-size:11px}
+#driveRoot .drive-car-nav{max-width:580px;margin-bottom:14px;align-items:center;gap:10px}
+#driveRoot .drive-car-nav>button{font-size:27px;padding:2px 16px;min-height:48px}
+#driveRoot .drive-car-select{display:flex;align-items:center;gap:15px;flex:1;min-width:0}
+#driveRoot .drive-car-select>span{color:var(--accent);font-size:10px;letter-spacing:.12em;white-space:nowrap}
+#driveRoot .drive-car-select select{flex:1;max-width:none;min-width:0;width:100%;font-weight:650;background:#172c31}
+#driveRoot .drive-garage-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr);gap:26px;max-width:1600px;margin:auto}
+#driveRoot .drive-garage-view{min-width:0}
+#driveRoot .drive-preview-stage{position:relative;height:clamp(270px,46vh,520px);border:1px solid #91b2a829;background:#14262c;overflow:hidden}
+#driveRoot #driveGarageCanvasSlot,#driveRoot .drive-garage-canvas{width:100%;height:100%;display:block}
+#driveRoot .drive-garage-canvas{touch-action:none;cursor:grab}
+#driveRoot .drive-garage-canvas:active{cursor:grabbing}
+#driveRoot .drive-garage-canvas[data-painting=true]{cursor:crosshair}
+#driveRoot .drive-preview-label{position:absolute;top:18px;left:20px;z-index:1;pointer-events:none;text-shadow:0 2px 15px #071719}
+#driveRoot .drive-preview-label>span{font-size:10px;letter-spacing:.17em;color:var(--accent);font-weight:750}
+#driveRoot .drive-preview-label h2{font-size:clamp(26px,3vw,44px);margin:5px 0;line-height:1}
+#driveRoot .drive-preview-hint{position:absolute;left:14px;bottom:13px;z-index:1;font-size:10px;letter-spacing:.06em;pointer-events:none;background:#0b1b20b8;padding:6px 8px}
+#driveRoot .drive-garage-panel .drive-inspection{position:absolute;top:auto;bottom:45px;right:12px;margin:0;gap:4px;z-index:2;display:flex;flex-wrap:nowrap}
+#driveRoot .drive-garage-panel .drive-inspection button{padding:7px 9px;min-width:35px;min-height:36px;text-align:center;font-size:17px;background:#0b1e25e8}
+#driveRoot .drive-stat-caption{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-top:14px;color:var(--accent)}
+#driveRoot .drive-stat-caption>span{font-size:10px;color:#9eafad;text-align:right}
+#driveRoot .drive-garage-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:10px 0 16px;padding:14px 0;border-top:1px solid #92afa436;border-bottom:1px solid #92afa436}
+#driveRoot .drive-garage-stats small{font-size:10px;min-height:26px;line-height:1.25;color:#aec1bb}
+#driveRoot .drive-garage-stats strong{font-size:clamp(13px,1.5vw,18px);font-variant-numeric:tabular-nums;white-space:nowrap}
+#driveRoot .drive-garage-description{font-size:13px;max-width:650px;line-height:1.5;margin:8px 0 14px}
+#driveRoot .drive-select-car{width:100%;min-height:44px;text-align:center}
+#driveRoot .drive-select-car:disabled{opacity:.8;background:#293b32;color:#b7c88a;border-color:#678348}
+#driveRoot .drive-garage-customize{min-width:0;background:#14272db8;padding:18px 20px;align-self:start;border-top:2px solid #9aab6b}
+#driveRoot .drive-workshop-tabs{display:flex;border-bottom:1px solid #8da9a333;padding-bottom:12px;margin-bottom:16px;gap:6px}
+#driveRoot .drive-workshop-tabs>button{flex:1;text-align:center;padding:11px 8px;font-size:12px}
+#driveRoot .drive-part-categories{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:18px}
+#driveRoot .drive-part-categories>button{padding:8px 10px;font-size:11px;border-color:#8da9a333;min-height:35px}
+#driveRoot .drive-part-categories>button.active,#driveRoot .drive-paint-mode>button.active,#driveRoot .drive-workshop-tabs>button.active{color:#e4f1aa;border-color:#d9ed83;background:#2d4036}
+#driveRoot .drive-equipped-line{display:flex;flex-direction:column;gap:3px;border-left:2px solid #b4c77d;padding:1px 0 2px 10px;margin-bottom:20px}
+#driveRoot .drive-equipped-line span{color:#95aaa4;font-size:9px;letter-spacing:.15em}
+#driveRoot .drive-equipped-line strong{font-size:14px;font-weight:600}
+#driveRoot .drive-option-label{display:block;color:#a8bbb6;font-size:11px;margin:8px 0}
+#driveRoot #drivePartOption{width:100%;max-width:none;font-size:13px;padding:11px 10px}
+#driveRoot .drive-part-detail{padding:20px 0 5px}
+#driveRoot .drive-part-detail h3{font-size:23px;margin-bottom:8px}
+#driveRoot .drive-part-detail p{font-size:12px;line-height:1.55;margin-bottom:12px}
+#driveRoot .drive-part-detail>button{width:100%;text-align:center;min-height:43px}
+#driveRoot .drive-part-detail .drive-factory{font-size:11px;padding:9px}
+#driveRoot .drive-part-effects{color:#d4e799;font-variant-numeric:tabular-nums}
+#driveRoot .drive-part-note,#driveRoot .drive-garage-footnote{font-size:10px;line-height:1.5;color:#8ea5a0;margin:10px 0 0}
+#driveRoot .drive-garage-footnote{border-top:1px solid #8da9a333;padding-top:13px;margin-top:16px}
+#driveRoot .drive-paint-mode{display:flex;gap:6px}
+#driveRoot .drive-paint-mode>button{flex:1;padding:10px 7px;text-align:center;font-size:12px}
+#driveRoot .drive-paint-help{font-size:12px;line-height:1.5;margin:15px 0}
+#driveRoot .drive-paint-field{display:flex;align-items:center;gap:12px;min-height:48px;font-size:12px}
+#driveRoot .drive-paint-field input[type=color],#driveRoot #driveBaseColor{width:42px;height:34px;background:transparent;border:1px solid #9ab4ab55;padding:3px;cursor:pointer}
+#driveRoot .drive-paint-field input[type=color]{margin-left:auto}
+#driveRoot .drive-paint-field input[type=range]{flex:1;width:100px;min-width:55px;margin-left:auto}
+#driveRoot .drive-paint-field output{width:24px;text-align:right;color:var(--accent);font-variant-numeric:tabular-nums}
+#driveRoot .drive-paint-actions{margin:14px 0 20px}
+#driveRoot .drive-paint-actions>button{flex:1;padding:10px 8px;font-size:12px;text-align:center}
+#driveRoot .drive-body-color{border-top:1px solid #8da9a333;padding-top:14px}
+#driveRoot .drive-body-color>span{font-size:11px;color:#a8bbb6}
+#driveRoot .drive-paints{flex-wrap:wrap;align-items:center;margin:12px 0 17px;gap:12px}
+#driveRoot .drive-paints button{width:27px;height:27px}
+@media(max-height:520px) and (orientation:landscape){#driveRoot .drive-preview-stage{max-height:170px}#driveRoot .drive-garage-panel .drive-inspection{bottom:8px!important}#driveRoot .drive-preview-hint{display:none}}
+@media(max-width:1050px){#driveRoot .drive-garage-layout{grid-template-columns:minmax(0,1.25fr) minmax(280px,1fr);gap:18px}#driveRoot .drive-garage-customize{padding:16px}#driveRoot .drive-garage-stats{gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}#driveRoot .drive-garage-stats small{min-height:17px}#driveRoot .drive-garage-stats strong{font-size:16px}#driveRoot .drive-garage-stats>div:nth-child(n+4){margin-top:6px}}
+@media(max-width:650px) and (orientation:portrait){#driveRoot.drive-in-garage .drive-top{top:14px;left:16px}#driveRoot .drive-garage-panel{inset:48px 14px 15px}#driveRoot .drive-garage-header{gap:5px;margin-bottom:6px}#driveRoot .drive-garage-saved{display:none}#driveRoot .drive-car-nav{gap:6px;margin-bottom:10px}#driveRoot .drive-car-select{display:block}#driveRoot .drive-car-select>span{display:block;font-size:9px;margin-bottom:3px}#driveRoot .drive-car-select select{font-size:12px;padding:8px}#driveRoot .drive-car-nav>button{align-self:end;min-height:37px;padding:0 12px}#driveRoot .drive-garage-layout{display:flex;flex-direction:column;gap:18px}#driveRoot .drive-preview-stage{height:270px}#driveRoot .drive-preview-label{top:12px;left:13px}#driveRoot .drive-preview-label h2{font-size:28px}#driveRoot .drive-garage-panel .drive-inspection{top:auto;bottom:40px;right:9px}#driveRoot .drive-preview-hint{left:8px;bottom:9px;font-size:9px}#driveRoot .drive-garage-stats{margin:8px 0 10px;padding:10px 0;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}#driveRoot .drive-garage-stats strong{font-size:16px}#driveRoot .drive-stat-caption{font-size:10px;margin-top:10px}#driveRoot .drive-stat-caption>span{max-width:47%;font-size:9px}#driveRoot .drive-garage-customize{width:100%;padding:15px}#driveRoot .drive-garage-description{font-size:12px;margin:9px 0}#driveRoot .drive-part-categories{gap:4px}#driveRoot .drive-part-categories>button{flex:1;padding:8px 6px}#driveRoot.drive-in-garage .drive-toast{bottom:20px;max-width:90%;width:max-content;font-size:12px}}
+@media(max-height:520px) and (orientation:landscape){#driveRoot.drive-in-garage .drive-top{display:none}#driveRoot .drive-garage-panel{inset:6px 14px 8px}#driveRoot .drive-garage-header{margin:0 0 4px}#driveRoot .drive-garage-header .drive-back{padding:4px 0!important}#driveRoot .drive-garage-saved{font-size:9px}#driveRoot .drive-car-nav{margin-bottom:8px;max-width:480px}#driveRoot .drive-car-nav>button{font-size:24px;min-height:33px;padding:0 13px}#driveRoot .drive-car-select select{padding:6px 10px;font-size:12px}#driveRoot .drive-car-select>span{font-size:9px}#driveRoot .drive-garage-layout{grid-template-columns:minmax(0,1fr) minmax(265px,.9fr);gap:15px}#driveRoot .drive-preview-stage{height:230px}#driveRoot .drive-preview-label{top:10px;left:12px}#driveRoot .drive-preview-label h2{font-size:25px}#driveRoot .drive-preview-label>span{font-size:8px}#driveRoot .drive-garage-panel .drive-inspection{bottom:39px;right:9px}#driveRoot .drive-garage-panel .drive-inspection button{min-height:32px;min-width:32px;padding:5px 8px}#driveRoot .drive-preview-hint{font-size:9px;left:8px;bottom:8px}#driveRoot .drive-garage-customize{padding:12px}#driveRoot .drive-workshop-tabs{margin-bottom:12px;padding-bottom:8px}#driveRoot .drive-workshop-tabs>button{padding:8px 6px;font-size:11px}#driveRoot .drive-garage-stats{padding:9px 0;margin:8px 0}#driveRoot .drive-stat-caption{font-size:9px}#driveRoot .drive-stat-caption>span{font-size:8px}#driveRoot .drive-garage-stats strong{font-size:14px}#driveRoot .drive-garage-stats small{font-size:9px}#driveRoot .drive-garage-description{font-size:11px}#driveRoot .drive-part-categories{gap:4px;margin-bottom:12px}#driveRoot .drive-part-categories>button{padding:6px;font-size:10px;min-height:31px}}
 
 #platdoTouchControls[hidden],#platdoTouchControls [hidden],#platdoStandaloneControls[hidden]{display:none!important}
 html[data-control-mode="pc"] #platdoTouchControls,html[data-control-mode="pc"] .jump-touch-controls,html[data-control-mode="pc"] .sw-touch,html[data-control-mode="pc"] [data-reset-control]{display:none!important}
