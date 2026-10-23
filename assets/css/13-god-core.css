@@ -1,0 +1,78 @@
+
+
+/* GOD CORE: independent identity; all game styling stays inside its active root. */
+.god-core-only{display:none}
+#fieldGame.god-core-game{--gc-ink:#0d0c0e;--gc-ivory:#eee9dc;--gc-muted:#a19b93;--gc-red:#dc2c36;font-family:Outfit,Arial,sans-serif!important;color:var(--gc-ivory)!important;background:var(--gc-ink)!important}
+#fieldGame.god-core-game #fieldMenu{color:var(--gc-ivory);background:linear-gradient(100deg,rgba(13,12,14,.97),rgba(13,12,14,.91) 58%,rgba(22,11,13,.92)),var(--god-core-background-image,none);background-position:center;background-size:cover;isolation:isolate}
+#fieldGame.god-core-game #fieldMenu:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:linear-gradient(90deg,transparent 69.9%,#eee9dc07 70%,transparent 70.1%),linear-gradient(0deg,transparent 49.9%,#eee9dc04 50%,transparent 50.1%)}
+#fieldGame.god-core-game #fieldMenu:after{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--gc-red) 0 28%,#eee9dc1c 28% 100%);pointer-events:none}
+#fieldGame.god-core-game .code-home-layout{padding:clamp(24px,3.8vw,58px) clamp(24px,4.4vw,68px) 32px;min-height:100%;height:auto;position:relative}
+#fieldGame.god-core-game .code-home-header{flex:none;align-items:center;min-height:30px;gap:20px}
+#fieldGame.god-core-game .code-home-brand{display:flex;align-items:center;gap:13px;font:900 18px/1 Outfit,Arial,sans-serif;letter-spacing:4px;text-transform:lowercase}
+#fieldGame.god-core-game .code-home-brand svg{width:24px;height:28px;color:var(--gc-red)}
+#fieldGame.god-core-game .code-home-header>.code-home-tag{padding:0;border:0;border-radius:0;color:var(--gc-muted);font:10px/1.5 Consolas,monospace;letter-spacing:2px;display:block}
+#fieldGame.god-core-game .code-home-hero{flex:1;display:grid;grid-template-columns:minmax(0,1fr) clamp(250px,23vw,340px);column-gap:clamp(36px,7vw,112px);align-content:center;align-items:start;width:100%;max-width:none;margin:0;padding:clamp(36px,5.5vh,72px) 0 42px}
+#fieldGame.god-core-game .code-home-eyebrow{grid-column:1;margin:0 0 21px;color:var(--gc-muted);font:10px/1.5 Consolas,monospace;letter-spacing:3px;font-weight:400}
+#fieldGame.god-core-game .code-home-eyebrow:before{content:"";display:inline-block;width:24px;height:2px;vertical-align:middle;margin-right:12px;background:var(--gc-red)}
+#fieldGame.god-core-game .code-home-title{grid-column:1;font-size:inherit;line-height:1;letter-spacing:0;margin:0;max-width:780px;position:relative}
+.god-core-wordmark{width:100%;height:auto;display:block;overflow:visible;color:inherit}
+#fieldGame.god-core-game .code-home-description{grid-column:1;margin:27px 0 0;padding-left:2px;color:#c7c0b5;font:11px/1.5 Consolas,monospace;letter-spacing:4px}
+#fieldGame.god-core-game .code-home-actions{grid-column:2;grid-row:1/5;align-self:center;display:flex;flex-direction:column;gap:0;max-width:none;padding-top:7px;counter-reset:gc-menu}
+#fieldGame.god-core-game .code-home-actions button{position:relative;border-radius:0;font-family:Outfit,Arial,sans-serif;transition:background .18s,color .18s,transform .18s;text-transform:uppercase;letter-spacing:1px}
+#fieldGame.god-core-game .code-home-actions :is(.code-home-play,.code-home-secondary){min-height:78px;border:0;border-top:1px solid #eee9dc30;background:none;color:var(--gc-ivory);padding:20px 12px 20px 48px;font-size:clamp(23px,2.1vw,31px);font-weight:900;line-height:1;display:flex;align-items:center;justify-content:space-between}
+#fieldGame.god-core-game .code-home-actions :is(.code-home-play,.code-home-secondary):before{counter-increment:gc-menu;content:"0" counter(gc-menu);position:absolute;left:9px;top:50%;transform:translateY(-50%);font:10px/1 Consolas,monospace;letter-spacing:0;color:#a19b93}
+#fieldGame.god-core-game .code-home-actions :is(.code-home-play,.code-home-secondary)>span{font-family:Arial,sans-serif;font-weight:400;font-size:24px;color:var(--gc-muted)}
+#fieldGame.god-core-game .code-home-actions .code-home-play{background:var(--gc-red);border-top-color:var(--gc-red);color:#fff2e9;margin-bottom:15px;min-height:88px;box-shadow:5px 5px 0 #dc2c3624}
+#fieldGame.god-core-game .code-home-actions .code-home-play:before,#fieldGame.god-core-game .code-home-actions .code-home-play>span{color:#ffddd3}
+#fieldGame.god-core-game .code-home-actions .code-home-play:hover{background:#f33e45;transform:translateX(4px)}
+#fieldGame.god-core-game .code-home-actions .code-home-secondary:hover{background:#eee9dc0b;color:white;transform:translateX(4px)}
+#fieldGame.god-core-game #fieldBack{margin-top:27px;min-height:44px;padding:12px 8px;color:var(--gc-muted);font:11px/1.5 Consolas,monospace;letter-spacing:1px;text-transform:none}
+#fieldGame.god-core-game #fieldBack:hover{color:var(--gc-ivory)}
+#fieldGame.god-core-game #fieldLockerBtn,#fieldGame.god-core-game #fieldModeChoices,#fieldGame.god-core-game .code-home-footer>div:has(#fieldModeChoices),#fieldGame.god-core-game #fieldMenu [data-field-music]{display:none!important}
+#fieldGame.god-core-game .code-home-footer{position:relative;flex:none;gap:22px;border-top:1px solid #eee9dc2a;padding-top:21px;color:var(--gc-muted);letter-spacing:1px}
+#fieldGame.god-core-game .code-home-footer>div:first-child{min-width:0!important}
+#fieldGame.god-core-game #fieldMapCaption{font:10px/1.6 Consolas,monospace;letter-spacing:1px;margin-bottom:12px!important;color:#b9b1a6}
+#fieldGame.god-core-game #fieldMapChoices{gap:10px!important}
+#fieldGame.god-core-game #fieldMapChoices button{min-height:38px;border:1px solid #eee9dc32!important;border-radius:0!important;background:#eee9dc05!important;color:#b9b1a6!important;font:11px/1.3 Consolas,monospace!important;letter-spacing:1px!important;padding:11px 18px!important;text-transform:uppercase;transition:color .15s,background .15s}
+#fieldGame.god-core-game #fieldMapChoices button[aria-pressed="true"]{background:var(--gc-ivory)!important;color:var(--gc-ink)!important;border-color:var(--gc-ivory)!important}
+#fieldGame.god-core-game #fieldMapChoices button:hover{border-color:var(--gc-red)!important}
+#fieldGame.god-core-game .god-core-footer-mark{display:flex;align-items:center;gap:13px;align-self:center;font:9px/1.65 Consolas,monospace;letter-spacing:2px;color:#928b82;text-align:right;text-transform:uppercase;white-space:nowrap}
+#fieldGame.god-core-game .god-core-footer-mark svg{width:26px;height:36px;color:var(--gc-red)}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel){background:var(--gc-ink)!important;color:var(--gc-ivory)!important;border-top:4px solid var(--gc-red)}
+#fieldGame.god-core-game #fieldSettings>div{max-width:900px!important;padding:12px 0 40px}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel,#fieldPausePanel) :is(h2,h3){text-transform:uppercase;letter-spacing:-1px;font-weight:900!important;font-family:Outfit,Arial,sans-serif}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel) h2{font-size:clamp(32px,4vw,52px)!important;line-height:1.15;margin-top:28px!important}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel) :is(p,label){line-height:1.6}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel) p{color:#b9b1a6!important}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel,#fieldPausePanel) button{border-radius:0!important;border-color:#eee9dc3a!important;box-shadow:none}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel) :is(button,select){min-height:40px}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel) button:hover{background:#eee9dc14!important}
+#fieldGame.god-core-game #fieldSettings [role="tablist"]{gap:0!important;border-bottom:1px solid #eee9dc35;padding:0 0 12px}
+#fieldGame.god-core-game #fieldSettings [role="tab"]{border:0!important;border-bottom:2px solid transparent!important;padding:14px 18px!important;font-size:13px}
+#fieldGame.god-core-game #fieldSettings [role="tab"][aria-selected="true"]{background:none!important;color:var(--gc-ivory)!important;border-bottom-color:var(--gc-red)!important}
+#fieldGame.god-core-game #fieldSettings [role="tab"][aria-selected="false"]{color:var(--gc-muted)!important;background:none!important}
+#fieldGame.god-core-game :is(#fieldSettings,#fieldRunsPanel) select{background:#201b1d!important;color:var(--gc-ivory)!important;border:1px solid #eee9dc3a!important;border-radius:0!important}
+#fieldGame.god-core-game #fieldSettings input{accent-color:var(--gc-red)}
+#fieldGame.god-core-game #fieldBindRows>div{border-bottom-color:#eee9dc22!important}
+#fieldGame.god-core-game #fieldBindRows>div>span{border-radius:0!important;border-color:#eee9dc3a!important;background:#eee9dc05}
+#fieldGame.god-core-game #fieldPausePanel{background:#0d0c0eeb!important;backdrop-filter:blur(7px)!important}
+#fieldGame.god-core-game #fieldPausePanel>div{width:min(360px,calc(100% - 48px))!important}
+#fieldGame.god-core-game #fieldPausePanel h2{font-size:58px!important;margin-bottom:12px}
+#fieldGame.god-core-game #fieldResumeBtn{background:var(--gc-red)!important;color:var(--gc-ivory)!important;border:0}
+#fieldGame.god-core-game #fieldPausePanel .code-home-secondary{border-color:#eee9dc33!important;background:none!important;color:var(--gc-ivory)!important}
+#fieldGame.god-core-game button:focus-visible{outline:2px solid var(--gc-ivory)!important;outline-offset:5px!important}
+#openGodCoreBtn.hub-tile{overflow:hidden;background:#110d10!important;color:#eee9dc;padding:0!important;border-radius:20px;isolation:isolate;font-family:Outfit,Arial,sans-serif}
+#openGodCoreBtn:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(125deg,#170e12,#0c0b0e 65%)}
+#openGodCoreBtn:after{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:#dc2c36}
+.god-core-tile-content{width:100%;height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:10% 10% 9%;text-align:left}
+.god-core-tile-kicker{font:900 clamp(8px,.85vw,13px)/1 Outfit,Arial,sans-serif;letter-spacing:.25em;display:flex;align-items:center;gap:8px}
+.god-core-tile-kicker:before{content:"";width:14px;height:2px;background:#dc2c36}
+.god-core-tile-content .god-core-wordmark{width:100%;margin:12% 0 10%;filter:drop-shadow(3px 4px 0 #9c202730)}
+.god-core-tile-footer{width:100%;padding-top:9%;border-top:1px solid #eee9dc33;display:flex;align-items:center;justify-content:space-between;font:8px/1.2 Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:#aca398}
+.god-core-tile-footer b{font:20px/1 Arial,sans-serif;font-weight:400;color:#dc2c36}
+@media(min-width:1600px){#fieldGame.god-core-game .code-home-hero{column-gap:10vw}#fieldGame.god-core-game .code-home-title{max-width:920px}}
+@media(max-width:850px){#fieldGame.god-core-game .code-home-hero{column-gap:30px;grid-template-columns:minmax(0,1fr) 225px}#fieldGame.god-core-game .code-home-description{font-size:9px;letter-spacing:2px}#fieldGame.god-core-game .code-home-eyebrow{font-size:9px;letter-spacing:2px}#fieldGame.god-core-game .code-home-actions :is(.code-home-play,.code-home-secondary){min-height:66px;font-size:24px;padding-left:42px}#fieldGame.god-core-game .code-home-actions .code-home-play{min-height:76px}}
+@media(max-width:620px){#fieldGame.god-core-game .code-home-layout{padding:25px 25px 24px;min-height:100%;height:auto}#fieldGame.god-core-game .code-home-header{min-height:26px}#fieldGame.god-core-game .code-home-brand{font-size:15px;letter-spacing:3px;gap:10px}#fieldGame.god-core-game .code-home-brand svg{width:18px;height:22px}#fieldGame.god-core-game .code-home-header>.code-home-tag{font-size:8px;letter-spacing:1px;text-align:right;max-width:150px}#fieldGame.god-core-game .code-home-hero{display:flex;flex-direction:column;flex:1;padding:42px 0 22px;gap:0;justify-content:center}#fieldGame.god-core-game .code-home-eyebrow{font-size:8px;letter-spacing:2px;margin-bottom:17px}#fieldGame.god-core-game .code-home-title{width:min(100%,410px)}#fieldGame.god-core-game .code-home-description{font-size:8px;letter-spacing:2.5px;margin:19px 0 0}#fieldGame.god-core-game .code-home-actions{width:100%;align-self:stretch;max-width:none;padding-top:0;margin-top:32px}#fieldGame.god-core-game .code-home-actions :is(.code-home-play,.code-home-secondary){font-size:23px;min-height:55px;padding:14px 13px 14px 44px}#fieldGame.god-core-game .code-home-actions .code-home-play{min-height:62px;margin-bottom:10px}#fieldGame.god-core-game #fieldBack{margin-top:11px;min-height:38px;padding:10px 8px;font-size:10px}#fieldGame.god-core-game .code-home-footer{padding-top:17px;gap:14px}#fieldGame.god-core-game #fieldMapCaption{font-size:9px;letter-spacing:.4px;margin-bottom:10px!important}#fieldGame.god-core-game #fieldMapChoices button{padding:10px 12px!important;font-size:10px!important;min-height:36px}#fieldGame.god-core-game .god-core-footer-mark{display:none}#fieldGame.god-core-game #fieldSettings [role="tab"]{padding:12px!important;font-size:12px}#openGodCoreBtn.hub-tile{border-radius:14px}.god-core-tile-kicker{font-size:8px}.god-core-tile-footer{font-size:6px}.god-core-tile-footer b{font-size:16px}}
+@media(max-height:650px) and (min-width:621px){#fieldGame.god-core-game .code-home-layout{padding-top:24px;padding-bottom:22px}#fieldGame.god-core-game .code-home-hero{padding-top:28px;padding-bottom:26px}#fieldGame.god-core-game .code-home-title{max-width:590px}#fieldGame.god-core-game .code-home-description{margin-top:17px}#fieldGame.god-core-game .code-home-actions :is(.code-home-play,.code-home-secondary){min-height:58px;font-size:23px}#fieldGame.god-core-game .code-home-actions .code-home-play{min-height:67px}#fieldGame.god-core-game #fieldBack{margin-top:10px}}
+@media(prefers-reduced-motion:reduce){#fieldGame.god-core-game button{transition:none!important;transform:none!important}}
+

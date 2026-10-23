@@ -1,0 +1,703 @@
+{
+  "source": "Copy of V12.html",
+  "sourceSha256": "e6d1d6ea9a8c04ae5917c4146aa9f96a9f1ee9ec5300ba505f8118e0a92a9658",
+  "embeddedReferencesExtracted": 135,
+  "assets": [
+    {
+      "path": "assets/images/image-dacdaeb37453.svg",
+      "mime": "image/svg+xml",
+      "bytes": 792825,
+      "sha256": "dacdaeb374538010d9ec9d3c4c4d8b84d8810ed57f068afe6deb52a26cb090b3"
+    },
+    {
+      "path": "assets/fonts/font-ca157063339a.woff2",
+      "mime": "font/woff2",
+      "bytes": 25960,
+      "sha256": "ca157063339ac4ad418f214f3abfed119b0798ab4d377386ce5c9e5a7a435ebd"
+    },
+    {
+      "path": "assets/fonts/font-71d5ee93cc1e.woff2",
+      "mime": "font/woff2",
+      "bytes": 18748,
+      "sha256": "71d5ee93cc1e9f1d520a3a8b66456de18c7879d8df09d57fcd2eaff75fef0075"
+    },
+    {
+      "path": "assets/fonts/font-6e9e020a25f9.woff2",
+      "mime": "font/woff2",
+      "bytes": 11232,
+      "sha256": "6e9e020a25f9b56d418f2c085b1d3c09725a4da23fe693a5b463064606732190"
+    },
+    {
+      "path": "assets/fonts/font-1be3448e292f.woff2",
+      "mime": "font/woff2",
+      "bytes": 18996,
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6"
+    },
+    {
+      "path": "assets/fonts/font-5c66f9e07e90.woff2",
+      "mime": "font/woff2",
+      "bytes": 10252,
+      "sha256": "5c66f9e07e90c6d4ac4922cc68d60de26c17b1858e677fb5e603fce3952b3ff2"
+    },
+    {
+      "path": "assets/fonts/font-34b9c504cab7.woff2",
+      "mime": "font/woff2",
+      "bytes": 85068,
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956"
+    },
+    {
+      "path": "assets/fonts/font-3100e775e861.woff2",
+      "mime": "font/woff2",
+      "bytes": 48256,
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62"
+    },
+    {
+      "path": "assets/fonts/font-0f53d1c03b39.woff2",
+      "mime": "font/woff2",
+      "bytes": 14808,
+      "sha256": "0f53d1c03b3918d744a843b5039001ee31695ca1e255e3914188df81beb461e9"
+    },
+    {
+      "path": "assets/fonts/font-6c18d579fd87.woff2",
+      "mime": "font/woff2",
+      "bytes": 32292,
+      "sha256": "6c18d579fd87c3776be068b762cbc83fde3acb543d49eabd3ade842eb987e887"
+    },
+    {
+      "path": "assets/audio/selectormusic-90596a032051.m4a",
+      "mime": "audio/mp4",
+      "bytes": 2874430,
+      "sha256": "90596a0320513294e60087287bf1be3e4ab1a33df3367b8a5e0b1adf17a9ae10"
+    },
+    {
+      "path": "assets/images/image-037025f9fa5a.png",
+      "mime": "image/png",
+      "bytes": 64006,
+      "sha256": "037025f9fa5a8507ce15e074723a26d0ef3e9b31f477cce4fa49e4b244c6208e"
+    },
+    {
+      "path": "assets/images/openplatdobtn-744075d69fa8.png",
+      "mime": "image/png",
+      "bytes": 3059267,
+      "sha256": "744075d69fa8d427f25d9f06fb776f3a087ac0839c7f0df806c0ce6468bc4600"
+    },
+    {
+      "path": "assets/images/image-96e3ce94052c.png",
+      "mime": "image/png",
+      "bytes": 169071,
+      "sha256": "96e3ce94052cafd74633322f338ac2fba689ebc22203a5c835085edbf626ae36"
+    },
+    {
+      "path": "assets/images/image-fa9196a9e3c2.png",
+      "mime": "image/png",
+      "bytes": 1299409,
+      "sha256": "fa9196a9e3c2ab6975197e7cfe1d48fac1b5865ce1db6ef9bdaf6471d9e700f0"
+    },
+    {
+      "path": "assets/images/image-8b1602e9cc23.webp",
+      "mime": "image/webp",
+      "bytes": 37520,
+      "sha256": "8b1602e9cc23d4cfe5885ccacd2844c9ef707c74935ddb1550e19a0ec35f86e7"
+    },
+    {
+      "path": "assets/images/goldaksprite-87fd15aafd56.png",
+      "mime": "image/png",
+      "bytes": 263345,
+      "sha256": "87fd15aafd567a144124388584e4179ad0568db7b3465e5f2fc6cf84cf8bc1bf"
+    },
+    {
+      "path": "assets/images/sniperscopeimage-a3fce01e4bdf.jpg",
+      "mime": "image/jpeg",
+      "bytes": 10158,
+      "sha256": "a3fce01e4bdf37344f8b6741774bf9d23d27605c1a31c7a74516d17065c87e81"
+    },
+    {
+      "path": "assets/images/nukepickupimage-1f11bd7dab1b.png",
+      "mime": "image/png",
+      "bytes": 5463,
+      "sha256": "1f11bd7dab1b61486215083fd6ffc4e51037f0430c89463ce8ffaa0dab22c605"
+    },
+    {
+      "path": "assets/audio/minigameopenaudio-30f12db9d850.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 49319,
+      "sha256": "30f12db9d8500734339cfd26ea37bd8b02e33e7907a2d4da49a3cd1f66f2d9f5"
+    },
+    {
+      "path": "assets/audio/minigamehoveraudio-5d2bdffdef52.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 454739,
+      "sha256": "5d2bdffdef520d19dc39796aa8ceed332ddfbec318a8bc9e28dccfdefb9c69e0"
+    },
+    {
+      "path": "assets/audio/fieldtargethitaudio-f9ba4c73c85d.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 33024,
+      "sha256": "f9ba4c73c85d70068e1ebd8bd362d63c677ced0e0cf8a446da3a750497cb252b"
+    },
+    {
+      "path": "assets/audio/fieldwaveaudio-f0f633a5cbb8.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 46811,
+      "sha256": "f0f633a5cbb8a35c0f27bf0452205d04018a3e1d031f63b012c7040e2825eee6"
+    },
+    {
+      "path": "assets/audio/fieldhurtaudio-c8f36c1583e1.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 14210,
+      "sha256": "c8f36c1583e1304a6ddddbc53fe70b2d8c27ee7f5693ba29657fe5f2e660aa0d"
+    },
+    {
+      "path": "assets/audio/fieldenemyshotaudio-1a547a9ca019.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 63744,
+      "sha256": "1a547a9ca01969e639a3a89a4549a0da670059b32e50c2ec05b5a017e7790c2b"
+    },
+    {
+      "path": "assets/images/fieldretroenemyimage-7970eda84a6d.png",
+      "mime": "image/png",
+      "bytes": 2735,
+      "sha256": "7970eda84a6d052593bf5ce2836e3de77cbc0b4fa64837831cc73c51bdddbd33"
+    },
+    {
+      "path": "assets/images/fieldretrolaserimage-dbe17729bf97.png",
+      "mime": "image/png",
+      "bytes": 73204,
+      "sha256": "dbe17729bf9738533f9827e2bd9c118434fcb7a7849e66f8ee78e8199acb4479"
+    },
+    {
+      "path": "assets/audio/fieldplaylists-bb0a386d1496.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1043226,
+      "sha256": "bb0a386d149638aaf8ae7e8e5be2f55a768e49b5cdb22e8918d79cc790b4eeb7"
+    },
+    {
+      "path": "assets/audio/audio-a24ac2fa9870.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1619173,
+      "sha256": "a24ac2fa98703a29f159d447efbab6f3c3fbd345076318f049f89bb7adfa9440"
+    },
+    {
+      "path": "assets/audio/audio-d740b8d00e95.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1505489,
+      "sha256": "d740b8d00e959982e34f5ae4cafea7e7c363136b5c6639520e13c9bddcf19b44"
+    },
+    {
+      "path": "assets/audio/audio-3acdf0fade96.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1628369,
+      "sha256": "3acdf0fade968339c8120747b11b1118dbc84cf218a1ef37d5ed4c902e716b2b"
+    },
+    {
+      "path": "assets/audio/audio-68d3b0d18e9b.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 513024,
+      "sha256": "68d3b0d18e9b4bc9f69674703bb3b9da255a861721ae9b6dfa817a2e50e59163"
+    },
+    {
+      "path": "assets/audio/audio-3e7b96a421ba.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 1011840,
+      "sha256": "3e7b96a421baec23b881c811042272a10106e4d9110238f79462aa2ea6cf2da2"
+    },
+    {
+      "path": "assets/audio/fieldlobbytrack-4f2a75bf2608.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 2005368,
+      "sha256": "4f2a75bf26082b34534b3ce53ac3fa6387feab94acdcddf975c52d35b3df9bf6"
+    },
+    {
+      "path": "assets/images/fieldretroshotgunready-ab595ce162c6.png",
+      "mime": "image/png",
+      "bytes": 276047,
+      "sha256": "ab595ce162c6328b76ad01dc4977a85aaf79c551c91524d888baec40773d13f4"
+    },
+    {
+      "path": "assets/images/fieldretroshotgunreload-2368e5d3e8d3.png",
+      "mime": "image/png",
+      "bytes": 377196,
+      "sha256": "2368e5d3e8d36095b020b235e179542646388ba56366007f27ad8434a6d85691"
+    },
+    {
+      "path": "assets/images/fieldshotgunidle-a206319a7e41.png",
+      "mime": "image/png",
+      "bytes": 1304413,
+      "sha256": "a206319a7e419edb4870269b9352ad8a534eb36f4ad401b86f5e80c27cf1698b"
+    },
+    {
+      "path": "assets/images/fieldsniperidle-9871a364f73c.png",
+      "mime": "image/png",
+      "bytes": 1144260,
+      "sha256": "9871a364f73cc87b7d763d3495351ee56570f6f228ebaddb98b5ac0126e48cc9"
+    },
+    {
+      "path": "assets/images/fieldaridle-5be570fbf7ff.png",
+      "mime": "image/png",
+      "bytes": 1764229,
+      "sha256": "5be570fbf7ff925601b832fa78f969b739f8308efc8599d063d30c7696d1df9e"
+    },
+    {
+      "path": "assets/images/fieldaraim-6a4794d690b2.png",
+      "mime": "image/png",
+      "bytes": 1025475,
+      "sha256": "6a4794d690b27ab38b896c4de1b987f383174efca9292406da3bde3e6f5baa6a"
+    },
+    {
+      "path": "assets/images/fieldpistolidle-314031f74947.png",
+      "mime": "image/png",
+      "bytes": 253629,
+      "sha256": "314031f74947bc853710780f6436162ba1315e43f935f80fbfe5e1424e3b9954"
+    },
+    {
+      "path": "assets/images/image-8bbd192d3543.png",
+      "mime": "image/png",
+      "bytes": 269636,
+      "sha256": "8bbd192d3543b360f66e7f6fa5d2ddc813816610ca322d0f47ab9e0af0c82c8d"
+    },
+    {
+      "path": "assets/images/fieldscope-e103294b18bb.png",
+      "mime": "image/png",
+      "bytes": 510551,
+      "sha256": "e103294b18bb7aef3f93783c60c54daca3104980734f220310342ee51de821b2"
+    },
+    {
+      "path": "assets/images/fieldmuzzleflash-23922957ff37.jpg",
+      "mime": "image/jpeg",
+      "bytes": 4578,
+      "sha256": "23922957ff378a16987f563c002e3d9531751052197e05207b5fa75f2f9e8b52"
+    },
+    {
+      "path": "assets/images/godcorecover-b0faf4b286c8.png",
+      "mime": "image/png",
+      "bytes": 1080327,
+      "sha256": "b0faf4b286c8fc5423f0577a6ed9ff1add30755883e85730a1280ed7284a2fa9"
+    },
+    {
+      "path": "assets/audio/fieldfootsteps-01df77ccb309.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 138240,
+      "sha256": "01df77ccb3094a915b1554b57c2dae64c03ec0f005f47f504485e0cddb6414d0"
+    },
+    {
+      "path": "assets/audio/fieldjumpaudio-7021b29020cd.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 46848,
+      "sha256": "7021b29020cddb0ec0114d1aea0090718210a6c5b7a8c5066fbd01be8c8d0fff"
+    },
+    {
+      "path": "assets/audio/fieldlandaudio-fa538a848484.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 12000,
+      "sha256": "fa538a84848473341ecab81be395d130ff0fc65467680259c58707e931d0f8e5"
+    },
+    {
+      "path": "assets/images/fieldimpactimage-b7c74c0c6ec6.jpg",
+      "mime": "image/jpeg",
+      "bytes": 12888,
+      "sha256": "b7c74c0c6ec699088eb970bfa120e8d10b4ba5da5a62d890228de6f79594026d"
+    },
+    {
+      "path": "assets/audio/fieldpistolshotaudio-d11776d7b3e1.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 55170,
+      "sha256": "d11776d7b3e15a24b9eaacd825b87c6f2e11602a9ed13b6bb42960c1e17b8356"
+    },
+    {
+      "path": "assets/audio/fieldsnipershotaudio-cee18db7340c.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 161280,
+      "sha256": "cee18db7340c285613bace321094dbd8c1050c1aaaa912258f3a8d8195be1d2d"
+    },
+    {
+      "path": "assets/audio/fieldarshotaudio-eefaff20e694.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 34560,
+      "sha256": "eefaff20e6946ec5423bce4117d85f47f4345df853cdaed50afac925e2f4c479"
+    },
+    {
+      "path": "assets/audio/fieldshotgunshotaudio-11b38935394d.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 20160,
+      "sha256": "11b38935394d6bc7ae9c2e56f0f334a76e76dc3365eca75ed84f818cd8871167"
+    },
+    {
+      "path": "assets/audio/fieldfriendlyshotaudio-b89545e0bc0b.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 26400,
+      "sha256": "b89545e0bc0b3731e3cb457a196f792468c89ca377c3bbcb0f2671deef2bbc6d"
+    },
+    {
+      "path": "assets/images/fieldfriendlyaridle-bcff424e4b1c.png",
+      "mime": "image/png",
+      "bytes": 1148814,
+      "sha256": "bcff424e4b1c8319ad7b722ca6790c20f052ab2e5794e6a59eb6beb8fdc5cec6"
+    },
+    {
+      "path": "assets/images/fieldfriendlyaraim-a8badb25c88b.png",
+      "mime": "image/png",
+      "bytes": 735705,
+      "sha256": "a8badb25c88bd8e7d0e31544bafb84e93faebdd67e2ad3f7305067b449d733ed"
+    },
+    {
+      "path": "assets/images/fieldfriendlypistolidle-8a96f750522d.png",
+      "mime": "image/png",
+      "bytes": 803686,
+      "sha256": "8a96f750522d376c63bc8689b2646cdde62070185a4d07e33fe44fa188340c96"
+    },
+    {
+      "path": "assets/images/fieldretroarsource-44ded1b400e0.png",
+      "mime": "image/png",
+      "bytes": 5110,
+      "sha256": "44ded1b400e02422740485a0b521d059555b2976ecf8e5abbc5bf2f8cc41333f"
+    },
+    {
+      "path": "assets/audio/fieldfriendlydeathaudio-6d6b9a8f4c8e.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 97802,
+      "sha256": "6d6b9a8f4c8e801dd2c11eb236c21bdd76e288642230e7b089b308dcb2959f52"
+    },
+    {
+      "path": "assets/audio/fieldfriendlyhurtaudio-4e9223b0977a.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 10560,
+      "sha256": "4e9223b0977a36fadcb4c54fc0289749a6db298d681e05b45835e7c16747def2"
+    },
+    {
+      "path": "assets/audio/fieldretroshotgunaudio-d2a8bd3814e5.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 20062,
+      "sha256": "d2a8bd3814e57c5a6a8c83df3398b70adbe58b177cab120c265b4d9d613f5fcd"
+    },
+    {
+      "path": "assets/audio/fieldretroenemyaudio-5009be38a32f.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 7837,
+      "sha256": "5009be38a32f53d58de8c9614eb7e464fec70ceb43f5060a5900eee94dfe83e0"
+    },
+    {
+      "path": "assets/images/fieldexplosionframes-39f2229c4482.png",
+      "mime": "image/png",
+      "bytes": 45993,
+      "sha256": "39f2229c448221bfc8f2f4dce66aa41fe117b9858dff1902bb3db84a688afb63"
+    },
+    {
+      "path": "assets/images/image-95987161f2ea.png",
+      "mime": "image/png",
+      "bytes": 67607,
+      "sha256": "95987161f2ea8bdb8d5d7c1e02f655c7fd79686cb8d89f0f16daecfdfa3f325d"
+    },
+    {
+      "path": "assets/images/image-17d4f816dec3.png",
+      "mime": "image/png",
+      "bytes": 82698,
+      "sha256": "17d4f816dec3f64a73ea802fb36ac54fa6c50dd282c86fce83afd2753b098f91"
+    },
+    {
+      "path": "assets/images/image-9a67a5718a49.png",
+      "mime": "image/png",
+      "bytes": 56852,
+      "sha256": "9a67a5718a49e374b37f65b44dc341fd83d5250298edec8cf2b6819edf14bc56"
+    },
+    {
+      "path": "assets/images/image-c4cf3a960ec3.png",
+      "mime": "image/png",
+      "bytes": 44457,
+      "sha256": "c4cf3a960ec3fbf5c5d1d194e8ef929d31b77eb4b5854cb2b05af0248bb99a49"
+    },
+    {
+      "path": "assets/images/image-c4f9e476fbd1.png",
+      "mime": "image/png",
+      "bytes": 35194,
+      "sha256": "c4f9e476fbd1f38003f50eb8a8ef124b6988b13de7175ad60c7a53fbb22bbe43"
+    },
+    {
+      "path": "assets/audio/fieldgrenadeexplosionaudio-0619df33f0ce.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 45600,
+      "sha256": "0619df33f0ceb7535fa6f54fdbe07c36c2622457fcfa77d0bed8b4ae64ca8a45"
+    },
+    {
+      "path": "assets/images/fieldgrenadeimage-57d294fd5643.png",
+      "mime": "image/png",
+      "bytes": 27490,
+      "sha256": "57d294fd5643df5d6e1f30f057dc5eb973e860e6cc3bd8e033ec291a89105565"
+    },
+    {
+      "path": "assets/audio/fieldretroreloadsource-bbc9da755221.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 83040,
+      "sha256": "bbc9da7552212ab017354aedd5302a97195a12b0f771c609e048f68b1633488f"
+    },
+    {
+      "path": "assets/images/fieldshellsource-df0408cce4ee.png",
+      "mime": "image/png",
+      "bytes": 1222,
+      "sha256": "df0408cce4eebc9ae38a3427d2d406b98be6b076fcc1475c9a1a18936b975675"
+    },
+    {
+      "path": "assets/images/fieldretroshotgunaimimage-7ed53719bc02.jpg",
+      "mime": "image/jpeg",
+      "bytes": 12224,
+      "sha256": "7ed53719bc02861ed0bf5b0e34515dabdf031f26a011be2fe8beb483e22ab5ac"
+    },
+    {
+      "path": "assets/audio/fieldfriendlyrefillsource-3ebc9f90a3cc.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 127059,
+      "sha256": "3ebc9f90a3ccf759d1a525dad412bd5e70448d77dc0d56771b24db2ea2b4bb59"
+    },
+    {
+      "path": "assets/images/fieldfriendlydropsource-f638595c525c.png",
+      "mime": "image/png",
+      "bytes": 373160,
+      "sha256": "f638595c525c8d5a186cb9e079f8f108016cf02864733508c404237e69d0ceea"
+    },
+    {
+      "path": "assets/audio/fieldfriendlytowelsource-3a469d630520.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 147840,
+      "sha256": "3a469d6305209abb72d9418f6a90c8491d9aec8fd59b65428e660c94988267e9"
+    },
+    {
+      "path": "assets/images/fieldretropistolbulletsource-a950a723e78b.jpg",
+      "mime": "image/jpeg",
+      "bytes": 5744,
+      "sha256": "a950a723e78b91817a9511caf980395764668df6ea4b0bec0766267c7d4b7995"
+    },
+    {
+      "path": "assets/images/fieldretrorocketammosource-ba2e410358c2.png",
+      "mime": "image/png",
+      "bytes": 3004,
+      "sha256": "ba2e410358c23543e82f32d0ec24769e3b2801a700bf4ce2800830b0d063f175"
+    },
+    {
+      "path": "assets/images/fieldretropistolspentsource-4e59aa3c7363.png",
+      "mime": "image/png",
+      "bytes": 8251,
+      "sha256": "4e59aa3c7363ba3e649ff58d4ae3a6dc33fcfa36e22d34441669648134690dc2"
+    },
+    {
+      "path": "assets/images/fieldretroarbulletsource-9c77e0a01bfc.png",
+      "mime": "image/png",
+      "bytes": 42442,
+      "sha256": "9c77e0a01bfc1d6e5116ad98779ee175e7972abedb367ce35ae9ea4b2f07f7cf"
+    },
+    {
+      "path": "assets/images/image-da15a128d211.png",
+      "mime": "image/png",
+      "bytes": 706010,
+      "sha256": "da15a128d2119b6b43fe7a1f752f46fc3e393a6c090643855816905a2e61c7df"
+    },
+    {
+      "path": "assets/images/fieldretropistolsources-effc51e9aa9c.png",
+      "mime": "image/png",
+      "bytes": 8354,
+      "sha256": "effc51e9aa9cfb1238e3370f87555ab6aabca94d176a307041fa500622b96ece"
+    },
+    {
+      "path": "assets/images/image-f12ba6c794e7.gif",
+      "mime": "image/gif",
+      "bytes": 116385,
+      "sha256": "f12ba6c794e726cf36a21defcae308493bb8e34e318e21019446519dfaeca494"
+    },
+    {
+      "path": "assets/images/image-17b29b7cfa6a.png",
+      "mime": "image/png",
+      "bytes": 14572,
+      "sha256": "17b29b7cfa6a80710aa29a498fb3aef154df80341ced3a948e4197f62ea49bcd"
+    },
+    {
+      "path": "assets/images/image-b22190d6ccfb.gif",
+      "mime": "image/gif",
+      "bytes": 150662,
+      "sha256": "b22190d6ccfb3bb130c4ea3f0161125f2552cfbe9dd92d5132cd568b0b7b0085"
+    },
+    {
+      "path": "assets/images/godcorepoweridlesource-498c262001e6.png.json",
+      "mime": "image/png",
+      "bytes": 42496262,
+      "sha256": "498c262001e678dce5d4b5f458135ce2ed5c03c64af78018124382e37e96f5f7"
+    },
+    {
+      "path": "assets/audio/godcorepowermusicsource-0078e6e7a100.wav",
+      "mime": "audio/wav",
+      "bytes": 9775694,
+      "sha256": "0078e6e7a10094d1c0d6844e373dfc8776c3ec75ad14766b37b208dfc628db58"
+    },
+    {
+      "path": "assets/images/godcorepowerfiresources-2a3d6145a805.png",
+      "mime": "image/png",
+      "bytes": 1011462,
+      "sha256": "2a3d6145a8058c9e3bd5c9896c67d236a797b8bc2e8790dfa17a5ae56906358a"
+    },
+    {
+      "path": "assets/images/image-d3fad5998aee.png",
+      "mime": "image/png",
+      "bytes": 1341480,
+      "sha256": "d3fad5998aee388fded86fdb920041285a3c4094f65a79f1bdabfd063212aae6"
+    },
+    {
+      "path": "assets/images/image-f80989935257.png",
+      "mime": "image/png",
+      "bytes": 1391524,
+      "sha256": "f8098993525712ad6b1b01c022d46cd4879f491b85cf1fb4de95b7260946549f"
+    },
+    {
+      "path": "assets/images/image-170d7ad50178.png",
+      "mime": "image/png",
+      "bytes": 1429589,
+      "sha256": "170d7ad501785df7b6d4b7118fe4eb42b7d4be1b4a67f4448b1d867402b7204b"
+    },
+    {
+      "path": "assets/images/image-fcb4f935a2ff.png",
+      "mime": "image/png",
+      "bytes": 1808920,
+      "sha256": "fcb4f935a2ff86663ec4a5c73005350819c1c034c33ed9c35f2e54c356535ee0"
+    },
+    {
+      "path": "assets/audio/fieldretrorocketreloadsource-dff87d8ed3e1.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 48384,
+      "sha256": "dff87d8ed3e14b79718ea8bbed5519682657e7facc944b7dcfef353638b39bf2"
+    },
+    {
+      "path": "assets/audio/fieldretroarreloadsource-c1acdf3043f5.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 48384,
+      "sha256": "c1acdf3043f54f3d828674f071ae23031c7d837e64cfdde3e5beda41f46e3943"
+    },
+    {
+      "path": "assets/images/fieldnormalpistolreloadsource-3c907b041bae.gif",
+      "mime": "image/gif",
+      "bytes": 240249,
+      "sha256": "3c907b041bae775940be3ec24783c145b0c3564c874eb250ba729374bb17c119"
+    },
+    {
+      "path": "assets/images/fieldnormalpistolbulletsource-10fce1801c0f.jpg",
+      "mime": "image/jpeg",
+      "bytes": 1950,
+      "sha256": "10fce1801c0f10c63c774a195f838eab9821f69c2158f5b574ee729c32207a4f"
+    },
+    {
+      "path": "assets/video/godcoreintrosource-b919debc3644.mp4",
+      "mime": "video/mp4",
+      "bytes": 4109711,
+      "sha256": "b919debc36447f4ff155a5d547ad7e179dd703b510581d5280fad3f72a74e0db"
+    },
+    {
+      "path": "assets/video/godcoreacquisitionsource-b236274be91c.mp4",
+      "mime": "video/mp4",
+      "bytes": 3647653,
+      "sha256": "b236274be91c1d861e20369a063f6b4035fad6d12a2cd079ce082e5d4e456f03"
+    },
+    {
+      "path": "assets/video/godcorevictorysource-539b5921fbd1.mp4",
+      "mime": "video/mp4",
+      "bytes": 5657509,
+      "sha256": "539b5921fbd13e30938e8d8c9bf52d844d545265b572864a610646ff45060e43"
+    },
+    {
+      "path": "assets/audio/fieldmapselectaudio-254e4ae8758b.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 35108,
+      "sha256": "254e4ae8758b85547f276010d8f1411873d78246913dd37667d49a6a12d32298"
+    },
+    {
+      "path": "assets/audio/fieldmaphoveraudio-95591ddb2d32.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 39288,
+      "sha256": "95591ddb2d32e34fc124a5200b7275781b6052b3cf3c0c0297eae57a10f670a1"
+    },
+    {
+      "path": "assets/images/image-9d1015dc5dd2.png",
+      "mime": "image/png",
+      "bytes": 153533,
+      "sha256": "9d1015dc5dd244508e07e76532c2d58f5d9724a237433d411572231fff66ab5e"
+    },
+    {
+      "path": "assets/images/opendrivebtn-1a834240378c.png",
+      "mime": "image/png",
+      "bytes": 78587,
+      "sha256": "1a834240378c3ea2224d780c2a322b18352304a541a4c1fe53a2fddf7dd071ce"
+    },
+    {
+      "path": "assets/images/openswingbtn-cdf16a51752a.png",
+      "mime": "image/png",
+      "bytes": 90922,
+      "sha256": "cdf16a51752a9f66bf207b486cf096e776866221f9765792258ba93b00cb1a87"
+    },
+    {
+      "path": "assets/images/image-afcec54c3c03.png",
+      "mime": "image/png",
+      "bytes": 565255,
+      "sha256": "afcec54c3c03cf90a068be72d4fd55471fe1a5765d2cd169dbfe74a8f4ef108a"
+    },
+    {
+      "path": "assets/audio/jump-ak48-dd64b1dd6732.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 9120,
+      "sha256": "dd64b1dd6732a19fb7b437f1c3ec2c7afad40cad4cd9315820b8296cc28341c6"
+    },
+    {
+      "path": "assets/audio/jump-empty-e6b886b477fe.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 7837,
+      "sha256": "e6b886b477fe133f8dcc7c7be34058b583b3b799ed49a30d0f370d9f30df1f7c"
+    },
+    {
+      "path": "assets/audio/jump-enemydeath-3771a8db5866.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 32600,
+      "sha256": "3771a8db5866b506c84df5869a28f5e7348cd08f279b2aca6c5548b96e879e4f"
+    },
+    {
+      "path": "assets/audio/jump-nuke-66e46f31bcdd.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 53080,
+      "sha256": "66e46f31bcdd04463c6b2eecfb3098a49c8738603a9384b26d095f6d7ddf9d9d"
+    },
+    {
+      "path": "assets/audio/jump-stomp-07fc45c6ef91.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 42240,
+      "sha256": "07fc45c6ef91b6e78dfd7024d5307ecd4ba3009e22441f43df167f8ee9420928"
+    },
+    {
+      "path": "assets/audio/jump-levelcomplete-0c765f662886.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 62693,
+      "sha256": "0c765f662886e27537915b52aa735914efe43f4d52a9983e861c0e094aa0c5fd"
+    },
+    {
+      "path": "assets/audio/jump-levelbonus-d5dfb245ae9d.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 47616,
+      "sha256": "d5dfb245ae9d9b55ca32333d4d74d4b19e609db56a20de93c7ec86f2119cf69c"
+    },
+    {
+      "path": "assets/audio/jump-weaponmax-bf9c2862679a.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 88320,
+      "sha256": "bf9c2862679a41b0aaddbe2e6e54d094fb2f2aa74acf6f1764668a1b407ad1fa"
+    },
+    {
+      "path": "assets/audio/jump-coin-c22bc689e7f2.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 43467,
+      "sha256": "c22bc689e7f25e670bfd6136109da405bc17dd39ea5bd9f32b101a7e80a901ad"
+    },
+    {
+      "path": "assets/audio/jump-jump-7ebef1253f22.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 13920,
+      "sha256": "7ebef1253f22dbef4c091096da81aee1ecd6a7fce03ad5758abe67f5abbdf78b"
+    },
+    {
+      "path": "assets/audio/jump-playerdeath-0066e0d82f0d.mp3",
+      "mime": "audio/mpeg",
+      "bytes": 94458,
+      "sha256": "0066e0d82f0df7eecc67fb525736cdd4e221f8dce94ea0dddf9f368e7825138b"
+    }
+  ]
+}

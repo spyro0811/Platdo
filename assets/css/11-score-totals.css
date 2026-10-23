@@ -1,0 +1,7 @@
+
+.score-totals {width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 5px;flex-shrink:0;}
+.score-totals > div {background:#020617;border:1px solid #334155;border-radius:10px;padding:9px;text-align:center;min-width:0;}
+.score-totals span {display:block;font-size:11px;color:#cbd5e1;}
+.score-totals strong {display:block;font-size:20px;color:#fcd34d;overflow-wrap:anywhere;}
+.score-totals-help {font-size:10px;line-height:1.4;color:#94a3b8;margin-bottom:10px;text-align:center;flex-shrink:0;}
+#levelSelectModal > div > :not(#levelGrid) {flex-shrink:0;}
