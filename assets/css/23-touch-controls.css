@@ -1,0 +1,22 @@
+#platdoTouchControls[hidden],#platdoTouchControls [hidden],#platdoStandaloneControls[hidden]{display:none!important}
+html[data-control-mode="pc"] #platdoTouchControls,html[data-control-mode="pc"] .jump-touch-controls,html[data-control-mode="pc"] .sw-touch,html[data-control-mode="pc"] [data-reset-control]{display:none!important}
+#platdoTouchControls{position:fixed;inset:0;z-index:150000;pointer-events:none;font:700 12px/1.2 Arial,sans-serif;color:#fff;user-select:none;-webkit-user-select:none;touch-action:none;--pt-size:56px;--pt-gap:8px}
+#platdoTouchControls *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#platdoTouchControls button{pointer-events:auto;touch-action:none;min-width:var(--pt-size);min-height:var(--pt-size);padding:7px;border:1px solid #ffffff78;border-radius:15px;background:#101d30b8;box-shadow:0 3px 12px #0004;color:white;font:inherit;text-align:center;cursor:pointer}
+#platdoTouchControls button[aria-pressed="true"]{background:#2575bde6;border-color:#b5edff;transform:scale(.96)}
+#platdoTouchControls button:focus-visible{outline:3px solid #72d4ff;outline-offset:2px}
+#platdoTouchControls .pt-look{position:absolute;inset:0 0 0 38%;pointer-events:auto;touch-action:none}
+#platdoTouchControls .pt-look span{position:absolute;top:48%;right:15%;color:#fff9;font-size:11px;text-shadow:0 1px 3px #000;pointer-events:none}
+#platdoTouchControls .pt-stick{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));width:132px;height:132px;border:2px solid #ffffff6b;border-radius:50%;background:#0b172b65;pointer-events:auto;touch-action:none}
+#platdoTouchControls .pt-stick i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:#fff7;border:2px solid #fff9;pointer-events:none}
+#platdoTouchControls .pt-stick-label{position:absolute;top:-23px;left:0;width:100%;text-align:center;text-shadow:0 1px 3px #000;pointer-events:none}
+#platdoTouchControls .pt-right{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,minmax(48px,var(--pt-size)));gap:var(--pt-gap)}
+#platdoTouchControls .pt-left{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:calc(max(20px,env(safe-area-inset-bottom)) + 165px);display:grid;grid-template-columns:repeat(2,minmax(48px,var(--pt-size)));gap:var(--pt-gap)}
+#platdoTouchControls .pt-top{position:absolute;top:max(12px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:var(--pt-gap);max-width:90%}
+#platdoTouchControls .pt-top button{min-height:44px;min-width:54px;max-width:95px;background:#101d30cc}
+#platdoTouchControls .pt-extra{position:absolute;left:50%;top:65px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:12px;border:1px solid #7994b5;border-radius:18px;background:#0a1627f5;display:grid;grid-template-columns:repeat(3,minmax(62px,90px));gap:8px;pointer-events:auto}
+#platdoStandaloneControls{position:fixed;right:16px;bottom:14px;z-index:140000;padding:8px 11px;border:1px solid #7c99b7;border-radius:10px;background:#10213de8;color:#fff;font:13px Arial,sans-serif}
+#platdoStandaloneControls select{padding:8px;margin-left:8px;color:#fff;background:#203852;border:1px solid #96afc8;border-radius:6px}
+html[data-control-mode="mobile"] :is(#gameCanvas,#fieldCanvas,#cityCanvas,.drive-canvas,.sw-canvas){touch-action:none}
+@media(max-width:480px){#platdoTouchControls{--pt-size:50px;--pt-gap:6px;font-size:11px}#platdoTouchControls .pt-stick{width:112px;height:112px;left:max(14px,env(safe-area-inset-left))}#platdoTouchControls .pt-right{right:max(12px,env(safe-area-inset-right))}#platdoTouchControls .pt-left{bottom:calc(max(20px,env(safe-area-inset-bottom)) + 140px);left:14px}}
+@media(max-height:500px){#platdoTouchControls{--pt-size:46px;--pt-gap:6px;font-size:11px}#platdoTouchControls .pt-stick{width:108px;height:108px;bottom:12px}#platdoTouchControls .pt-left{bottom:144px}#platdoTouchControls .pt-right{bottom:12px}#platdoTouchControls .pt-top{top:max(6px,env(safe-area-inset-top))}#platdoTouchControls .pt-top button{min-height:40px}#platdoTouchControls .pt-extra{top:54px}}

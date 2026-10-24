@@ -1,0 +1,34 @@
+
+/* Jump uses the entire browser viewport; the original 800 x 450 world stays intact. */
+body:has(#platdoGame:not([hidden])){padding:0;margin:0;overflow:hidden;min-height:100dvh}
+#platdoGame:not([hidden]){position:fixed;inset:0;width:100%!important;max-width:none!important;height:100vh;height:100dvh;margin:0;border:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;overflow:hidden}
+#platdoGame:not([hidden]) .game-stage{flex:1 1 0;min-width:0;min-height:0!important;aspect-ratio:auto!important;width:100%;overflow:hidden}
+#platdoGame #gameCanvas{min-width:0;min-height:0;width:100%;height:100%;object-fit:contain}
+#platdoGame :is(.hub-back-bar,.jump-hud,.weapon-bar,.jump-touch-controls){flex-shrink:0}
+#platdoGame .hub-back-bar{min-height:38px;padding:0 20px}
+#platdoGame #backToGamesBtn{padding:9px 0}
+#platdoGame .jump-hud{min-height:52px;padding:7px 20px}
+#platdoGame .weapon-bar{padding:7px 16px;gap:6px}
+#platdoGame .inventory-slot{padding:1px 5px 4px}
+#platdoGame .inventory-slot canvas{height:28px}
+#platdoGame .weapon-help{line-height:1.3}
+#platdoGame #titleOverlay{overscroll-behavior:contain}
+#platdoGame .jump-home-layout{max-width:1540px;margin:0 auto;padding-top:clamp(28px,5vh,64px);padding-bottom:28px}
+@media(max-width:740px){
+ #platdoGame .hub-back-bar{padding:0 14px}
+ #platdoGame .jump-hud{padding:6px 12px}
+ #platdoGame .weapon-bar{padding:7px 10px;gap:5px}
+ #platdoGame .inventory-slot canvas{height:25px}
+ #platdoGame .jump-home-layout{padding-top:28px;padding-bottom:28px}
+ #platdoGame .jump-touch-controls{padding:8px 12px}
+}
+@media(max-height:540px) and (min-width:741px){
+ #platdoGame .hub-back-bar{min-height:30px}
+ #platdoGame #backToGamesBtn{padding:6px 0}
+ #platdoGame .jump-hud{min-height:42px;padding:3px 16px}
+ #platdoGame .weapon-bar{padding:4px 12px}
+ #platdoGame .inventory-slot canvas{height:20px}
+ #platdoGame .inventory-slot{padding-bottom:1px}
+ #platdoGame .weapon-help{display:none}
+}
+

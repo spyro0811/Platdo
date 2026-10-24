@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><!-- PLATDO STARTUP HEAD -->
+<link rel="stylesheet" href="assets/css/01-startup.css">
+<script src="assets/js/01-startup.js"></script>
+<!-- PLATDO STARTUP HEAD END -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PLATDO</title>
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="assets/css/01-base-and-tailwind.css">
-    <link rel="stylesheet" href="assets/css/02-fonts-and-theme.css">
-<link rel="stylesheet" href="assets/css/03-game-layout.css">
-<link rel="stylesheet" href="assets/css/04-bindings-and-skins.css">
-<link rel="stylesheet" href="assets/css/05-settings.css">
-<link rel="stylesheet" href="assets/css/06-level-records.css">
-<link rel="stylesheet" href="assets/css/07-hub.css">
-<link rel="stylesheet" href="assets/css/08-hub-audio.css"><link rel="stylesheet" href="assets/css/09-weapon-shop.css"><link rel="stylesheet" href="assets/css/10-victory.css"><link rel="stylesheet" href="assets/css/11-score-totals.css"><link rel="stylesheet" href="assets/css/12-admin.css"><link rel="stylesheet" href="assets/css/13-god-core.css" id="godCorePresentationStyle">
-<link rel="stylesheet" href="assets/css/14-jump-presentation.css" id="platdoJumpPresentationStyle">
-<link rel="stylesheet" href="assets/css/15-jump-full-window.css" id="platdoJumpFullWindowStyle">
+    <link rel="stylesheet" href="assets/css/02-base-and-tailwind.css">
+    <link rel="stylesheet" href="assets/css/03-fonts-and-theme.css">
+<link rel="stylesheet" href="assets/css/04-game-layout.css">
+<link rel="stylesheet" href="assets/css/05-bindings-and-skins.css">
+<link rel="stylesheet" href="assets/css/06-settings.css">
+<link rel="stylesheet" href="assets/css/07-level-records.css">
+<link rel="stylesheet" href="assets/css/08-hub.css">
+<link rel="stylesheet" href="assets/css/09-hub-audio.css"><link rel="stylesheet" href="assets/css/10-weapon-shop.css"><link rel="stylesheet" href="assets/css/11-victory.css"><link rel="stylesheet" href="assets/css/12-score-totals.css"><link rel="stylesheet" href="assets/css/13-admin.css"><link rel="stylesheet" href="assets/css/14-god-core.css" id="godCorePresentationStyle">
+<link rel="stylesheet" href="assets/css/15-jump-presentation.css" id="platdoJumpPresentationStyle">
+<link rel="stylesheet" href="assets/css/16-jump-full-window.css" id="platdoJumpFullWindowStyle">
 <!-- code-platdo-presentation -->
-<link rel="stylesheet" href="assets/css/16-code-presentation.css">
-<link rel="stylesheet" href="assets/css/17-jump-arcade.css" id="platdoJumpArcadeStyle">
-<link rel="stylesheet" href="assets/css/18-god-core-cover.css" id="godCoreCoverStyle">
+<link rel="stylesheet" href="assets/css/17-code-presentation.css">
+<link rel="stylesheet" href="assets/css/18-jump-arcade.css" id="platdoJumpArcadeStyle">
+<link rel="stylesheet" href="assets/css/19-god-core-cover.css" id="godCoreCoverStyle">
 <!-- code-platdo-game-lobby -->
-<link rel="stylesheet" href="assets/css/19-code-lobby.css">
-<link rel="stylesheet" href="assets/css/20-god-core-pause.css">
-<link rel="stylesheet" href="assets/css/21-city-selector.css">
+<link rel="stylesheet" href="assets/css/20-code-lobby.css">
+<link rel="stylesheet" href="assets/css/21-god-core-pause.css">
+<link rel="stylesheet" href="assets/css/22-city-selector.css">
 
 <!-- PLATDO SHARED CONTROLS BEGIN -->
-<link rel="stylesheet" href="assets/css/22-touch-controls.css">
-<script src="assets/js/01-shared-controls.js"></script>
+<link rel="stylesheet" href="assets/css/23-touch-controls.css">
+<script src="assets/js/02-shared-controls.js"></script>
 <!-- PLATDO SHARED CONTROLS END -->
-<link rel="stylesheet" href="assets/css/23-shared-graphics.css" id="platdo-shared-graphics-style">
-<script id="platdo-shared-graphics-script" src="assets/js/02-shared-graphics.js"></script>
+<link rel="stylesheet" href="assets/css/24-shared-graphics.css" id="platdo-shared-graphics-style">
+<script id="platdo-shared-graphics-script" src="assets/js/03-shared-graphics.js"></script>
     <script src="assets/js/asset-loader.js"></script>
 </head>
-<body class="hub-open bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 overflow-x-hidden"><svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><filter id="fieldWhiteKey" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 3"/><feComponentTransfer><feFuncA type="linear" slope="20" intercept="0"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/></filter><filter id="fieldGrenadeKey" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 2.40"/><feComponentTransfer><feFuncA type="linear" slope="20" intercept="0"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/></filter></defs></svg>
+<body class="hub-open bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 overflow-x-hidden"><!-- PLATDO STARTUP BODY --><section id="platdoStartup" aria-label="Loading PLATDO"><div id="platdoWarningHost"></div><div id="platdoPreparationCard" class="startup-card" hidden><h1>PLATDO<span>.</span></h1><progress id="platdoStartupProgress" max="100" value="0" aria-label="Loading all games"></progress><div class="startup-line"><p id="platdoStartupLabel" role="status" aria-live="polite">Preparing your games…</p><span id="platdoStartupPercent">0%</span></div><button id="platdoStartupRetry" hidden>Retry loading</button></div></section><!-- PLATDO STARTUP BODY END --><svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs><filter id="fieldWhiteKey" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 3"/><feComponentTransfer><feFuncA type="linear" slope="20" intercept="0"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/></filter><filter id="fieldGrenadeKey" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  -1 -1 -1 0 2.40"/><feComponentTransfer><feFuncA type="linear" slope="20" intercept="0"/></feComponentTransfer><feComposite in2="SourceGraphic" operator="in"/></filter></defs></svg>
 
     <main id="gameHub" aria-label="Choose a mini game">
         <audio id="selectorMusic" src="assets/audio/selectormusic-90596a032051.m4a" loop preload="metadata"></audio>
@@ -172,7 +175,7 @@
                     <div id="weaponShopGrid" class="armory-grid" role="tabpanel" aria-labelledby="weaponAmmoTab"></div>
                     <p id="weaponShopMessage" role="status"></p>
                     <button id="closeWeaponShopBtn" class="game-button">Back</button>
-                    <span class="text-xs text-slate-400">Escape returns to the PLATDO jump! menu</span>
+                    <span class="text-xs text-slate-400">Escape pauses or resumes gameplay</span>
                 </div>
             </div>
             <!-- Level Editor Modal -->
@@ -379,7 +382,7 @@
                     <div id="inventoryOrder" class="binding-list"></div>
                     </section>
                     <section id="settingsKeysPanel" class="settings-panel hidden" role="tabpanel" aria-labelledby="settingsTabKeys">
-                    <p class="text-xs text-slate-400 mb-3">Click a binding to change it, or + to add one (up to 5). Keys, mouse buttons, and wheel directions are supported. Escape returns to the PLATDO jump! menu; press it there to return to all games.</p>
+                    <p class="text-xs text-slate-400 mb-3">Click a binding to change it, or + to add one (up to 5). Keys, mouse buttons, and wheel directions are supported. Escape pauses or resumes gameplay; press it at the main menu to return to all games.</p>
                     <div id="bindingRows" class="binding-list"></div>
                     <div id="bindingCapture" class="hidden binding-capture">
                         <p id="bindingCaptureMessage" role="status"></p>
@@ -489,7 +492,7 @@
         </div>
     </div>
 
-    <script src="assets/js/03-platdo-main.js"></script>
+    <script src="assets/js/04-platdo-main.js"></script>
 
 
 
@@ -521,22 +524,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  -->
-<link rel="stylesheet" href="assets/css/24-drive.css">
-<script src="assets/js/04-drive-adapter.js"></script>
-<script src="assets/js/05-drive-shared-graphics.js"></script>
-<script src="assets/js/06-drive-shared-controls.js"></script>
-<script src="assets/js/07-three-drive.js"></script>
-<script src="assets/js/08-drive-routes.js"></script>
-<script src="assets/js/09-drive-core.js"></script>
-<script src="assets/js/10-drive-vehicle-surfaces.js"></script>
-<script src="assets/js/11-drive-scene.js"></script>
-<script src="assets/js/12-drive-scenery.js"></script>
-<script src="assets/js/13-drive-scenery-impacts.js"></script>
-<script src="assets/js/14-drive-quality.js"></script>
-<script src="assets/js/15-drive-debris.js"></script>
-<script src="assets/js/16-drive-audio.js"></script>
-<script src="assets/js/17-drive-graphics.js"></script>
-<script src="assets/js/18-drive-ui.js"></script>
+<link rel="stylesheet" href="assets/css/25-drive.css">
+<script src="assets/js/05-drive-adapter.js"></script>
+<script src="assets/js/06-drive-shared-graphics.js"></script>
+<script src="assets/js/07-drive-shared-controls.js"></script>
+<script src="assets/js/08-three-drive.js"></script>
+<script src="assets/js/09-drive-routes.js"></script>
+<script src="assets/js/10-drive-core.js"></script>
+<script src="assets/js/11-drive-vehicle-surfaces.js"></script>
+<script src="assets/js/12-drive-scene.js"></script>
+<script src="assets/js/13-drive-scenery.js"></script>
+<script src="assets/js/14-drive-scenery-impacts.js"></script>
+<script src="assets/js/15-drive-quality.js"></script>
+<script src="assets/js/16-drive-debris.js"></script>
+<script src="assets/js/17-drive-engine-audio.js"></script>
+<script src="assets/js/18-drive-audio.js"></script>
+<script src="assets/js/19-drive-graphics.js"></script>
+<script src="assets/js/20-drive-preparation.js"></script>
+<script src="assets/js/21-drive-ui.js"></script>
 <!-- PLATDO DRIVE END -->
 
 
@@ -563,17 +568,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  -->
-<link rel="stylesheet" href="assets/css/25-swing.css">
-<script src="assets/js/19-swing-adapter.js"></script>
-<script src="assets/js/20-swing-shared-graphics.js"></script>
-<script src="assets/js/21-swing-shared-controls.js"></script>
-<script src="assets/js/22-three-swing.js"></script>
-<script src="assets/js/23-swing-content.js"></script>
-<script src="assets/js/24-swing-core.js"></script>
-<script src="assets/js/25-swing-scene.js"></script>
-<script src="assets/js/26-swing-audio.js"></script>
-<script src="assets/js/27-swing-graphics.js"></script>
-<script src="assets/js/28-swing-ui.js"></script>
+<link rel="stylesheet" href="assets/css/26-swing.css">
+<script src="assets/js/22-swing-adapter.js"></script>
+<script src="assets/js/23-swing-shared-graphics.js"></script>
+<script src="assets/js/24-swing-shared-controls.js"></script>
+<script src="assets/js/25-three-swing.js"></script>
+<script src="assets/js/26-swing-content.js"></script>
+<script src="assets/js/27-swing-core.js"></script>
+<script src="assets/js/28-swing-scene.js"></script>
+<script src="assets/js/29-swing-audio.js"></script>
+<script src="assets/js/30-swing-graphics.js"></script>
+<script src="assets/js/31-swing-ui.js"></script>
 <!-- PLATDO SWING END -->
 
 
@@ -632,32 +637,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 -->
-<link rel="stylesheet" href="assets/css/26-city.css">
-<script src="assets/js/29-three-city.js"></script>
-<script src="assets/js/30-city-audio-assets.js"></script>
-<script src="assets/js/31-city-adapter.js"></script>
-<script src="assets/js/32-city-shared-controls.js"></script>
-<script src="assets/js/33-city-shared-graphics.js"></script>
-<script src="assets/js/34-city-config.js"></script>
-<script src="assets/js/35-city-quality.js"></script>
-<script src="assets/js/36-city-appearance.js"></script>
-<script src="assets/js/37-city-people.js"></script>
-<script src="assets/js/38-city-vehicles.js"></script>
-<script src="assets/js/39-city-fleet.js"></script>
-<script src="assets/js/40-city-damage.js"></script>
-<script src="assets/js/41-city-world.js"></script>
-<script src="assets/js/42-city-navigation.js"></script>
-<script src="assets/js/43-city-dialogue.js"></script>
-<script src="assets/js/44-city-economy.js"></script>
-<script src="assets/js/45-city-missions.js"></script>
-<script src="assets/js/46-city-physical-reactions.js"></script>
-<script src="assets/js/47-city-simulation.js"></script>
-<script src="assets/js/48-city-life.js"></script>
-<script src="assets/js/49-city-traversal.js"></script>
-<script src="assets/js/50-city-support.js"></script>
-<script src="assets/js/51-city-scene.js"></script>
-<script src="assets/js/52-city-audio.js"></script>
-<script src="assets/js/53-city-ui.js"></script>
+<link rel="stylesheet" href="assets/css/27-city.css">
+<script src="assets/js/32-three-city.js"></script>
+<script src="assets/js/33-city-audio-assets.js"></script>
+<script src="assets/js/34-city-adapter.js"></script>
+<script src="assets/js/35-city-shared-controls.js"></script>
+<script src="assets/js/36-city-shared-graphics.js"></script>
+<script src="assets/js/37-city-config.js"></script>
+<script src="assets/js/38-city-quality.js"></script>
+<script src="assets/js/39-city-appearance.js"></script>
+<script src="assets/js/40-city-people.js"></script>
+<script src="assets/js/41-city-vehicles.js"></script>
+<script src="assets/js/42-city-fleet.js"></script>
+<script src="assets/js/43-city-damage.js"></script>
+<script src="assets/js/44-city-world.js"></script>
+<script src="assets/js/45-city-navigation.js"></script>
+<script src="assets/js/46-city-dialogue.js"></script>
+<script src="assets/js/47-city-economy.js"></script>
+<script src="assets/js/48-city-missions.js"></script>
+<script src="assets/js/49-city-physical-reactions.js"></script>
+<script src="assets/js/50-city-simulation.js"></script>
+<script src="assets/js/51-city-life.js"></script>
+<script src="assets/js/52-city-traversal.js"></script>
+<script src="assets/js/53-city-support.js"></script>
+<script src="assets/js/54-city-scene.js"></script>
+<script src="assets/js/55-city-engine-audio.js"></script>
+<script src="assets/js/56-city-audio.js"></script>
+<script src="assets/js/57-city-ui.js"></script>
 <!-- PLATDO CITY END -->
 </body>
 </html>

@@ -1,0 +1,6 @@
+
+.weapon-shop-tabs {display:flex;gap:8px;margin:14px 0;}
+.weapon-card label {display:block;font-size:12px;margin:10px 0 4px;color:#cbd5e1;}
+.weapon-card select {width:100%;background:#1e293b;color:#fff;}
+.weapon-card button {white-space:normal;}
+.inventory-slot small {font-size:9px;white-space:normal;line-height:1.3;}
