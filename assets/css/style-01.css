@@ -1,0 +1,25 @@
+.platdo-warning-host{width:min(540px,100%)}
+.platdo-startup-warning{width:min(540px,100%);color:#fff;font:16px/1.6 system-ui,sans-serif}
+.platdo-startup-warning .warning-brand{font-size:12px;font-weight:800;letter-spacing:.24em;color:#aeb8b3;margin:0 0 20px}
+.platdo-startup-warning h1{font:900 clamp(36px,10vw,62px)/1 system-ui,sans-serif!important;letter-spacing:.02em!important;color:#ff4747;margin:0 0 24px!important;outline:none}
+.platdo-startup-warning #platdoWarningText{font-size:clamp(15px,3vw,18px);line-height:1.6;color:#fff;margin:0 0 32px}
+.platdo-startup-warning button{position:relative;isolation:isolate;overflow:hidden;width:100%;min-height:58px;padding:16px 20px;border:1px solid #a94343;border-radius:3px;background:#231719;color:#fff;font:800 16px/1.4 system-ui,sans-serif;cursor:pointer;margin:0}
+.platdo-startup-warning button:disabled{cursor:wait;opacity:1;color:#e9dede}
+.platdo-startup-warning button:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.platdo-startup-warning .warning-fill{position:absolute;inset:0 auto 0 0;width:0;background:#b5262d;z-index:-1}
+.platdo-startup-warning .warning-label{position:relative}
+@media(max-height:450px){.platdo-startup-warning .warning-brand{margin-bottom:10px}.platdo-startup-warning h1{margin-bottom:14px!important}.platdo-startup-warning #platdoWarningText{margin-bottom:20px}}
+html[data-platdo-loading] body{overflow:hidden!important}
+html[data-platdo-loading] body > :not(#platdoStartup):not(script):not(style){visibility:hidden!important;pointer-events:none!important}
+#platdoStartup{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;background:#090c0b;color:#f5f5ee;padding:28px;font:16px/1.5 system-ui,sans-serif}
+#platdoStartup[hidden]{display:none!important}
+#platdoStartup [hidden]{display:none!important}
+#platdoStartup .startup-card{width:min(440px,100%)}
+#platdoStartup h1{font:800 clamp(46px,12vw,80px)/1 system-ui,sans-serif;letter-spacing:-.065em;margin:0 0 38px}
+#platdoStartup h1 span{color:#d3ef74}
+#platdoStartup progress{display:block;width:100%;height:12px;accent-color:#d3ef74}
+#platdoStartup .startup-line{display:flex;gap:20px;align-items:baseline;justify-content:space-between;margin:18px 0 0}
+#platdoStartupPercent{font-variant-numeric:tabular-nums;font-weight:800;font-size:26px;color:#d3ef74}
+#platdoStartupLabel{color:#c0cac3;margin:0;overflow-wrap:anywhere}
+#platdoStartupRetry{margin-top:24px;background:#d3ef74;color:#152211;border:0;border-radius:3px;padding:12px 22px;font:700 15px system-ui;cursor:pointer}
+#platdoStartupRetry[hidden]{display:none}

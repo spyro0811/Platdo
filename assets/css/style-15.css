@@ -1,0 +1,130 @@
+
+/* PLATDO jump only. Gameplay, assets, themes and all game controls remain intact. */
+body:has(#platdoGame:not([hidden])){background:#14201c;padding:24px;min-height:100vh;justify-content:center}
+#platdoGame{--jump-paper:#eeeede;--jump-ink:#16291e;--jump-accent:#c6ed58;--jump-muted:#a4b5a4;width:min(1200px,100%);max-width:1200px;border:1px solid #3c5041;border-radius:3px;background:#17261f;box-shadow:0 20px 70px #06120c66;color:#eef1e5}
+#platdoGame .hub-back-bar{min-height:53px;padding:0 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:#17261f;border-bottom:1px solid #41503d}
+#platdoGame #backToGamesBtn{color:#c3ccbc;padding:12px 0;border-radius:0;font-size:12px;background:none}
+#platdoGame #backToGamesBtn:hover{color:var(--jump-accent);background:none}
+#platdoGame .jump-nav-brand{display:flex;gap:5px;align-items:center;font:900 13px/1 Outfit,Arial,sans-serif;letter-spacing:1px;color:#edf2db}
+#platdoGame .jump-nav-brand b{color:var(--jump-accent)}
+#platdoGame .jump-nav-brand i{font:26px/1 Arial,sans-serif;margin-left:2px;font-style:normal}
+#platdoGame .jump-nav-caption{font:9px/1.5 Consolas,monospace;letter-spacing:2px;color:#9fae9c}
+#platdoGame .game-stage{min-height:0;aspect-ratio:16/9;background:#14221c}
+#platdoGame #gameCanvas{object-fit:contain;image-rendering:auto}
+#platdoGame:has(#titleOverlay:not(.hidden)) .game-stage{min-height:655px;aspect-ratio:auto}
+#platdoGame:has(#titleOverlay:not(.hidden)) :is(.jump-hud,.weapon-bar,.jump-touch-controls){display:none}
+#platdoGame #titleOverlay{padding:0;background:var(--jump-paper);color:var(--jump-ink);text-align:left;overflow-y:auto;backdrop-filter:none;transition:none}
+#platdoGame #titleOverlay.hidden{display:none}
+#platdoGame .jump-home-layout{min-height:100%;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.99fr);gap:24px 58px;padding:46px 48px 25px;align-content:center}
+#platdoGame .jump-home-copy{position:relative;min-width:0}
+#platdoGame .jump-eyebrow{font:10px/1.5 Consolas,monospace;letter-spacing:2px;display:flex;align-items:center;gap:10px;color:#5e6c4e;margin-bottom:23px}
+#platdoGame .jump-eyebrow>span{width:24px;height:3px;background:#243b27}
+#platdoGame .jump-wordmark{margin:0;line-height:.78;font-family:Outfit,Arial,sans-serif;letter-spacing:-7px;color:#183626}
+#platdoGame .jump-wordmark>span:first-child{font-size:31px;line-height:1;letter-spacing:5px;display:block;margin-bottom:5px;font-weight:900}
+#platdoGame .jump-wordmark strong{font-size:clamp(90px,9vw,128px);display:block;letter-spacing:-8px;font-style:italic;font-weight:900;position:relative;white-space:nowrap}
+#platdoGame .jump-wordmark i{font:92px/1 Arial,sans-serif;font-style:normal;letter-spacing:-14px;display:inline-block;transform:translate(5px,-12px);color:#81a535}
+#platdoGame .jump-home-description{font-size:14px;line-height:1.6;margin:26px 0 26px;color:#516249}
+#platdoGame .jump-home-actions{width:100%}
+#platdoGame .jump-home-actions button{cursor:pointer;border-radius:0;box-shadow:none;transition:background .14s,color .14s,transform .14s;display:flex;align-items:center;justify-content:space-between;text-align:left;background:none;color:var(--jump-ink);font:700 14px/1.3 Inter,Arial,sans-serif;transform:none;gap:7px}
+#platdoGame .jump-home-actions .jump-play{width:100%;min-height:66px;padding:17px 21px;background:var(--jump-ink);color:var(--jump-paper);border:1px solid var(--jump-ink);font-family:Outfit,Arial,sans-serif;font-size:27px;font-weight:900;margin-bottom:15px}
+#platdoGame .jump-play b{font:36px/1 Arial,sans-serif;color:var(--jump-accent)}
+#platdoGame .jump-home-actions .jump-play:hover{background:#294a30;transform:translateY(-2px)}
+#platdoGame .jump-menu-grid{display:grid;grid-template-columns:1fr 1fr;column-gap:25px}
+#platdoGame .jump-menu-grid button{min-height:49px;padding:12px 1px;border:0;border-bottom:1px solid #aab29a}
+#platdoGame .jump-menu-grid button:hover{color:#577327;background:#dde3ca}
+#platdoGame .jump-menu-grid b{font:20px/1 Arial,sans-serif;font-weight:400;color:#7a8865}
+#platdoGame .jump-menu-grid small{font:9px/1.3 Consolas,monospace;color:#738162;letter-spacing:0}
+#platdoGame #editorLockBadge{border:0;background:transparent;color:#738162;font:8px/1.3 Consolas,monospace;letter-spacing:0;border-radius:0;max-width:66px;text-align:right;padding:0;white-space:normal}
+#platdoGame .jump-home-showcase{min-width:0;padding-top:51px;display:flex;flex-direction:column;justify-content:center;position:relative}
+#platdoGame .jump-preview-heading{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #9fae8a;padding-top:14px;margin-bottom:12px;font:9px/1.5 Consolas,monospace;letter-spacing:2px;color:#657653}
+#platdoGame .jump-preview-frame{position:relative;padding:11px;background:#253c29;box-shadow:8px 8px 0 #ced6b6}
+#platdoGame #jumpMenuPreview{display:block;width:100%;height:auto;aspect-ratio:16/9;border:1px solid #162f19}
+#platdoGame .jump-preview-corner{position:absolute;right:-13px;bottom:-17px;display:flex;align-items:center;justify-content:center;width:53px;height:53px;background:var(--jump-accent);border:1px solid #526936;font:37px/1 Arial,sans-serif;color:#203a24;transform:rotate(-4deg)}
+#platdoGame .jump-campaign-progress{margin:32px 0 0;padding-right:0}
+#platdoGame .jump-campaign-progress>div:first-child{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#536647;margin-bottom:13px;font:9px/1.5 Consolas,monospace;letter-spacing:1px}
+#platdoGame .jump-campaign-progress strong{font:600 12px/1.5 Inter,Arial,sans-serif;letter-spacing:0;color:#304a31}
+#platdoGame .jump-progress-track{height:5px;background:#c7d0b5;overflow:hidden}
+#platdoGame .jump-progress-track i{display:block;height:100%;width:0;background:#527536}
+#platdoGame .jump-showcase-caption{font:10px/1.6 Consolas,monospace;color:#687a56;margin:16px 0 0;letter-spacing:.1px}
+#platdoGame .jump-home-footer{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid #b4bea2;margin-top:14px;padding-top:18px;font:9px/1.5 Consolas,monospace;letter-spacing:1px;color:#627650}
+#platdoGame #jumpMenuControls{display:flex;align-items:center;gap:17px;letter-spacing:0;font-family:Inter,Arial,sans-serif;font-size:10px}
+#platdoGame #jumpMenuControls>span{display:flex;align-items:center;gap:5px}
+#platdoGame kbd{display:inline-block;min-width:20px;text-align:center;border:1px solid #b3bda1;border-bottom-width:2px;padding:3px 5px;font:10px/1.2 Consolas,monospace;color:#345131}
+/* A quiet HUD with the canvas and inventory as its focus. */
+#platdoGame .jump-hud{min-height:66px;padding:10px 23px;gap:12px;background:#1a2b22;backdrop-filter:none;border-bottom:1px solid #41503d}
+#platdoGame .jump-level-readout{background:none;border:0;border-radius:0;padding:0;gap:8px;color:#b9c5ad}
+#platdoGame #levelLabel{font:10px/1.5 Consolas,monospace;letter-spacing:1.5px}
+#platdoGame #levelDisplay{font:900 29px/1 Outfit,Arial,sans-serif;color:var(--jump-paper)}
+#platdoGame #levelMaxDisplay{font:11px/1.5 Consolas,monospace;color:#95a58d}
+#platdoGame #statusMessage{font-size:10px;line-height:1.5;color:#a8b79e;max-width:330px}
+#platdoGame .jump-cash-readout{background:none;border:0;border-radius:0;padding:0 10px}
+#platdoGame .jump-cash-readout>span:first-child{font:8px/1.5 Consolas,monospace;letter-spacing:2px;color:#a8b79e}
+#platdoGame #scoreDisplay{font:900 25px/1.1 Outfit,Arial,sans-serif;color:var(--jump-accent)}
+#platdoGame :is(#menuBtn,#soundToggleBtn){border-radius:2px;border:1px solid #4e6045;background:none;box-shadow:none;color:#e6ecd7;font-size:11px;padding:9px 12px}
+#platdoGame :is(#menuBtn,#soundToggleBtn):hover{background:#30432c}
+#platdoGame .weapon-bar{background:#1a2b22;border-top:1px solid #41503d;padding:13px 20px 10px;gap:10px;display:grid;grid-template-columns:1fr auto auto;align-items:center}
+#platdoGame #inventoryTray{width:auto;justify-content:flex-start;gap:6px;min-width:0}
+#platdoGame .inventory-slot{width:96px;max-width:calc(20% - 5px);padding:2px 5px 6px;border:1px solid #41563b;border-radius:2px;background:#203327;box-shadow:none}
+#platdoGame .inventory-slot canvas{height:34px;width:100%;object-fit:contain}
+#platdoGame .inventory-slot span{font-size:9px;color:#e7ecd9}
+#platdoGame .inventory-slot small{font-size:8px;color:#a7b399}
+#platdoGame .inventory-slot.selected{border:1px solid var(--jump-accent);background:#314626;box-shadow:inset 0 -3px 0 var(--jump-accent)}
+#platdoGame .inventory-slot:disabled{opacity:.38}
+#platdoGame .weapon-help{grid-column:1/-1;text-align:left;font-size:9px;line-height:1.5;color:#99ab8e;padding:0;margin:0}
+#platdoGame .jump-touch-controls{background:#1a2b22;border-color:#41503d}
+#platdoGame :is(#touchLeft,#touchRight,#touchJump){border-radius:2px;background:#283f2d;border-color:#66784c;box-shadow:none}
+#platdoGame #touchJump{background:var(--jump-accent);color:var(--jump-ink);border-color:var(--jump-accent)}
+/* Larger, consistent game pages. Existing content and controls stay in place. */
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#editorModal,#adminModal,#weaponShopModal){padding:25px;background:#17251ff5;backdrop-filter:blur(4px);overflow-y:auto}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal)>div,#platdoGame .armory-panel{border:0;border-radius:0;box-shadow:none;background:#1d3024;padding:26px;max-height:100%;width:100%;max-width:790px;overflow-y:auto;align-items:stretch}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal)>div{border-top:3px solid var(--jump-accent)}
+#platdoGame #weaponShopModal .armory-panel{border-top:3px solid var(--jump-accent)}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal,#weaponShopModal) h2{font:900 30px/1.2 Outfit,Arial,sans-serif;letter-spacing:-.6px;color:#edf1df;margin-bottom:14px}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal,#weaponShopModal) h3{color:#d4e4b9}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal,#weaponShopModal) p{line-height:1.65}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal,#weaponShopModal) :is(.text-slate-400,.audio-note){color:#aebfa3}
+#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal,#weaponShopModal,#editorModal) button{border-radius:2px;box-shadow:none;transition:background .14s,border-color .14s}
+#platdoGame :is(.game-button,#closeSettingsBtn,#closeShopBtn,#closeLockerBtn,#closeLevelSelectBtn,#closeAdminBtn,#closeEditorBtn){border-radius:2px;background:#293f2c;border:1px solid #607249;color:#edf1df;box-shadow:none;padding:10px 13px;min-height:35px}
+#platdoGame .game-button.accent{background:var(--jump-accent);border-color:var(--jump-accent);color:#21301c}
+#platdoGame .game-button:hover{background:#405736}
+#platdoGame .game-button.accent:hover{background:#daff79}
+#platdoGame button:focus-visible,#platdoGame select:focus-visible,#platdoGame input:focus-visible{outline:2px solid #b5dc53;outline-offset:3px}
+#platdoGame .jump-home-actions button:focus-visible{outline-color:#38522c}
+#platdoGame .settings-tabs{gap:0;border-bottom:1px solid #61704b;padding-bottom:11px;margin-bottom:18px}
+#platdoGame .settings-tabs .game-button{background:none;border:0;border-radius:0;border-bottom:2px solid transparent;color:#b8c4a7;font-size:12px;font-weight:600}
+#platdoGame .settings-tabs .game-button[aria-selected="true"]{border-bottom-color:var(--jump-accent);color:var(--jump-accent)}
+#platdoGame .settings-panel{max-height:360px;margin-bottom:18px}
+#platdoGame .binding-row{border:0;border-bottom:1px solid #405335;background:transparent;border-radius:0;padding:13px 0;margin:0;display:grid;grid-template-columns:minmax(100px,1fr) 2fr;align-items:center}
+#platdoGame .binding-capture{background:#172c20;border:2px solid #c6ed58;border-radius:2px}
+#platdoGame #advancedWeaponAudio{border-color:#425938;border-radius:2px}
+#platdoGame :is(.audio-row input,#settingsModal input){accent-color:var(--jump-accent)}
+#platdoGame .score-totals>div{border:0;border-left:2px solid #657c48;border-radius:0;background:#263c29;text-align:left;padding:12px}
+#platdoGame .score-totals strong{color:var(--jump-accent);font-family:Outfit,Arial,sans-serif}
+#platdoGame #levelGrid{grid-template-columns:repeat(10,minmax(0,1fr));max-height:310px;gap:7px;padding:1px}
+#platdoGame #levelGrid>button{border-radius:2px!important;background:#314e31;border:1px solid #71854d;color:#f1f3e3}
+#platdoGame #levelGrid>button:disabled{background:#17291d;border-color:#344833;color:#74856a}
+#platdoGame #levelGrid>button:not(:disabled):hover{background:#4b6d37;border-color:var(--jump-accent)}
+#platdoGame :is(#levelTabCampaign,#levelTabMyLevels){background:#293f2c;border:1px solid #597043;color:#c3d0b2;border-radius:2px;box-shadow:none;padding:11px}
+#platdoGame :is(#levelTabCampaign,#levelTabMyLevels)[aria-pressed="true"]{background:var(--jump-accent);color:#21301c;border-color:var(--jump-accent)}
+#platdoGame .custom-level-row{border-radius:2px;background:#223725;border-color:#4b6240;padding:15px}
+#platdoGame .custom-level-name{color:#e6efce}
+#platdoGame .armory-grid{gap:12px}
+#platdoGame .weapon-card{border:1px solid #47623d;border-radius:2px;background:#203524;padding:17px}
+#platdoGame .weapon-card h3{font-size:18px}
+#platdoGame :is(#pauseOverlay,#winOverlay){background:#14251dee;backdrop-filter:blur(5px);color:#e9eedb;padding:30px;overflow-y:auto}
+#platdoGame #pauseOverlay h2{font:900 72px/1 Outfit,Arial,sans-serif;letter-spacing:-3px;margin:0 0 30px;color:#edf1df}
+#platdoGame #pauseOverlay>div{width:265px;gap:8px}
+#platdoGame #pauseOverlay button,#platdoGame #winOverlay button{border-radius:2px;border:1px solid #5f7944;min-height:44px;background:#2c472d;box-shadow:none;padding:12px 18px;color:#edf1df;font-size:12px}
+#platdoGame #pauseOverlay #resumeBtn,#platdoGame #winOverlay #nextLevelBtn{background:var(--jump-accent);color:#20321c;border-color:var(--jump-accent);font-weight:800}
+#platdoGame #winTitle{font-family:Outfit,Arial,sans-serif;font-size:clamp(28px,4vw,50px);letter-spacing:-1px;color:#edf1df}
+#platdoGame #winOverlay.max-win{background:#263c1ff5;border:3px solid var(--jump-accent);box-shadow:none}
+#platdoGame #maxWinBanner strong{color:var(--jump-accent);text-shadow:none}
+#platdoGame #maxFlagToast{background:var(--jump-accent);border-color:#e2ff9f;border-radius:2px;box-shadow:3px 3px 0 #223b1d;color:#223b1d}
+#platdoGame #editorModal>div{border-radius:2px;background:#1d3024;border-color:#647d49;box-shadow:none}
+@media(min-width:741px){#platdoGame:has(#titleOverlay.hidden){width:min(1200px,100%,calc((100dvh - 286px)*16/9))}}
+@media(max-width:1000px){#platdoGame .jump-home-layout{gap:22px 32px;padding:39px 31px 25px}#platdoGame .jump-wordmark strong{font-size:100px}#platdoGame .jump-wordmark i{font-size:71px;letter-spacing:-13px}#platdoGame .jump-menu-grid{column-gap:15px}#platdoGame .jump-menu-grid button{font-size:12px}#platdoGame .jump-home-showcase{padding-top:40px}#platdoGame #levelGrid{grid-template-columns:repeat(8,minmax(0,1fr))}}
+@media(max-width:740px){body:has(#platdoGame:not([hidden])){padding:12px;justify-content:flex-start}#platdoGame .hub-back-bar{padding:0 18px}#platdoGame .jump-nav-caption{display:none}#platdoGame:has(#titleOverlay:not(.hidden)) .game-stage{min-height:880px}#platdoGame .jump-home-layout{grid-template-columns:1fr;gap:28px;padding:31px 25px 24px;align-content:start}#platdoGame .jump-wordmark strong{font-size:116px}#platdoGame .jump-wordmark i{font-size:86px;letter-spacing:-10px}#platdoGame .jump-home-description{margin:21px 0 22px;font-size:12px}#platdoGame .jump-eyebrow{font-size:9px;margin-bottom:19px}#platdoGame .jump-wordmark>span:first-child{font-size:27px}#platdoGame .jump-home-showcase{padding-top:0}#platdoGame .jump-preview-heading{padding-top:12px;font-size:8px;letter-spacing:1.5px}#platdoGame .jump-preview-frame{padding:7px;box-shadow:5px 5px 0 #ced6b6}#platdoGame .jump-preview-corner{width:40px;height:40px;font-size:29px;right:-9px;bottom:-12px}#platdoGame .jump-campaign-progress{margin-top:24px}#platdoGame .jump-home-footer{margin-top:0;padding-top:17px;gap:14px;font-size:8px}#platdoGame .jump-home-footer>span{display:none}#platdoGame #jumpMenuControls{font-size:9px}#platdoGame .jump-showcase-caption{font-size:9px;margin-top:12px}#platdoGame .jump-menu-grid button{font-size:12px;min-height:45px}#platdoGame .jump-home-actions .jump-play{min-height:58px;font-size:24px;padding:14px 17px}#platdoGame .jump-hud{padding:10px 12px;min-height:61px}#platdoGame #levelMaxDisplay{display:none}#platdoGame #levelDisplay{font-size:25px}#platdoGame #levelLabel{font-size:8px;letter-spacing:.5px}#platdoGame .jump-cash-readout{padding:0 3px}#platdoGame #scoreDisplay{font-size:20px}#platdoGame :is(#menuBtn,#soundToggleBtn){padding:8px;font-size:10px}#platdoGame #statusMessage{display:none}#platdoGame .weapon-bar{grid-template-columns:1fr 1fr;padding:10px 11px;gap:8px}#platdoGame #inventoryTray{grid-column:1/-1;justify-content:center;gap:4px}#platdoGame .inventory-slot{max-width:calc(20% - 3px);width:100%;padding:2px 2px 5px}#platdoGame .inventory-slot canvas{height:25px}#platdoGame .inventory-slot span{font-size:8px}#platdoGame .inventory-slot small{font-size:7px}#platdoGame :is(#fireWeaponBtn,#inGameWeaponShopBtn){font-size:10px;padding:7px;min-height:32px}#platdoGame .weapon-help{font-size:8px;text-align:center}#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#editorModal,#adminModal,#weaponShopModal){padding:13px}#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal)>div,#platdoGame .armory-panel{padding:18px 14px}#platdoGame :is(#settingsModal,#shopModal,#lockerModal,#levelSelectModal,#adminModal,#weaponShopModal) h2{font-size:25px}#platdoGame #levelGrid{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}#platdoGame .binding-row{display:flex;align-items:stretch;padding:10px 0}#platdoGame .armory-grid{gap:8px}#platdoGame .weapon-card{padding:11px}#platdoGame .weapon-card h3{font-size:15px}#platdoGame #pauseOverlay h2{font-size:47px;margin-bottom:18px}#platdoGame #pauseOverlay>div{gap:5px}#platdoGame #pauseOverlay button{min-height:34px;padding:8px}#platdoGame:has(#pauseOverlay:not(.hidden)) .game-stage,#platdoGame:has(#winOverlay:not(.hidden)) .game-stage,#platdoGame:has(#settingsModal:not(.hidden)) .game-stage,#platdoGame:has(#weaponShopModal:not(.hidden)) .game-stage{min-height:520px}}
+@media(max-width:380px){#platdoGame .jump-wordmark strong{font-size:100px}#platdoGame .jump-wordmark i{font-size:72px}#platdoGame .jump-home-layout{padding-left:20px;padding-right:20px}#platdoGame .jump-menu-grid{column-gap:13px}#platdoGame .jump-menu-grid button{font-size:11px}#platdoGame .jump-nav-brand{font-size:11px}}
+@media(max-width:740px){#platdoGame:has(#titleOverlay:not(.hidden)) .game-stage{min-height:925px}#platdoGame .jump-wordmark strong{font-size:clamp(86px,25vw,116px)}#platdoGame .jump-wordmark i{font-size:.72em;letter-spacing:-9px;transform:translate(5px,-9px)}}
+@media(prefers-reduced-motion:reduce){#platdoGame button{transition:none!important;transform:none!important}}
+
