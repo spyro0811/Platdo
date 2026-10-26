@@ -1,4 +1,4 @@
-Play unblocked platdo at https://www.platdo.io, play it natively on spyro0811.github.io/Platdo (Must be a capital P)
+Play unblocked platdo at https://www.platdo.io, play it natively on https://spyro0811.github.io/Platdo (Must be a capital P)
 
 \----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
