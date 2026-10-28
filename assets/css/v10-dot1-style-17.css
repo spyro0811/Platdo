@@ -1,0 +1,134 @@
+
+/* Code PLATDO: a single visual language for menus, controls, and records. */
+#fieldGame:not(.god-core-game){--cp-ink:#111518;--cp-panel:#191e22;--cp-line:#ffffff21;--cp-muted:#a5adb2;--cp-paper:#f2f1e9;--cp-accent:#f4a35f;font-family:Inter,Arial,sans-serif!important;color:var(--cp-paper)}
+#fieldGame:not(.god-core-game)[data-code-mode="friendly"]{--cp-accent:#88d9e9}
+#fieldGame.god-core-game .code-ui-only{display:none!important}
+#fieldGame:not(.god-core-game) button{font-family:inherit;cursor:pointer}
+#fieldGame:not(.god-core-game) button:disabled{cursor:default}
+#fieldGame:not(.god-core-game) :is(button,select,input):focus-visible{outline:2px solid var(--cp-accent);outline-offset:4px}
+#fieldGame:not(.god-core-game) #fieldMenu{background:linear-gradient(90deg,#101518f5 0%,#101518e6 34%,#101518b0 67%,#101518d6 100%);color:var(--cp-paper)}
+#fieldGame:not(.god-core-game) .code-home-layout{width:100%;min-height:100%;height:auto;padding:clamp(24px,3.6vw,56px) clamp(25px,4.8vw,76px) 30px;position:relative}
+#fieldGame:not(.god-core-game) .code-home-header{min-height:34px;flex:none;border-bottom:1px solid var(--cp-line);padding-bottom:21px}
+#fieldGame:not(.god-core-game) .code-home-brand{font-family:Outfit,Arial,sans-serif;font-size:22px;font-weight:400;letter-spacing:-.6px}
+#fieldGame:not(.god-core-game) .code-home-brand:before{content:"";display:inline-block;width:12px;height:12px;background:var(--cp-accent);margin-right:12px;transform:skewX(-14deg)}
+#fieldGame:not(.god-core-game) .code-home-brand strong{font-weight:800;letter-spacing:.2px}
+#fieldGame:not(.god-core-game) .code-home-header>.code-home-tag{border:0;padding:0;color:var(--cp-muted);font-size:10px;font-weight:500;letter-spacing:2.2px;border-radius:0}
+#fieldGame:not(.god-core-game) .code-home-hero{flex:1;display:grid;grid-template-columns:minmax(0,1fr) clamp(245px,24vw,355px);grid-template-rows:auto auto auto auto auto;column-gap:clamp(35px,7vw,110px);align-content:center;align-items:start;max-width:none;width:100%;margin:0;padding:clamp(36px,6vh,80px) 0}
+#fieldGame:not(.god-core-game) .code-home-hero>.code-home-eyebrow{grid-column:1;margin:0 0 20px;color:var(--cp-accent);font-size:10px;line-height:1.5;letter-spacing:2.5px;font-weight:600;display:flex;align-items:center;gap:12px}
+#fieldGame:not(.god-core-game) .code-home-hero>.code-home-eyebrow:before{content:"";display:block;width:32px;height:1px;background:currentColor}
+#fieldGame:not(.god-core-game) .code-home-title{grid-column:1;margin:0;font-family:Outfit,Arial,sans-serif;font-weight:900;font-size:clamp(68px,9.8vw,164px);letter-spacing:-.065em;line-height:.82}
+#fieldGame:not(.god-core-game) .code-home-title span{display:block;font-weight:400;color:var(--cp-paper);font-size:.35em;letter-spacing:-.045em;margin:0 0 15px 3px;line-height:1}
+#fieldGame:not(.god-core-game) .code-home-description{grid-column:1;max-width:390px;margin:30px 0 0;color:#c2c8ca;font-size:14px;line-height:1.7;letter-spacing:0}
+#fieldGame:not(.god-core-game) .code-home-actions{grid-column:2;grid-row:1/6;align-self:center;display:flex;flex-direction:column;gap:0;width:100%;max-width:none;counter-reset:cp-menu}
+#fieldGame:not(.god-core-game) .code-home-actions :is(.code-home-play,.code-home-secondary){position:relative;display:flex;align-items:center;justify-content:space-between;min-height:68px;padding:19px 19px 19px 45px;border:0;border-top:1px solid var(--cp-line);border-radius:0;background:transparent;color:var(--cp-paper);text-align:left;font-family:Outfit,Arial,sans-serif;font-size:27px;font-weight:600;letter-spacing:-.6px;line-height:1;transition:background .16s,color .16s,padding .16s}
+#fieldGame:not(.god-core-game) .code-home-actions :is(.code-home-play,.code-home-secondary):before{counter-increment:cp-menu;content:"0" counter(cp-menu);position:absolute;left:13px;top:50%;transform:translateY(-50%);font:10px/1 Inter,Arial,sans-serif;color:var(--cp-muted);letter-spacing:0}
+#fieldGame:not(.god-core-game) .code-home-actions :is(.code-home-play,.code-home-secondary)>span{font:22px/1 Arial,sans-serif;font-weight:400;color:var(--cp-muted)}
+#fieldGame:not(.god-core-game) .code-home-actions .code-home-play{min-height:83px;margin-bottom:18px;background:var(--cp-accent);color:var(--cp-ink);font-size:34px;font-weight:700;border:0}
+#fieldGame:not(.god-core-game) .code-home-actions .code-home-play:before,#fieldGame:not(.god-core-game) .code-home-actions .code-home-play>span{color:#111518a6}
+#fieldGame:not(.god-core-game) .code-home-actions .code-home-play:hover{background:var(--cp-paper);transform:none;padding-left:49px}
+#fieldGame:not(.god-core-game) .code-home-actions .code-home-secondary:hover{background:#ffffff09;color:var(--cp-accent);padding-left:49px;transform:none}
+#fieldGame:not(.god-core-game) #fieldBack{font-size:12px;letter-spacing:.2px;margin-top:16px;padding:16px 0;min-height:42px;color:var(--cp-muted);border:0;border-radius:0;background:none}
+#fieldGame:not(.god-core-game) #fieldBack:hover{color:var(--cp-paper)}
+#fieldGame:not(.god-core-game) #fieldStatus{grid-column:1;max-width:420px;margin:14px 0 0;font-size:12px;color:var(--cp-accent);line-height:1.5}
+#fieldGame:not(.god-core-game) #fieldStatus:empty{display:none}
+#fieldGame:not(.god-core-game) .code-home-footer{display:grid;grid-template-columns:minmax(0,1fr) minmax(330px,.76fr);gap:28px;align-items:start!important;flex:none;border-top:1px solid var(--cp-line);padding-top:22px;font-size:10px;letter-spacing:1.1px;color:var(--cp-muted)}
+#fieldGame:not(.god-core-game) .code-home-footer>div{min-width:0!important;text-align:left!important}
+#fieldGame:not(.god-core-game) .code-home-footer>div:has(#fieldModeChoices){padding-left:28px;border-left:1px solid var(--cp-line)}
+#fieldGame:not(.god-core-game) .code-home-footer .code-home-eyebrow{margin:0 0 12px!important;font-size:10px;color:var(--cp-muted);letter-spacing:1.1px;font-weight:500}
+#fieldGame:not(.god-core-game) #fieldMapCaption{min-height:15px;line-height:1.5;margin-bottom:12px!important;font-size:10px;letter-spacing:.6px}
+#fieldGame:not(.god-core-game) :is(#fieldMapChoices,#fieldModeChoices){gap:5px!important}
+#fieldGame:not(.god-core-game) :is(#fieldMapChoices,#fieldModeChoices) button{background:transparent!important;color:#c4cace!important;border:1px solid var(--cp-line)!important;border-radius:0!important;min-height:38px;padding:10px 12px!important;font-size:10px!important;letter-spacing:.5px;font-weight:500}
+#fieldGame:not(.god-core-game) :is(#fieldMapChoices,#fieldModeChoices) button[aria-pressed="true"]{background:var(--cp-paper)!important;color:var(--cp-ink)!important;border-color:var(--cp-paper)!important}
+#fieldGame:not(.god-core-game) :is(#fieldMapChoices,#fieldModeChoices) button:hover{border-color:var(--cp-accent)!important}
+#fieldGame:not(.god-core-game) label:has(>[data-field-friendly]){display:flex!important;align-items:center;gap:10px!important;width:max-content;padding:10px 0!important;background:none!important;border:0!important;border-radius:0!important;font-size:12px!important;color:#c4cace!important;letter-spacing:0;margin-top:8px!important}
+#fieldGame:not(.god-core-game) input[type="checkbox"]{accent-color:var(--cp-accent);width:16px;height:16px;vertical-align:middle;margin-right:6px}
+#fieldGame:not(.god-core-game) [data-field-friendly]{appearance:none;width:30px!important;height:17px!important;border-radius:20px;background:#ffffff30;margin:0;position:relative;flex:none;cursor:pointer}
+#fieldGame:not(.god-core-game) [data-field-friendly]:before{content:"";position:absolute;left:3px;top:3px;width:11px;height:11px;border-radius:50%;background:#bec7ca;transition:transform .15s}
+#fieldGame:not(.god-core-game) [data-field-friendly]:checked{background:var(--cp-accent)}
+#fieldGame:not(.god-core-game) [data-field-friendly]:checked:before{background:#172027;transform:translateX(13px)}
+/* Compact player: the track and controls sit in the menu instead of a cover card. */
+#fieldGame:not(.god-core-game) [data-field-music]{justify-content:flex-start!important;gap:7px!important;color:var(--cp-muted)!important;margin:24px 0 0!important;grid-column:1;max-width:440px}
+#fieldGame:not(.god-core-game) [data-field-music]>button{width:30px;height:30px;flex:none;border:1px solid var(--cp-line);font-size:9px;color:var(--cp-muted)}
+#fieldGame:not(.god-core-game) [data-field-music]>button:first-child{order:2}
+#fieldGame:not(.god-core-game) [data-field-music]>button:last-child{order:3}
+#fieldGame:not(.god-core-game) [data-field-music]>div{flex:1;text-align:left!important;max-width:none!important;min-width:0}
+#fieldGame:not(.god-core-game) [data-field-music]>div>div:first-child{display:none!important}
+#fieldGame:not(.god-core-game) [data-field-music]>div>div:nth-child(2){font-size:11px!important;line-height:1.5;margin:0!important;letter-spacing:0}
+#fieldGame:not(.god-core-game) [data-field-music]>div>div:last-child{display:flex!important;align-items:center;gap:12px!important;margin-top:7px!important}
+#fieldGame:not(.god-core-game) [data-field-music] [data-field-music-pause]{background:none!important;color:var(--cp-paper)!important;border:0!important;border-radius:0!important;padding:0!important;font-size:10px!important;letter-spacing:.2px}
+#fieldGame:not(.god-core-game) [data-field-music]>div>div:last-child>button:last-child{font-size:10px!important;color:var(--cp-muted)}
+/* Settings, history, and equipment share a spacious desktop-first shell. */
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel){background:var(--cp-ink)!important;color:var(--cp-paper)!important;padding:clamp(24px,4vw,58px) clamp(24px,5vw,76px)!important;scrollbar-color:#586168 var(--cp-ink)}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) :is(h2,h3){font-family:Outfit,Arial,sans-serif;font-weight:600!important;letter-spacing:-.04em;line-height:1.1}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) h2{font-size:clamp(31px,4vw,54px)!important;margin:22px 0 26px!important}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) p{color:var(--cp-muted)!important;font-size:13px;line-height:1.7;max-width:950px}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) :is(button,select){border-color:var(--cp-line)!important;border-radius:2px!important;font-size:12px;letter-spacing:0;box-shadow:none;min-height:38px;line-height:1.4}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) button:hover{border-color:var(--cp-accent)!important;background:#ffffff08!important}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) select{background:var(--cp-panel)!important;color:var(--cp-paper)!important;padding:10px 13px!important}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) input[type="range"]{accent-color:var(--cp-accent);height:4px;cursor:pointer}
+#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel) output{font-variant-numeric:tabular-nums;color:var(--cp-accent);margin-left:12px;font-size:12px}
+#fieldGame:not(.god-core-game) #fieldSettings>div{max-width:1180px!important;display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:clamp(30px,5vw,74px);align-items:start}
+#fieldGame:not(.god-core-game) #fieldSettingsBack{grid-column:1/-1;justify-self:start;border:0!important;padding:0!important;background:none!important;color:var(--cp-muted);font-size:12px}
+#fieldGame:not(.god-core-game) #fieldSettings .code-settings-heading{font-family:Outfit,Arial,sans-serif;font-weight:600;letter-spacing:-.045em;line-height:1.1;grid-column:1/-1;border-bottom:1px solid var(--cp-line);padding-bottom:27px;margin:21px 0 28px!important;font-size:clamp(38px,5vw,66px)!important}
+#fieldGame:not(.god-core-game) #fieldSettings [role="tablist"]{grid-column:1;grid-row:3;display:flex!important;flex-direction:column;flex-wrap:nowrap!important;gap:3px!important;margin-top:0!important;position:sticky;top:0}
+#fieldGame:not(.god-core-game) #fieldSettings [role="tab"]{display:block!important;text-align:left;border:0!important;border-radius:0!important;padding:14px 16px!important;min-height:47px;background:transparent!important;color:var(--cp-muted);font-size:13px;font-weight:500;position:relative}
+#fieldGame:not(.god-core-game) #fieldSettings [role="tab"][aria-selected="true"]{background:#ffffff08!important;color:var(--cp-paper)}
+#fieldGame:not(.god-core-game) #fieldSettings [role="tab"][aria-selected="true"]:before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:2px;background:var(--cp-accent)}
+#fieldGame:not(.god-core-game) #fieldSettings [role="tabpanel"]{grid-column:2;grid-row:3;min-width:0;padding-bottom:32px}
+#fieldGame:not(.god-core-game) #fieldSettings [role="tabpanel"]>h2{margin-top:5px!important;font-size:32px!important}
+#fieldGame:not(.god-core-game) #fieldSettings>div>button:last-child:not(#fieldSettingsBack){grid-column:2;justify-self:start;margin-top:6px!important;border-color:#865e4a!important;color:#e1bca6}
+#fieldGame:not(.god-core-game) #fieldBindRows>div{gap:8px!important;padding:13px 0!important;border-color:var(--cp-line)!important}
+#fieldGame:not(.god-core-game) #fieldBindRows>div>strong{font-size:12px;font-weight:500;width:148px!important}
+#fieldGame:not(.god-core-game) #fieldBindRows>div>span{border-color:var(--cp-line)!important;border-radius:2px!important;background:#ffffff05}
+#fieldGame:not(.god-core-game) #fieldBindRows button{min-height:35px;padding:8px 11px!important}
+#fieldGame:not(.god-core-game) #fieldBindPrompt:empty{min-height:8px!important;margin-top:10px!important}
+#fieldGame:not(.god-core-game) #fieldBindPrompt:not(:empty){padding:10px 12px;background:#f4a35f12;border-left:2px solid var(--cp-accent);color:var(--cp-accent)!important}
+#fieldGame:not(.god-core-game) #fieldAudioPanel nav{display:flex;gap:6px;flex-wrap:wrap}
+#fieldGame:not(.god-core-game) #fieldAudioPanel nav button{padding:8px 18px;letter-spacing:0;background:transparent!important}
+#fieldGame:not(.god-core-game) #fieldAudioPanel nav button[aria-pressed="true"]{background:var(--cp-paper)!important;color:var(--cp-ink)!important}
+#fieldGame:not(.god-core-game) #fieldAudioPanel :is(h3,h4){margin:28px 0 12px!important}
+#fieldGame:not(.god-core-game) #fieldAudioPanel h3{font-size:24px!important}
+#fieldGame:not(.god-core-game) #fieldAudioPanel h4{font-size:12px;letter-spacing:.5px}
+#fieldGame:not(.god-core-game) #fieldAudioPanel>label{font-size:13px}
+#fieldGame:not(.god-core-game) #fieldLoadoutPanel>div{border-color:var(--cp-line)!important;border-radius:0!important;background:#ffffff03!important;padding:15px!important}
+#fieldGame:not(.god-core-game) #fieldLoadoutPanel>div>strong{font-size:14px;font-weight:500}
+#fieldGame:not(.god-core-game) #fieldRunsPanel>h2{margin-top:0!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel>nav{padding:9px 0 20px;border-bottom:1px solid var(--cp-line);gap:6px!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel>nav button{padding:10px 22px;min-width:100px;background:transparent!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel>nav button[aria-pressed="true"]{background:var(--cp-paper)!important;color:var(--cp-ink)!important;border-color:var(--cp-paper)!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel article[data-latest-run]{border:1px solid var(--cp-line)!important;border-radius:0!important;background:#ffffff03;padding:22px 26px!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel article[data-latest-run] h3{font-size:22px!important;margin-bottom:12px}
+#fieldGame:not(.god-core-game) #fieldRunsPanel .code-run-podium{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px!important;align-items:stretch!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel .code-run-podium>article{min-width:0!important;min-height:0!important;padding:23px!important;border:1px solid var(--cp-line)!important;border-top:2px solid #64717b!important;background:var(--cp-panel)!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel .code-run-podium>article[data-rank="1"]{border-top-color:var(--cp-accent)!important;order:-1}
+#fieldGame:not(.god-core-game) #fieldRunsPanel .code-run-podium h3{font-size:42px!important;color:var(--cp-accent)}
+#fieldGame:not(.god-core-game) #fieldRunsPanel .code-run-podium p{font-size:12px;margin-top:8px!important}
+#fieldGame:not(.god-core-game) #fieldRunsPanel table{font-size:12px}
+#fieldGame:not(.god-core-game) #fieldRunsPanel :is(th,td){padding:15px 12px!important;min-width:90px;vertical-align:top;line-height:1.65}
+#fieldGame:not(.god-core-game) #fieldRunsPanel th{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--cp-muted);font-weight:500}
+#fieldGame:not(.god-core-game) #fieldRunsPanel tr{border-color:var(--cp-line)!important}
+#fieldGame:not(.god-core-game) #fieldLockerPanel>nav{border-bottom:1px solid var(--cp-line);padding-bottom:22px;gap:6px!important}
+#fieldGame:not(.god-core-game) #fieldLockerPanel>nav button{padding:10px 22px;background:transparent!important}
+#fieldGame:not(.god-core-game) #fieldLockerPanel>nav button[aria-pressed="true"]{background:var(--cp-paper)!important;color:var(--cp-ink)!important}
+#fieldGame:not(.god-core-game) #fieldLockerPanel>div>button{border:1px solid var(--cp-line)!important;background:#ffffff03!important;border-radius:0!important;max-width:640px;padding:28px!important}
+#fieldGame:not(.god-core-game) #fieldLockerPanel img{height:clamp(240px,40vh,480px)!important;object-position:center bottom}
+#fieldGame:not(.god-core-game) #fieldLockerPanel>div>button>p{text-align:left;color:var(--cp-paper)!important;margin:20px 0 0;font-size:14px}
+#fieldGame:not(.god-core-game) #fieldPausePanel{background:#101518e6!important;backdrop-filter:blur(12px)!important}
+#fieldGame:not(.god-core-game) #fieldPausePanel>div{width:min(380px,calc(100vw - 48px))!important;gap:9px!important}
+#fieldGame:not(.god-core-game) #fieldPausePanel h2{font:600 clamp(42px,6vw,68px)/1 Outfit,Arial,sans-serif!important;text-align:left!important;letter-spacing:-.05em;margin-bottom:17px}
+#fieldGame:not(.god-core-game) #fieldPausePanel [data-field-music]{margin:0 0 23px!important;max-width:none}
+#fieldGame:not(.god-core-game) #fieldPausePanel>.code-home-play,#fieldGame:not(.god-core-game) #fieldPausePanel .code-home-play{background:var(--cp-accent);color:var(--cp-ink);border:0;border-radius:0;padding:17px 20px;font:600 23px Outfit,Arial,sans-serif}
+#fieldGame:not(.god-core-game) #fieldPausePanel .code-home-secondary{border:0;border-bottom:1px solid var(--cp-line);background:transparent;color:var(--cp-paper);border-radius:0;padding:17px 20px;font:500 20px Outfit,Arial,sans-serif}
+/* Gameplay stays sparse: the user's health and ammo remain in their corners. */
+#fieldGame:not(.god-core-game) #fieldMenuBtn{background:transparent!important;border:0!important;border-radius:0!important;color:white!important;text-shadow:0 1px 3px #001525;padding:10px!important;font-size:12px;letter-spacing:.3px}
+#fieldGame:not(.god-core-game) #fieldRunTimer{font:500 13px/1.3 Inter,Arial,sans-serif!important;font-variant-numeric:tabular-nums;background:none!important;border:0!important;border-radius:0!important;text-shadow:0 1px 3px #001525;padding:4px 10px!important;top:59px!important}
+#fieldGame:not(.god-core-game) #fieldPracticeHUD{background:none!important;border:0!important;border-radius:0!important;text-shadow:0 1px 3px #001525;font-family:Outfit,Arial,sans-serif}
+#fieldGame:not(.god-core-game) #fieldInventorySlots{background:none!important;border-radius:0!important;gap:8px!important;padding:0!important}
+#fieldGame:not(.god-core-game) #fieldInventorySlots button{border:0!important;border-radius:0!important;background:transparent!important;color:#fff!important;text-shadow:0 1px 3px #001525;font-size:12px;min-height:38px;letter-spacing:.2px}
+#fieldGame:not(.god-core-game) #fieldInventorySlots button[aria-pressed="true"]{color:var(--cp-accent)!important;text-decoration:underline;text-underline-offset:7px;text-decoration-thickness:2px}
+@media(min-width:1800px){#fieldGame:not(.god-core-game) .code-home-hero{grid-template-columns:minmax(0,1fr) 380px;column-gap:12vw}#fieldGame:not(.god-core-game) .code-home-title{font-size:180px}}
+@media(max-width:1000px){#fieldGame:not(.god-core-game) .code-home-hero{column-gap:35px;grid-template-columns:minmax(0,1fr) 260px}#fieldGame:not(.god-core-game) .code-home-title{font-size:clamp(64px,9.8vw,98px)}#fieldGame:not(.god-core-game) .code-home-footer{grid-template-columns:1fr;gap:18px}#fieldGame:not(.god-core-game) .code-home-footer>div:has(#fieldModeChoices){padding-left:0;border-left:0;display:flex;align-items:center;flex-wrap:wrap;gap:10px}#fieldGame:not(.god-core-game) .code-home-footer .code-home-eyebrow{margin:0 5px 0 0!important}#fieldGame:not(.god-core-game) .code-home-footer label:has(>[data-field-friendly]){margin:0!important;padding:5px 0!important}#fieldGame:not(.god-core-game) #fieldSettings>div{grid-template-columns:165px minmax(0,1fr);column-gap:28px}}
+@media(max-width:620px){#fieldGame:not(.god-core-game) .code-home-layout{padding:23px 24px 27px}#fieldGame:not(.god-core-game) .code-home-header{padding-bottom:18px;min-height:28px}#fieldGame:not(.god-core-game) .code-home-brand{font-size:18px}#fieldGame:not(.god-core-game) .code-home-header>.code-home-tag{font-size:8px;letter-spacing:1px;display:block}#fieldGame:not(.god-core-game) .code-home-hero{display:flex;flex-direction:column;padding:35px 0 23px;gap:0}#fieldGame:not(.god-core-game) .code-home-hero>.code-home-eyebrow{margin-bottom:18px;font-size:9px;letter-spacing:1.5px}#fieldGame:not(.god-core-game) .code-home-title{font-size:clamp(58px,18vw,100px)}#fieldGame:not(.god-core-game) .code-home-title span{margin-bottom:11px}#fieldGame:not(.god-core-game) .code-home-description{margin:22px 0 0;font-size:12px;max-width:320px;line-height:1.65}#fieldGame:not(.god-core-game) .code-home-actions{margin-top:27px}#fieldGame:not(.god-core-game) .code-home-actions :is(.code-home-play,.code-home-secondary){min-height:52px;padding:14px 16px 14px 43px;font-size:23px}#fieldGame:not(.god-core-game) .code-home-actions .code-home-play{min-height:63px;font-size:29px;margin-bottom:9px}#fieldGame:not(.god-core-game) #fieldBack{padding:11px 0;margin-top:10px;min-height:36px;font-size:11px}#fieldGame:not(.god-core-game) .code-home-hero>[data-field-music]{margin-top:10px!important;width:100%}#fieldGame:not(.god-core-game) .code-home-footer{gap:19px;padding-top:18px}#fieldGame:not(.god-core-game) :is(#fieldMapChoices,#fieldModeChoices) button{font-size:9px!important;padding:9px 10px!important;min-height:35px}#fieldGame:not(.god-core-game) .code-home-footer>div:has(#fieldModeChoices){align-items:flex-start}#fieldGame:not(.god-core-game) .code-home-footer .code-home-eyebrow{width:100%;font-size:9px}#fieldGame:not(.god-core-game) :is(#fieldSettings,#fieldRunsPanel,#fieldLockerPanel){padding:24px!important}#fieldGame:not(.god-core-game) #fieldSettings>div{display:block}#fieldGame:not(.god-core-game) #fieldSettings .code-settings-heading{font-size:45px!important;margin:18px 0 14px!important;padding-bottom:20px}#fieldGame:not(.god-core-game) #fieldSettings [role="tablist"]{position:static;display:flex!important;flex-direction:row;flex-wrap:wrap!important;gap:2px!important;padding-bottom:17px;margin-bottom:22px}#fieldGame:not(.god-core-game) #fieldSettings [role="tab"]{font-size:11px;padding:10px 12px!important;min-height:38px}#fieldGame:not(.god-core-game) #fieldSettings [role="tab"][aria-selected="true"]:before{top:auto;bottom:0;left:12px;right:12px;width:auto;height:2px}#fieldGame:not(.god-core-game) #fieldSettings [role="tabpanel"]>h2{font-size:29px!important}#fieldGame:not(.god-core-game) #fieldBindRows>div>strong{width:100%!important;flex:none;margin-bottom:4px}#fieldGame:not(.god-core-game) #fieldBindRows>div{gap:6px!important;padding:13px 0!important}#fieldGame:not(.god-core-game) #fieldBindRows button{font-size:11px;padding:8px 9px!important}#fieldGame:not(.god-core-game) #fieldRunsPanel .code-run-podium{grid-template-columns:1fr}#fieldGame:not(.god-core-game) #fieldRunsPanel>nav button{min-width:0;padding:10px 17px}#fieldGame:not(.god-core-game) #fieldLockerPanel>nav button{padding:10px 15px}#fieldGame:not(.god-core-game) #fieldLockerPanel img{height:270px!important}#fieldGame:not(.god-core-game) #fieldLockerPanel>div>button{padding:20px!important}#fieldGame:not(.god-core-game) #fieldInventorySlots{gap:5px!important}}
+@media(max-height:700px) and (min-width:621px){#fieldGame:not(.god-core-game) .code-home-layout{padding-top:23px;padding-bottom:21px}#fieldGame:not(.god-core-game) .code-home-header{padding-bottom:16px}#fieldGame:not(.god-core-game) .code-home-hero{padding:26px 0}#fieldGame:not(.god-core-game) .code-home-title{font-size:clamp(68px,8.6vw,115px)}#fieldGame:not(.god-core-game) .code-home-description{margin-top:20px;font-size:12px}#fieldGame:not(.god-core-game) .code-home-actions :is(.code-home-play,.code-home-secondary){min-height:53px;font-size:23px;padding-top:14px;padding-bottom:14px}#fieldGame:not(.god-core-game) .code-home-actions .code-home-play{min-height:65px;font-size:29px;margin-bottom:10px}#fieldGame:not(.god-core-game) #fieldBack{padding:10px 0;margin-top:9px}#fieldGame:not(.god-core-game) [data-field-music]{margin-top:17px!important}}
+@media(prefers-reduced-motion:reduce){#fieldGame:not(.god-core-game) *{scroll-behavior:auto!important;transition:none!important}}
+

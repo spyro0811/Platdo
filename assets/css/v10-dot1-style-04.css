@@ -1,0 +1,26 @@
+
+        .game-stage { min-height: 530px; }
+        #titleOverlay { overflow-y: auto; }
+        #levelSelectModal > div { max-height: 96%; }
+        #levelGrid { min-height: 0; }
+        .game-button { border: 1px solid #475569; border-radius: 10px; background: #1e293b; color: #e2e8f0; padding: 8px 12px; font-weight: 700; font-size: 12px; cursor: pointer; }
+        .game-button:hover { background: #334155; }
+        .game-button:disabled { opacity: .45; cursor: not-allowed; }
+        .game-button.accent { background: #0d9488; border-color: #2dd4bf; color: white; }
+        .game-button:focus-visible, .weapon-select:focus-visible { outline: 2px solid #38bdf8; outline-offset: 2px; }
+        .weapon-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 14px; background: #0f172a; border-top: 1px solid #334155; }
+        .weapon-select { max-width: 180px; background: #020617; color: #e2e8f0; border: 1px solid #475569; border-radius: 8px; padding: 7px; font-size: 12px; }
+        .weapon-help { color: #94a3b8; font-size: 11px; flex: 1; min-width: 180px; }
+        #weaponShopModal { position: absolute; inset: 0; z-index: 60; background: rgba(2,6,23,.97); padding: 16px; overflow-y: auto; }
+        .armory-panel { max-width: 650px; margin: 0 auto; padding: 16px; background: #0f172a; border: 1px solid #475569; border-radius: 16px; }
+        .armory-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 14px 0; }
+        .weapon-card { padding: 12px; border: 1px solid #334155; border-radius: 12px; background: #020617; }
+        .weapon-card h3 { font-size: 15px; color: #5eead4; font-weight: 800; }
+        .weapon-card p { font-size: 11px; color: #94a3b8; margin: 5px 0 10px; }
+        .weapon-card .game-button { width: 100%; }
+        #weaponShopMessage { font-size: 12px; color: #fcd34d; min-height: 18px; }
+        .custom-level-row { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border: 1px solid #334155; border-radius: 12px; background: #020617; }
+        .custom-level-name { width: 100%; overflow-wrap: anywhere; text-align: left; font-size: 13px; font-weight: 700; color: #5eead4; }
+        #editorSaveCopyBtn.hidden { display: none; }
+        @media (max-width: 639px) { .game-stage { min-height: 530px; } #titleOverlay { padding: 12px; } .armory-panel { padding: 10px; } .weapon-card { padding: 8px; } }
+    
