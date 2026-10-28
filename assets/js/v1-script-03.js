@@ -1,0 +1,1 @@
+window.addEventListener("keydown",e=>window.PlatdoHub?.handleKey(e),true);window.addEventListener("keyup",e=>{if(window.PlatdoHub?.panel)e.stopImmediatePropagation();},true);

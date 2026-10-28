@@ -1,0 +1,60 @@
+#platdoTouchControls[hidden],#platdoTouchControls [hidden],#platdoStandaloneControls[hidden]{display:none!important}
+html[data-control-mode="pc"] #platdoTouchControls,html[data-control-mode="pc"] .jump-touch-controls,html[data-control-mode="pc"] .sw-touch,html[data-control-mode="pc"] [data-reset-control]{display:none!important}
+#platdoTouchControls{position:fixed;inset:0;z-index:150000;pointer-events:none;font:700 12px/1.2 Arial,sans-serif;color:#fff;user-select:none;-webkit-user-select:none;touch-action:none;--pt-size:56px;--pt-gap:8px}
+#platdoTouchControls *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#platdoTouchControls button{pointer-events:auto;touch-action:none;min-width:var(--pt-size);min-height:var(--pt-size);padding:7px;border:1px solid #ffffff78;border-radius:15px;background:#101d30b8;box-shadow:0 3px 12px #0004;color:white;font:inherit;text-align:center;cursor:pointer}
+#platdoTouchControls button[aria-pressed="true"]{background:#2575bde6;border-color:#b5edff;transform:scale(.96)}
+#platdoTouchControls button:focus-visible{outline:3px solid #72d4ff;outline-offset:2px}
+#platdoTouchControls .pt-look{position:absolute;inset:0 0 0 38%;pointer-events:auto;touch-action:none}
+#platdoTouchControls .pt-look span{position:absolute;top:48%;right:15%;color:#fff9;font-size:11px;text-shadow:0 1px 3px #000;pointer-events:none}
+#platdoTouchControls .pt-stick{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:max(20px,env(safe-area-inset-bottom));width:132px;height:132px;border:2px solid #ffffff6b;border-radius:50%;background:#0b172b65;pointer-events:auto;touch-action:none}
+#platdoTouchControls .pt-stick i{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:#fff7;border:2px solid #fff9;pointer-events:none}
+#platdoTouchControls .pt-stick-label{position:absolute;top:-23px;left:0;width:100%;text-align:center;text-shadow:0 1px 3px #000;pointer-events:none}
+#platdoTouchControls .pt-right{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,minmax(48px,var(--pt-size)));gap:var(--pt-gap)}
+#platdoTouchControls .pt-left{position:absolute;left:max(20px,env(safe-area-inset-left));bottom:calc(max(20px,env(safe-area-inset-bottom)) + 165px);display:grid;grid-template-columns:repeat(2,minmax(48px,var(--pt-size)));gap:var(--pt-gap)}
+#platdoTouchControls .pt-top{position:absolute;top:max(12px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);display:flex;gap:var(--pt-gap);max-width:90%}
+#platdoTouchControls .pt-top button{min-height:44px;min-width:54px;max-width:95px;background:#101d30cc}
+#platdoTouchControls .pt-extra{position:absolute;left:50%;top:65px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:12px;border:1px solid #7994b5;border-radius:18px;background:#0a1627f5;display:grid;grid-template-columns:repeat(3,minmax(62px,90px));gap:8px;pointer-events:auto}
+#platdoStandaloneControls{position:fixed;right:16px;bottom:14px;z-index:140000;padding:8px 11px;border:1px solid #7c99b7;border-radius:10px;background:#10213de8;color:#fff;font:13px Arial,sans-serif}
+#platdoStandaloneControls select{padding:8px;margin-left:8px;color:#fff;background:#203852;border:1px solid #96afc8;border-radius:6px}
+html[data-control-mode="mobile"] :is(#gameCanvas,#fieldCanvas,#cityCanvas,.drive-canvas,.sw-canvas){touch-action:none}
+@media(max-width:480px){#platdoTouchControls{--pt-size:50px;--pt-gap:6px;font-size:11px}#platdoTouchControls .pt-stick{width:112px;height:112px;left:max(14px,env(safe-area-inset-left))}#platdoTouchControls .pt-right{right:max(12px,env(safe-area-inset-right))}#platdoTouchControls .pt-left{bottom:calc(max(20px,env(safe-area-inset-bottom)) + 140px);left:14px}}
+@media(max-height:500px){#platdoTouchControls{--pt-size:46px;--pt-gap:6px;font-size:11px}#platdoTouchControls .pt-stick{width:108px;height:108px;bottom:12px}#platdoTouchControls .pt-left{bottom:144px}#platdoTouchControls .pt-right{bottom:12px}#platdoTouchControls .pt-top{top:max(6px,env(safe-area-inset-top))}#platdoTouchControls .pt-top button{min-height:40px}#platdoTouchControls .pt-extra{top:54px}}
+/* Rebinding remains visibly active until a real input is captured or cancelled. */
+.platdo-bind-wait{white-space:nowrap}
+.platdo-bind-wait::after{content:'...';display:inline-block;overflow:hidden;vertical-align:bottom;white-space:nowrap;font-family:monospace;width:1ch;animation:platdoBindDots 1.5s steps(1,end) infinite}
+@keyframes platdoBindDots{0%,32%{width:1ch}33%,65%{width:2ch}66%,100%{width:3ch}}
+
+/* One independently saved control method per game. */
+.pt-method-table{width:100%;border-collapse:collapse;table-layout:fixed;color:inherit;font-size:14px}
+.pt-method-table th,.pt-method-table td{padding:12px 8px;border-bottom:1px solid #8c9bad55;text-align:center}
+.pt-method-table thead th{font-weight:800;border-bottom:3px solid #6d859c}
+.pt-method-table th:first-child{width:40%;text-align:left}
+.pt-method-table tr>*+*{border-left:2px solid #8296ab66}
+.pt-method-table label{display:flex;justify-content:center;align-items:center;gap:7px;min-height:44px;padding:6px;border-radius:9px;cursor:pointer}
+.pt-method-table label:has(:checked){background:#146cae;color:white;box-shadow:inset 0 0 0 1px #8dd3ff}
+.pt-method-table input{width:18px;height:18px;accent-color:#65ceff;flex:none}
+.pt-method-table input:focus-visible{outline:3px solid #f5ba47;outline-offset:3px}
+@media(max-width:480px){.pt-method-table th,.pt-method-table td{padding:7px 3px;font-size:12px}.pt-method-table label{flex-direction:column;gap:4px;padding:4px}.pt-method-table th:first-child{width:38%}}
+
+/* City's action shapes keep artwork and hit targets aligned. */
+#platdoTouchControls[data-design="city"]{--pt-size:54px;--pt-gap:8px}
+#platdoTouchControls[data-design="city"] button{border:1.5px solid #e1f4ffb8;background:linear-gradient(160deg,#253a47db,#0d1d29cf);box-shadow:0 3px 0 #07141b9c,0 2px 12px #0005;border-radius:50%;text-shadow:0 1px 2px #000;font-size:10px}
+#platdoTouchControls[data-design="city"] button[aria-pressed="true"]{color:#fff;border-color:#b9f6ff;background:linear-gradient(155deg,#43b2c5e8,#14677be8);box-shadow:inset 0 2px 7px #03111f77,0 0 0 3px #7ceaff40;transform:translateY(2px)}
+#platdoTouchControls[data-design="city"] .pt-icon-button{display:flex;align-items:center;justify-content:center;flex-direction:column;padding:5px;gap:1px}
+#platdoTouchControls[data-design="city"] .pt-icon-button svg{display:block;width:26px;height:26px;pointer-events:none;flex-shrink:0}
+#platdoTouchControls[data-design="city"] .pt-icon-button span{max-width:54px;line-height:1.05;pointer-events:none}
+#platdoTouchControls[data-design="city"] .pt-stick{background:radial-gradient(circle,#22313c99 0 22%,#ffffff38 23% 25%,#091a286b 26% 65%,#d1efff99 66% 68%,#14253688 69%);border:2px solid #e9faff82;box-shadow:0 4px 16px #0005,inset 0 0 0 9px #ffffff0d}
+#platdoTouchControls[data-design="city"] .pt-stick i{width:44%;height:44%;background:radial-gradient(circle at 40% 30%,#eefaffd9,#acccdeb3 65%,#718fa5cd);border:2px solid #e7f6ffcc;box-shadow:0 3px 7px #0007}
+#platdoTouchControls[data-design="city"] .pt-steering{position:absolute;left:max(14px,env(safe-area-inset-left));bottom:max(24px,env(safe-area-inset-bottom));display:flex;gap:15px}
+#platdoTouchControls[data-design="city"] .pt-steering button{width:66px;height:68px;border-radius:18px}
+#platdoTouchControls[data-design="city"] .pt-steering svg{width:36px;height:36px;fill:#d5f1ff;stroke-width:1}
+#platdoTouchControls[data-design="city"] .pt-pedals{position:absolute;right:max(15px,env(safe-area-inset-right));bottom:max(22px,env(safe-area-inset-bottom));display:grid;grid-template-columns:58px 74px;grid-template-rows:54px 70px;gap:12px;align-items:end}
+#platdoTouchControls[data-design="city"] [data-shape="gas"]{grid-column:2;grid-row:1 / 3;width:58px;height:136px;justify-self:end;border-radius:17px 17px 11px 11px;background:repeating-linear-gradient(0deg,#101d2999 0 7px,#c1dfef24 8px 11px),linear-gradient(130deg,#536977d9,#152b37eb)}
+#platdoTouchControls[data-design="city"] [data-shape="gas"] svg{height:54px;width:36px}
+#platdoTouchControls[data-design="city"] [data-shape="brake"]{grid-column:1;grid-row:2;width:68px;height:68px;border-radius:13px;background:repeating-linear-gradient(90deg,#101d2999 0 9px,#c1dfef24 10px 13px),linear-gradient(130deg,#536977d9,#152b37eb)}
+#platdoTouchControls[data-design="city"] [data-touch-action="handbrake"]{grid-column:1;grid-row:1;width:54px;height:54px}
+#platdoTouchControls[data-design="city"]:is([data-layout="city-land"],[data-layout="city-boat"],[data-layout="city-bike"]) .pt-right{bottom:184px;grid-template-columns:repeat(2,var(--pt-size))}
+#platdoTouchControls[data-design="city"] .pt-top button{border-radius:22px;min-width:52px;min-height:45px}
+@media(max-width:480px){#platdoTouchControls[data-design="city"]{--pt-size:49px;--pt-gap:7px}#platdoTouchControls[data-design="city"] .pt-steering{gap:10px}#platdoTouchControls[data-design="city"] .pt-steering button{width:58px;height:64px}}
+@media(max-height:500px){#platdoTouchControls[data-design="city"]{--pt-size:44px;--pt-gap:6px}#platdoTouchControls[data-design="city"] .pt-icon-button svg{width:23px;height:23px}#platdoTouchControls[data-design="city"] .pt-top button{min-height:40px}#platdoTouchControls[data-design="city"] .pt-pedals{bottom:14px;grid-template-rows:46px 62px;gap:10px}#platdoTouchControls[data-design="city"] [data-shape="gas"]{height:118px}#platdoTouchControls[data-design="city"] [data-shape="brake"]{height:62px}#platdoTouchControls[data-design="city"] [data-touch-action="handbrake"]{width:46px;height:46px;min-width:46px;min-height:46px}#platdoTouchControls[data-design="city"]:is([data-layout="city-land"],[data-layout="city-boat"],[data-layout="city-bike"]) .pt-right{bottom:148px;grid-template-columns:repeat(2,44px)}#platdoTouchControls[data-design="city"] .pt-left{bottom:104px}}

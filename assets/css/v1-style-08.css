@@ -1,0 +1,18 @@
+
+        body.hub-open { background:#fff;color:#161616;display:block;padding:0; }
+        #gameHub[hidden],#platdoGame[hidden] { display:none; }
+        #gameHub { min-height:100vh;position:relative;padding:clamp(160px,12.6vw,252px) 0 90px;font-family:Arial,sans-serif; }
+        .hub-brand { position:absolute;top:0;left:0;width:clamp(110px,14.3vw,286px);aspect-ratio:1;overflow:hidden; }
+        .hub-brand img { display:block;width:740.740741%;max-width:none;height:auto; }
+        .hub-grid { width:68%;max-width:1348px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(22px,3.15vw,63px) clamp(18px,1.85vw,37px); }
+        .hub-tile { aspect-ratio:1;background:#c4c4c4;border:0;border-radius:20px;display:flex;align-items:center;justify-content:center;font:400 clamp(18px,1.5vw,30px)/1.25 Arial,sans-serif;color:#161616;position:relative;text-align:center;padding:16px; }
+        button.hub-tile { cursor:pointer;transition:transform .18s ease;transform:scale(1);position:relative; }
+        button.hub-tile:hover,button.hub-tile:focus-visible {transform:scale(1.045);box-shadow:none;z-index:2;}
+        button.hub-tile:focus-visible { outline:4px solid #2563eb;outline-offset:6px; }
+        .hub-play { position:absolute;bottom:22px;right:24px;font-size:16px; }
+        .hub-back-bar { padding:10px 16px;border-bottom:1px solid #334155; }
+        #backToGamesBtn { color:#cbd5e1;font-size:13px;cursor:pointer;padding:4px 8px;border-radius:6px; }
+        #backToGamesBtn:hover,#backToGamesBtn:focus-visible { color:#fff;background:#334155; }
+        @media(max-width:700px) { #gameHub {padding-top:150px;} .hub-grid {width:calc(100% - 32px);grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px;} .hub-tile {border-radius:14px;font-size:19px;} .hub-play {bottom:14px;right:16px;font-size:13px;} }
+        @media(prefers-reduced-motion:reduce) {button.hub-tile {transition:none;}}
+    

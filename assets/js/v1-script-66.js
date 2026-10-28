@@ -1,0 +1,12 @@
+
+(function(root){'use strict';const V=root.CityVehicleModels,T=root.THREE,W=root.DriveWraps,R=root.DriveWrapRenderer;if(!V||!T||!W||!R)return;const create=V.create,update=V.update;
+function finish(mesh,c,entity=null){if(['plane','heli'].includes(mesh.userData.definition.category))return;const d=mesh.userData.definition,state=W.normalize(c.finish||{id:'factory',primary:'#'+Number(c.paint??d.color).toString(16).padStart(6,'0')}),key=JSON.stringify([state,c.wheelColor,c.spoiler]);
+ if(mesh.userData.mechanicKey!==key){mesh.userData.mechanicKey=key;Object.assign(mesh.userData,{width:d.dimensions.width,length:d.dimensions.length,height:d.dimensions.height,paintState:{baseColor:c.paint??d.color}});mesh.userData.materials.body.userData.driveBasePaint=true;mesh.traverse(o=>{if(o.isMesh&&o.material===mesh.userData.materials.body)o.userData.paintSurface=true;});if(state.id!=='factory'||mesh.userData.wrapState)R.attach(mesh,state);mesh.userData.finishSurface={roughness:mesh.userData.materials.body.roughness,metalness:mesh.userData.materials.body.metalness};
+  for(const wheel of mesh.userData.parts.wheels||[])wheel.spin.traverse(o=>{if(o.isMesh&&(o.material===mesh.userData.materials.metal||o.userData.customRim)){if(!o.userData.customRim){o.material=o.material.clone();o.userData.customRim=true;}o.material.color.setHex(c.wheelColor??0xb9c6c8);}});
+  const oldSpoiler=mesh.getObjectByName('mechanic-spoiler');if(oldSpoiler){oldSpoiler.traverse(o=>o.geometry?.dispose());oldSpoiler.removeFromParent();}if(c.spoiler&&d.kind==='car'){const g=new T.Group();g.name='mechanic-spoiler';const mat=mesh.userData.materials.trim,w=d.dimensions.width*.78,y=d.dimensions.height*.72,z=-d.dimensions.length*.37;for(const s of[-1,1]){const post=new T.Mesh(new T.BoxGeometry(.045,.20,.10),mat);post.position.set(s*w*.36,y,z);g.add(post);}const wing=new T.Mesh(new T.BoxGeometry(w,.048,c.spoiler===2?.29:.19),mat);wing.position.set(0,y+.11,z);g.add(wing);mesh.add(g);}
+ }
+ const f=mesh.userData.finishSurface;if(f){const m=mesh.userData.materials.body;const wear=entity?Math.max(0,1-entity.health/entity.maxHealth):0;m.roughness=Math.min(1,f.roughness+wear*.35);m.metalness=Math.max(0,f.metalness-wear*.15);}
+}
+V.create=function(type,c={},options){const mesh=create(type,c,options);finish(mesh,c);return mesh;};V.update=function(mesh,e,dt,options){const out=update(mesh,e,dt,options);finish(mesh,e.customization||{},e);return out;};root.CityVehicleFinish={apply:finish};
+})(typeof globalThis!=='undefined'?globalThis:this);
+
