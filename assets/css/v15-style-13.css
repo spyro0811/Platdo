@@ -1,0 +1,1 @@
+#adminModal > div {max-height:96%;overflow-y:auto;flex-shrink:1;} #adminModal > div > * {flex-shrink:0;}
