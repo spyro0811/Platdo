@@ -1,0 +1,13 @@
+
+#openPlatdoBtn:has(.hub-cover) {padding:0;overflow:hidden;background:white;}
+.hub-cover {display:block;width:100%;height:100%;object-fit:contain;}
+.audio-row {margin:12px 0;text-align:left;}
+.audio-row label {display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:700;}
+.audio-row p,.audio-note {font-size:11px;color:#94a3b8;line-height:1.5;margin:4px 0;}
+.audio-row input {width:100%;accent-color:#38bdf8;cursor:pointer;}
+.audio-row:has(input:disabled) {opacity:.4;}
+.audio-row input:disabled {cursor:not-allowed;}
+#advancedWeaponAudio {border:1px solid #334155;border-radius:10px;padding:10px;margin-top:12px;}
+#advancedWeaponAudio summary {cursor:pointer;font-size:12px;font-weight:bold;}
+.settings-tabs {flex-wrap:wrap;}
+#settingsModal > div > .settings-panel {flex-shrink:1;min-height:0;}
