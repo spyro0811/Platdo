@@ -1,0 +1,33 @@
+body:has(.drive-chase) #platdoStandaloneControls{display:none}
+.drive-chase{position:fixed;inset:0;z-index:10010;overflow:hidden;background:#273846;color:#fff;font:600 14px system-ui,sans-serif}
+.drive-chase canvas{height:100%;width:100%;display:block}
+.drive-chase-hud{pointer-events:none;position:absolute;inset:0;text-shadow:0 2px 5px #101b28}
+.drive-chase-header{position:absolute;left:max(4vw,env(safe-area-inset-left));top:max(4vh,env(safe-area-inset-top));display:grid;gap:.15rem}
+.drive-chase-header small{font:800 11px/1.6 system-ui;letter-spacing:.22em;color:#f6c680}
+.drive-chase-header strong{font:900 clamp(18px,3vw,34px)/1.1 system-ui;letter-spacing:-.025em}
+.drive-chase-time{font:800 clamp(22px,4vw,43px)/1 ui-monospace,monospace;position:absolute;right:max(4vw,env(safe-area-inset-right));top:4vh}
+.drive-chase-card{position:absolute;bottom:5vh;left:4vw;display:grid;gap:.4rem}
+.drive-chase-card b{font:900 clamp(20px,4vw,44px)/1 system-ui}
+.drive-chase-card span{font-size:clamp(11px,1.5vw,16px);letter-spacing:.035em}
+.drive-chase[data-phase=intro]:before,.drive-chase[data-phase=outro]:before,.drive-chase[data-phase=ended]:before{content:"";position:absolute;inset:0;border-block:clamp(10px,4.5vh,50px) solid #101518;pointer-events:none}
+.drive-chase button{position:absolute;right:4vw;bottom:4vh;z-index:2;color:white;background:#152435e6;border:1px solid #93a5af;border-radius:4px;padding:.65em 1em;font:700 13px system-ui;cursor:pointer}
+.drive-chase button:focus-visible{outline:3px solid #f6c680}
+@media(max-height:500px){.drive-chase-card{bottom:8vh}.drive-chase button{bottom:7vh}}
+.drive-chase.arrest-playing>.drive-chase-hud,.drive-chase.arrest-playing>.drive-chase-pause,.drive-chase.arrest-playing>button{display:none}
+.arrest-hud{position:absolute;inset:0;pointer-events:none;border-block:clamp(8px,3vh,32px) solid #0c1115;box-sizing:border-box}
+.arrest-fade{position:absolute;inset:-5vh 0;background:black;pointer-events:none}
+.arrest-sub{position:absolute;bottom:max(5.7vh,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);text-align:center;max-width:82%;width:max-content;color:#fff;background:#0d131be0;border-radius:.18em;padding:.3em .68em;font:600 clamp(15px,2.1vw,24px)/1.35 system-ui;letter-spacing:.01em}
+.arrest-sub:empty,.arrest-verdict:empty{display:none}
+.arrest-hud .arrest-verdict{position:absolute;bottom:15%;left:4.5%;font:900 italic clamp(25px,5.5vw,85px)/1 system-ui;letter-spacing:-.045em;text-shadow:0 3px 16px #101923;animation:arrest-stamp .35s ease-out}
+.arrest-hud button{pointer-events:auto;bottom:max(1.5vh,env(safe-area-inset-bottom));right:max(3vw,env(safe-area-inset-right));padding:.42em .78em}
+.arrest-hud kbd{opacity:.65;font:inherit;margin-left:.4em}
+@media (pointer:coarse){.arrest-hud kbd{display:none}}
+@keyframes arrest-stamp{from{opacity:0;transform:scale(1.09)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.arrest-hud .arrest-verdict{animation:none}}
+.drive-chase.arrest-reduced .arrest-verdict{animation:none}
+.drive-chase .drive-chase-pause[hidden]{display:none}
+.drive-chase .drive-chase-pause{position:absolute;inset:0;z-index:4;display:grid;place-items:center;background:#0a1425aa;color:white;font:500 1rem system-ui}
+.drive-chase-pause article{width:min(85vw,22rem);padding:1.75rem;background:#152033;border:1px solid #667586;border-radius:.85rem}
+.drive-chase-pause small{letter-spacing:.15em;color:#bdceaf}
+.drive-chase-pause h2{margin:.45rem 0;font-size:2rem}
+.drive-chase .drive-chase-pause button{position:static;display:block;width:100%;margin:.5rem 0 0;padding:.75rem;font:inherit}

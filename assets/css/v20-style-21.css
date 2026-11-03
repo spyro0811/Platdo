@@ -1,0 +1,19 @@
+
+#fieldGame.god-core-game #fieldPausePanel{overflow-y:auto;padding:24px 0;box-sizing:border-box}
+#fieldGame.god-core-game #fieldPausePanel>div{margin:auto 0;flex-shrink:0}
+#fieldAdminPanel{border-top:1px solid #eee9dc33;padding-top:16px;color:#eee9dc}
+#fieldAdminPanel[hidden],#fieldAdminPanel [hidden]{display:none!important}
+#fieldAdminForm>label,.field-admin-heading{display:block;font:800 14px/1.2 Outfit,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.field-admin-entry{display:flex;gap:8px}
+#fieldAdminCode{min-width:0;width:100%;padding:11px 12px;background:#ffffff09;color:#fff;border:1px solid #eee9dc55;font:16px monospace;border-radius:0}
+#fieldAdminPanel button{padding:10px 13px;background:#e8e1d8;color:#181316;border:1px solid #eee9dc55;font:800 13px Outfit,Arial,sans-serif;text-transform:uppercase;cursor:pointer}
+#fieldAdminPanel :is(button,input):focus-visible{outline:2px solid #ff5945;outline-offset:3px}
+#fieldAdminMessage:empty{display:none}
+#fieldAdminMessage{font:13px/1.4 Arial,sans-serif;color:#ff998c;margin:8px 0 0}
+.field-admin-toggle{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid #eee9dc22;font:600 16px Outfit,Arial,sans-serif;cursor:pointer}
+.field-admin-toggle input{width:20px;height:20px;accent-color:#ff5945;cursor:pointer}
+#fieldAdminSkip{width:100%;margin-top:12px}
+#fieldAdminSkip:disabled{opacity:.5;cursor:default}
+.field-admin-note{font:12px/1.4 Arial,sans-serif;color:#b5aaa5;margin-top:9px}
+@media(max-height:620px){#fieldGame.god-core-game #fieldPausePanel>div{gap:9px!important}#fieldGame.god-core-game #fieldPausePanel h2{font-size:38px!important;margin-bottom:0}#fieldGame.god-core-game #fieldPausePanel [data-field-music]{margin:0!important}}
+

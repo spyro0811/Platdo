@@ -1,0 +1,6 @@
+
+        .settings-tabs { display:flex;gap:7px;width:100%;margin-bottom:14px; }
+        .settings-tabs .game-button { flex:1; }
+        .settings-panel { width:100%;max-height:300px;overflow-y:auto;margin-bottom:14px; }
+        .settings-panel.hidden { display:none; }
+    
