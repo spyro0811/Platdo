@@ -1,0 +1,6 @@
+
+/* City is included in the main selector, with no unlock requirement. */
+#mainSettingsTabs{flex-wrap:wrap}
+#mainSettingsDialog{max-height:calc(100dvh - 32px);overflow-y:auto;box-sizing:border-box}
+#openCityBtn{position:relative}
+

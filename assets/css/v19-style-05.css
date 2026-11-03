@@ -1,0 +1,29 @@
+
+        .binding-list { width:100%; flex-shrink:0; }
+        .binding-row { display:flex;flex-direction:column;gap:7px;padding:9px;margin-bottom:6px;background:#020617;border:1px solid #334155;border-radius:10px;font-size:12px; }
+        .binding-buttons { display:flex;flex-wrap:wrap;gap:5px; }
+        .binding-chip { display:flex;align-items:center;gap:1px; }
+        .binding-chip .game-button { padding:5px 8px; }
+        .binding-remove { color:#fca5a5; padding:3px;font-size:15px; }
+        .binding-capture { position:absolute;inset:20%;z-index:80;padding:20px;background:#0f172a;border:2px solid #38bdf8;border-radius:15px;box-shadow:0 0 0 999px #020617aa; }
+        .binding-capture p { margin-bottom:20px; }
+        .order-row { display:flex;gap:6px;align-items:center;padding:6px;border-bottom:1px solid #334155;font-size:12px; }
+        .order-row span { flex:1; }
+        #settingsModal > div > * { flex-shrink:0; }
+        #editorModal > div > div:first-child { flex-wrap:wrap;gap:6px; }
+        #editorModal > div > div:first-child > div:last-child { flex-wrap:wrap; }
+        .weapon-bar { justify-content:center; }
+        #inventoryTray { display:flex;justify-content:center;gap:7px;width:100%; }
+        .inventory-slot { width:106px;max-width:calc(20% - 6px);border:1px solid #475569;border-radius:10px;background:#020617;padding:4px 5px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center; }
+        .inventory-slot canvas { width:100%;height:auto; }
+        .inventory-slot span { font-size:11px;font-weight:700;color:#e2e8f0; }
+        .inventory-slot small { font-size:10px;color:#94a3b8; }
+        .inventory-slot.selected { border:2px solid #5eead4;background:#12333d;box-shadow:0 0 9px #2dd4bf44; }
+        .inventory-slot:disabled { opacity:.4;cursor:not-allowed; }
+        .inventory-slot:focus-visible { outline:2px solid #facc15; }
+        .weapon-help { flex-basis:100%;text-align:center; }
+        .theme-filters { display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px; }
+        .theme-filters.hidden { display:none; }
+        .skin-grid { min-height:165px;flex-shrink:0; }
+        .theme-preview { width:100%;height:56px; }
+    
