@@ -1,0 +1,7 @@
+.premium-park .premium-museum-stage {overflow:hidden;background:#102426}
+.premium-park-hud {position:absolute;top:12px;left:12px;right:12px;width:fit-content;max-width:calc(100% - 24px);white-space:pre-line;pointer-events:none;background:#0b2028df;color:#fff5d3;border-left:4px solid #edbd60;border-radius:2px;padding:8px 12px;font:600 14px/1.5 system-ui}
+.premium-park .premium-field select {display:block;max-width:100%;width:100%;margin:5px 0 10px}
+.premium-park .premium-status {min-height:1.7em;margin:0;padding:5px 12px}
+.premium-park .premium-museum-stage canvas {outline:none}
+.premium-park #platdoTouchControls,.premium-drone #platdoTouchControls {position:absolute;inset:0;--pt-size:44px;--pt-gap:4px}
+.premium-park #platdoTouchControls .pt-top,.premium-drone #platdoTouchControls .pt-top {top:4px;left:auto;right:4px;transform:none}

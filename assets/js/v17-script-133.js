@@ -1,0 +1,22 @@
+
+/* Presentation only: accepted injuries and piece physics belong to CityGore.
+ * Each detached object retains its own geometry and rig across detail changes. */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory;else root.CityGoreRender=factory(root.THREE,root.CityPeopleModels,root.CityGore);})(typeof globalThis!=='undefined'?globalThis:this,function(T,P,G){'use strict';
+const labels=['none','ouch','oh shoot!','AAAAHHH!'],rank=value=>Math.max(0,labels.indexOf(value));
+class Renderer{
+ constructor(scene){this.scene=scene;this.level='ouch';this.parts=new Map();this.captures=new Map();this.clocks=new Map();this.emitters=[];this.totalBuilds=0;}
+ setLevel(level){if(!labels.includes(level))level='ouch';const previous=rank(this.level);this.level=level;if(rank(level)<3)this.clearParts();if(rank(level)<2){this.clocks.clear();this.emitters=[];}if(rank(level)<previous)for(const record of this.scene.meshes.people.values())P.setGore(record.mesh,[],false);this.scene.blood?.setEnabled(rank(level)>0);}
+ clearParts(){for(const record of this.parts.values()){record.mesh.removeFromParent();P.dispose(record.mesh);}this.parts.clear();}
+ clear(){this.clearParts();this.captures.clear();this.clocks.clear();this.emitters=[];}
+ pose(id,capture=false){const mesh=this.scene.meshes.people.get(id||'player')?.mesh;if(!mesh||!mesh.visible)return null;const pose=P.ragdollPose(mesh);if(capture){this.captures.set(id||'player',P.captureGorePose(mesh));if(this.captures.size>96)this.captures.delete(this.captures.keys().next().value);}return pose;}
+ sync(sim){const active=rank(this.level),actors=[...(sim.npcs||sim.people||[]),...(sim.player?[sim.player]:[])],byId=new Map(actors.map(a=>[a.id||'player',a]));for(const actor of actors){const mesh=this.scene.meshes.people.get(actor.id||'player')?.mesh;if(mesh)P.setGore(mesh,actor.gore?.hiddenRegions||[],active===3);}
+  const live=new Set();if(active===3)for(const part of sim.gore?.parts||[]){live.add(part.id);let record=this.parts.get(part.id);if(!record){const owner=byId.get(part.ownerId),existing=this.scene.meshes.people.get(part.ownerId)?.mesh;let source=existing;if(!source){source=P.create(Number.isInteger(part.appearance?.body)?part.appearance:owner?.appearance,{lod:1,modelDetail:this.scene.modelDetail||5});source.position.set(owner?.x||0,owner?.y||0,owner?.z||0);source.rotation.y=owner?.yaw||0;P.animate(source,owner||{},sim.time,0);if(part.initialPose)P.applyRagdoll(source,{points:part.initialPose});}const mesh=P.snapshotGore(source,part.regions||[part.region],existing?this.captures.get(part.ownerId):null);if(!existing)P.dispose(source);mesh.name='Detached '+part.region+' '+part.id;record={mesh,id:part.id,ownerId:part.ownerId,region:part.region};this.parts.set(part.id,record);this.scene.dynamic.add(mesh);this.totalBuilds++;}P.poseGorePiece(record.mesh,part);const p=Object.values(part.points)[0];record.mesh.visible=!!p&&this.scene.actorInView(p,2.2,220);}
+  for(const[id,record]of this.parts)if(!live.has(id)){record.mesh.removeFromParent();P.dispose(record.mesh);this.parts.delete(id);}
+  this.emitters=[];const woundLive=new Set();if(active>=2&&sim.settings?.effects!==false){const emit=(actor,wound,pose,part)=>{if(wound.age>=wound.life)return;woundLive.add(wound.id);const interval=1/Math.max(.5,wound.rate||4),tick=Math.floor(wound.age/interval),previous=this.clocks.get(wound.id);this.clocks.set(wound.id,tick);const point=G.woundPoint(actor,wound,pose,part);if(!point)return;this.emitters.push({id:wound.id,region:wound.region,ownerPartId:part?.id||null,point:{...point}});if(previous!==undefined&&tick>previous)this.scene.blood?.drip(point,part?Object.values(part.points)[0]:actor,part?.id||actor.id);};for(const actor of actors){const pose=this.pose(actor.id||'player')||actor.ragdoll?.points;for(const region of Object.values(actor.gore?.regions||{}))for(const wound of region.wounds||[])if(!wound.ownerPartId)emit(actor,wound,pose,null);}for(const part of sim.gore?.parts||[]){const actor=byId.get(part.ownerId)||{id:part.ownerId},pose=this.parts.get(part.id)?.mesh.userData.gorePose;for(const wound of part.wounds||[])emit(actor,wound,pose,part);}}
+  for(const id of this.clocks.keys())if(!woundLive.has(id))this.clocks.delete(id);
+ }
+ diagnostics(){return{level:this.level,parts:this.parts.size,totalBuilds:this.totalBuilds,emitters:this.emitters.length,identities:[...this.parts.keys()]};}
+ dispose(){this.clear();}
+}
+return{Renderer,labels};});
+
