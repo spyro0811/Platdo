@@ -5,6 +5,12 @@
     constructor(room,self){this.room=room;this.self=self;this.entities=new Map();this.seq=-1;this.time=0;}
     accept(packet){
       if(!packet||packet.room!==this.room.id||packet.seq<this.seq||(!packet.full&&packet.seq===this.seq))return;
+      const city=this.room.mode==='city',own=packet.changes['u:'+this.self];
+      const scopeChanged=city&&own&&Object.hasOwn(own,'homeInstance')&&!!own.homeInstance!==!!this.entities.get('u:'+this.self)?.value.homeInstance;
+      if(city&&(packet.full||scopeChanged)){
+        this.renderTime=undefined;this.lastFrame=undefined;
+        for(const entry of this.entities.values())if(entry.samples)entry.samples=[{time:packet.time,pose:entry.value}];
+      }
       if(packet.full)this.entities.clear();
       this.seq=packet.seq;this.time=packet.time;
       for(const key of packet.removed)this.entities.delete(key);
@@ -13,12 +19,18 @@
       for(const [key,value] of Object.entries(packet.changes)){
         const prior=this.entities.get(key);
         const next=prior&&typeof value==='object'?{...prior.value,...value}:value;
-        if(this.room.mode==='drive'&&Number.isFinite(next?.x)){
+        if(Number.isFinite(next?.x)&&(this.room.mode==='drive'||city&&['p','n','v'].includes(key[0]))){
           const samples=prior?.samples||[];
-          if(samples.length&&Math.hypot(next.x-samples.at(-1).pose.x,next.z-samples.at(-1).pose.z)>20)samples.length=0;
-          samples.push({time:packet.time,pose:next});if(samples.length>8)samples.shift();
+          if(samples.length&&Math.hypot(next.x-samples.at(-1).pose.x,next.z-samples.at(-1).pose.z)>(city?16:20))samples.length=0;
+          if(samples.at(-1)?.time===packet.time)samples[samples.length-1]={time:packet.time,pose:next};
+          else samples.push({time:packet.time,pose:next});if(samples.length>8)samples.shift();
           this.entities.set(key,{samples,value:next,start:now});
         }else this.entities.set(key,{from:prior?this.interpolate(prior,now):next,value:next,start:now});
+      }
+      // An omitted entity in a delta packet is unchanged, not missing. Record
+      // that sample too, so the next movement doesn't blend across a long stop.
+      if(city)for(const entry of this.entities.values())if(entry.samples&&entry.samples.at(-1)?.time<packet.time){
+        entry.samples.push({time:packet.time,pose:entry.value});if(entry.samples.length>8)entry.samples.shift();
       }
     }
     interpolate(item,now){
@@ -28,12 +40,19 @@
         let b=list.findIndex(s=>s.time>=target);
         if(b===0)return list[0].pose;
         if(b<0){
+          if(this.room.mode==='city')return list.at(-1).pose;
           const latest=list.at(-1),v={...latest.pose},dt=Math.min(.085,Math.max(0,target-latest.time));
           v.x+=(v.vx||0)*dt;v.z+=(v.vz||0)*dt;if(Number.isFinite(v.yaw))v.yaw+=(v.yawRate||0)*dt;return v;
         }
-        const before=list[b-1],after=list[b],t=(target-before.time)/(after.time-before.time||1),v={...after.pose};
+        const before=list[b-1],after=list[b],t=(target-before.time)/(after.time-before.time||1),city=this.room.mode==='city',v={...(city&&t<1?before.pose:after.pose)};
         for(const key of ['x','y','z','yaw','pitch','roll','steer','wheelSpin','rx','ry','rz']){
-          const a=before.pose[key],d=v[key]-a;if(Number.isFinite(d))v[key]=a+(key==='yaw'?Math.atan2(Math.sin(d),Math.cos(d)):d)*t;
+          const a=before.pose[key],d=after.pose[key]-a;if(Number.isFinite(d))v[key]=a+(key==='yaw'?Math.atan2(Math.sin(d),Math.cos(d)):d)*t;
+        }
+        if(city&&before.pose.ragdoll?.points&&after.pose.ragdoll?.points){
+          const points={};for(const [joint,target] of Object.entries(after.pose.ragdoll.points)){
+            const start=before.pose.ragdoll.points[joint];points[joint]=start?{x:start.x+(target.x-start.x)*t,y:start.y+(target.y-start.y)*t,z:start.z+(target.z-start.z)*t}:target;
+          }
+          v.ragdoll={...after.pose.ragdoll,points};
         }
         return v;
       }
@@ -52,16 +71,19 @@
     apply(sim){
       const now=performance.now(),city=this.room.mode==='city',npcs=[],vehicles=[],traffic=[];
       const fragments=[],sceneryPieces=[];
-      if(!city){
-        // Render one snapshot behind the server. A single monotonic clock avoids
-        // restarting a lerp from a moving target on each variable-latency packet.
-        const target=this.time+Math.min(.18,(now-(this.receivedAt??now))/1000)-.095;
+      {
+        // City keeps 110 ms of history and slews its playback clock rather than
+        // freezing whenever a jittery packet moves the estimated target back.
+        const target=this.time+Math.min(.18,(now-(this.receivedAt??now))/1000)-(city?.11:.095);
         const dt=Math.min(.10,Math.max(0,(now-(this.lastFrame??now))/1000));
-        this.renderTime=this.renderTime===undefined||Math.abs(target-this.renderTime)>.45?target:
-          this.renderTime+Math.min(Math.max(0,target-this.renderTime),dt*1.12);
+        if(city){
+          this.renderTime=this.renderTime===undefined||Math.abs(target-this.renderTime)>.45?Math.max(0,target):
+            Math.min(this.time,this.renderTime+dt*Math.max(.9,Math.min(1.1,1+(target-this.renderTime)*2)));
+        }else this.renderTime=this.renderTime===undefined||Math.abs(target-this.renderTime)>.45?target:
+            this.renderTime+Math.min(Math.max(0,target-this.renderTime),dt*1.12);
         this.lastFrame=now;
-        root.DriveOccupantPhysics?.ensure(sim).snapshot();
       }
+      if(!city)root.DriveOccupantPhysics?.ensure(sim).snapshot();
       this.cache??=new Map();const parts=[],effects=[],projectiles=[];if(city){this.heard??=new Set();sim.onlineSounds??=[];}
       for(const [key,entry] of this.entities){
         const kind=key[0],id=key.slice(2),v=this.interpolate(entry,now);
@@ -97,7 +119,7 @@
           if(kind==='b'){const b=sim.looseBlockers.find(b=>b.id===id);if(b)Object.assign(b,v);}
         }
       }
-      sim.time=this.time;if(city){sim.npcs=npcs;sim.vehicles=vehicles;sim.streetActions={parts,serial:0};sim.effects=effects;sim.projectiles=projectiles;for(const key of this.heard)if(!this.entities.has(key))this.heard.delete(key);}
+      sim.time=city?this.renderTime:this.time;if(city){sim.npcs=npcs;sim.vehicles=vehicles;sim.streetActions={parts,serial:0};sim.effects=effects;sim.projectiles=projectiles;for(const key of this.heard)if(!this.entities.has(key))this.heard.delete(key);}
       else{
         if(sim.traffic.length!==traffic.length||traffic.some((v,i)=>v!==sim.traffic[i]))sim.traffic=traffic;sim.renderPlayer=null;sim.railDebris=fragments;sim.sceneryDebris=sceneryPieces;
         const elapsed=Math.min(.08,Math.max(0,(this.renderTime-(this.lastPoseTime??this.renderTime))));
